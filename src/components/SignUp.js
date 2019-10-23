@@ -8,7 +8,7 @@ import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import '../App.css';
 
 const theme = createMuiTheme({
-    direction: 'rtl', 
+    direction: 'rtl',
 });
 
 
@@ -17,10 +17,10 @@ export default class SignUp extends React.Component{
 
     render(){
         return(
-            <form dir="rtl" style={{marginTop: 100, marginLeft: 100, marginRight: 100}}>
+            <form dir="rtl" style={{fontFamily: "Vazir", marginTop: 100, marginLeft: 100, marginRight: 100}}>
             <div dir="rtl">
                 <LockOutlinedIcon style={{color: 'red'}} />
-                <h1>ثبت نام</h1>
+                <h1 style={{fontFamily: "Vazir"}}>ثبت نام</h1>
             </div>
             <ThemeProvider theme={theme}>
             <TextField
@@ -51,7 +51,7 @@ export default class SignUp extends React.Component{
                 control={<Checkbox value="remember" color="primary" />}
                 label="مرا به خاطر داشته باش"
             />
-            <Button fullWidth style={{color: 'white', marginTop: 10, backgroundColor: 'blue'}}>
+            <Button fullWidth style={{fontFamily: "Vazir", color: 'white', marginTop: 10, backgroundColor: 'blue'}}>
                 ثبت نام
             </Button>
         </form>

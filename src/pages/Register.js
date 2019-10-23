@@ -27,7 +27,7 @@ export default class Register extends React.Component{
                     {!this.state.signUp&&<SignIn />}
                     <div dir="rtl" style={{marginTop: 10}}>
                         <Link
-                            style={{color: 'blue', marginTop: 10 , marginRight: 100}}
+                            style={{fontFamily: "Vazir", color: 'blue', marginTop: 10 , marginRight: 100}}
                             onClick={() => {this.setState({signUp: reverseSignUp})}}>
                                 {!reverseSignUp&&"ورود به حساب"}
                                 {reverseSignUp&&"ایجاد حساب جدید"}
