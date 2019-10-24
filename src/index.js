@@ -3,12 +3,16 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import { Provider} from 'react-redux';
+import { store } from './store';
 import './assets/fonts/Vazir.ttf';
 import './assets/fonts/Vazir-Bold.ttf';
 
 
 ReactDOM.render(
+    <Provider store={store}>
         <App />
+    </Provider>
     
     , document.getElementById('root'));
 
