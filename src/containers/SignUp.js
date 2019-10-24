@@ -13,14 +13,14 @@ const theme = createMuiTheme({
 
 
 
-export default class SignIn extends React.Component{
+export default class SignUp extends React.Component{
 
     render(){
         return(
             <form dir="rtl" style={{fontFamily: "Vazir", marginTop: 100, marginLeft: 100, marginRight: 100}}>
             <div dir="rtl">
                 <LockOutlinedIcon style={{color: 'red'}} />
-                <h1 style={{fontFamily: "Vazir"}}>ورود</h1>
+                <h1 style={{fontFamily: "Vazir"}}>ثبت نام</h1>
             </div>
             <ThemeProvider theme={theme}>
             <TextField
@@ -39,6 +39,14 @@ export default class SignIn extends React.Component{
                 autoComplete='password'
                 autoFocus
             />
+            <TextField
+                placeholder='تایید رمز عبور'
+                style={{fontFamily: "Vazir", marginTop: 10}}
+                fullWidth
+                variant="outlined"
+                autoFocus
+            />
+
             </ThemeProvider>
             <FormControlLabel
                 style={{fontFamily: "Vazir"}}
@@ -46,11 +54,10 @@ export default class SignIn extends React.Component{
                 label="مرا به خاطر داشته باش"
             />
             <Button fullWidth style={{fontFamily: "Vazir", color: 'white', marginTop: 10, backgroundColor: 'blue'}}>
-                ورود
+                ثبت نام
             </Button>
         </form>
 
         );
     }
-
 }
