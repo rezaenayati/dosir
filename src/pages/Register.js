@@ -1,12 +1,11 @@
 import React from 'react';
 import { 
-    AppBar, Tab, Tabs, Container, Link, Checkbox, Grid , Paper, TextField, Avatar, Button, FormControlLabel    
+    Link, Grid , Paper    
 } from "@material-ui/core";
-import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 
 import '../App.css';
-import SignUp from '../components/SignUp';
-import SignIn from '../components/SignIn';
+import SignUp from '../containers/SignUp';
+import SignIn from '../containers/SignIn';
 
 export default class Register extends React.Component{
     constructor(props){
@@ -18,9 +17,9 @@ export default class Register extends React.Component{
     render(){
         const reverseSignUp = !this.state.signUp;
         return( 
-            <Grid container component="main" style={{height: '100vh'}}>
-                <Grid item xs={false} sm={4} md={7} style={{backgroundSize: 'cover', backgroundImage: 'url(https://wallpaperplay.com/walls/full/9/5/e/13971.jpg)'}} />
-                <Grid xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+            <Grid item={true} container component="main" style={{height: '100vh'}}>
+                <Grid item={true}  xs={false} sm={4} md={7} style={{backgroundSize: 'cover', backgroundImage: 'url(https://wallpaperplay.com/walls/full/9/5/e/13971.jpg)'}} />
+                <Grid item={true} xs={12} sm={8} md={5} component={Paper} elevation={6} square>
                     <form>
                     </form>
                     {this.state.signUp&&<SignUp />}
