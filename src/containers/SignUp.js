@@ -4,16 +4,53 @@ import {
 } from "@material-ui/core";
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import {connect} from 'react-redux';
 
 import '../App.css';
 
 const theme = createMuiTheme({
-    direction: 'rtl', 
+    direction: 'rtl',
 });
 
 
+const mapStateToProps = state => ({ ...state, email: state.auth.email});
 
-export default class SignUp extends React.Component{
+const mapDispatchToProps = dispatch => ({
+    onSubmit: (email) => {
+        //reguest from server and save it in payload
+        // const payload = {email: email};
+        dispatch({type: 'REGISTER' , email});
+    }
+});
+
+
+class SignUp extends React.Component{
+
+    constructor(props){
+        super(props);
+        this.state = {
+            email: null,
+            password: null,
+            password2: null
+        }
+        this.changeEmail = ev => this.setState({email: ev.target.value});
+        this.changePassword = ev => this.setState({password: ev.target.value});
+        this.changePassword2 = ev => this.setState({password2: ev.target.value});
+
+        this.submit = ev => {
+            
+            ev.preventDefault();
+            if(this.state.password === this.state.password2){
+                console.log(this.state.email);
+                this.props.onSubmit(this.state.email , this.state.password);
+                // document.location.assign('/dashboard');
+            }
+            else
+            console.log("Password unmatch!");
+            
+            console.log("this is new :" + this.props.email);
+        };
+    }
 
     render(){
         return(
@@ -25,39 +62,46 @@ export default class SignUp extends React.Component{
             <ThemeProvider theme={theme}>
             <TextField
                 placeholder='ایمیل'
-                style={{fontFamily: "Vazir", marginTop: 10}}
+                style={{marginTop: 10}}
                 fullWidth
                 variant="outlined"
                 autoComplete='email'
-                autoFocus                            
+                onChange={this.changeEmail}
             />
             <TextField
                 placeholder='رمز عبور'
-                style={{fontFamily: "Vazir", marginTop: 10}}
+                style={{marginTop: 10}}
                 fullWidth
                 variant="outlined"
                 autoComplete='password'
-                autoFocus
+                onChange={this.changePassword}
             />
             <TextField
                 placeholder='تایید رمز عبور'
-                style={{fontFamily: "Vazir", marginTop: 10}}
+                style={{marginTop: 10}}
                 fullWidth
                 variant="outlined"
-                autoFocus
+                onChange={this.changePassword2}
             />
-
             </ThemeProvider>
             <FormControlLabel
-                style={{fontFamily: "Vazir"}}
                 control={<Checkbox value="remember" color="primary" />}
                 label="مرا به خاطر داشته باش"
             />
-            <Button fullWidth style={{fontFamily: "Vazir", color: 'white', marginTop: 10, backgroundColor: 'blue'}}>
+            <Button
+                onClick={this.submit} 
+                fullWidth 
+                style={{
+                    fontFamily: "Vazir",
+                    color: 'white', marginTop: 10, 
+                    backgroundColor: 'blue'}}>
                 ثبت نام
             </Button>
         </form>
 
         );
     }
+
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignUp);

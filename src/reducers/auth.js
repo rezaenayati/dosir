@@ -1,15 +1,17 @@
 
 export default (state = {} , action) => {
+    console.log("enter auth reducer");
+    
     switch(action.type){
-        case 'REGISTER':
+        case 'REGISTER':            
             return {
                 ...state,
-                user: {email: action.payload.email,}
+                email: action.email
             };
         case 'SIGNIN':
             return {
                 ...state,
-                users: {email: action.payload.email,}
+                email: action.email
             }    
         default:
             return state;
