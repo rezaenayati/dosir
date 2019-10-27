@@ -4,6 +4,8 @@ import {
 } from "@material-ui/core";
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import {connect} from 'react-redux';
+import { withRouter } from 'react-router-dom'
 
 import '../App.css';
 
@@ -11,9 +13,37 @@ const theme = createMuiTheme({
     direction: 'rtl', 
 });
 
+const mapStateToProps = state => ({ ...state, email: state.auth.email});
+
+const mapDispatchToProps = dispatch => ({
+    onSubmit: (email) => {
+        //reguest from server and save it in payload
+        // const payload = {email: email};
+        dispatch({type: 'REGISTER' , email});
+    }
+});
 
 
-export default class SignIn extends React.Component{
+class SignIn extends React.Component{
+
+    constructor(props){
+        super(props);
+        this.state = {
+            email: null,
+            password: null,
+            showPassword: true,
+        }
+        this.changeEmail = ev => this.setState({email: ev.target.value});
+        this.changePassword = ev => this.setState({password: ev.target.value});
+        this.submit = ev => {
+            
+            ev.preventDefault();
+            console.log(this.state.email);
+            this.props.onSubmit(this.state.email , this.state.password);
+            this.props.history.push('/dashboard');
+        };
+    }
+
 
     render(){
         return(
@@ -29,7 +59,7 @@ export default class SignIn extends React.Component{
                 fullWidth
                 variant="outlined"
                 autoComplete='email'
-                autoFocus                            
+                onChange={this.changeEmail}
             />
             <TextField
                 placeholder='رمز عبور'
@@ -37,7 +67,7 @@ export default class SignIn extends React.Component{
                 fullWidth
                 variant="outlined"
                 autoComplete='password'
-                autoFocus
+                onChange={this.changePassword}        
             />
             </ThemeProvider>
             <FormControlLabel
@@ -45,7 +75,15 @@ export default class SignIn extends React.Component{
                 control={<Checkbox value="remember" color="primary" />}
                 label="مرا به خاطر داشته باش"
             />
-            <Button fullWidth style={{fontFamily: "Vazir", color: 'white', marginTop: 10, backgroundColor: 'blue'}}>
+            <Button
+                onClick={this.submit}  
+                fullWidth 
+                style={{
+                    fontFamily: "Vazir",
+                    color: 'white', 
+                    marginTop: 10, 
+                    backgroundColor: 'blue'}}
+                >
                 ورود
             </Button>
         </form>
@@ -54,3 +92,4 @@ export default class SignIn extends React.Component{
     }
 }
 
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SignIn));
