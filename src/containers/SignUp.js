@@ -1,6 +1,6 @@
 import React from 'react';
 import { 
-    Checkbox, TextField, Button, FormControlLabel    
+    Checkbox, TextField, Button, FormControlLabel
 } from "@material-ui/core";
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
@@ -32,7 +32,7 @@ class SignUp extends React.Component{
         this.state = {
             email: null,
             password: null,
-            password2: null
+            password2: null,
         }
         this.changeEmail = ev => this.setState({email: ev.target.value});
         this.changePassword = ev => this.setState({password: ev.target.value});
@@ -67,14 +67,16 @@ class SignUp extends React.Component{
                 onChange={this.changeEmail}
             />
             <TextField
+                type='password'
                 placeholder='رمز عبور'
                 style={{marginTop: 10}}
                 fullWidth
                 variant="outlined"
                 autoComplete='password'
-                onChange={this.changePassword}
+                onChange={this.changePassword}        
             />
             <TextField
+                type='password'
                 placeholder='تایید رمز عبور'
                 style={{marginTop: 10}}
                 fullWidth
@@ -91,7 +93,8 @@ class SignUp extends React.Component{
                 fullWidth 
                 style={{
                     fontFamily: "Vazir",
-                    color: 'white', marginTop: 10, 
+                    color: 'white',
+                    marginTop: 10, 
                     backgroundColor: 'blue'}}>
                 ثبت نام
             </Button>

@@ -62,6 +62,7 @@ class SignIn extends React.Component{
                 onChange={this.changeEmail}
             />
             <TextField
+                type='password'
                 placeholder='رمز عبور'
                 style={{fontFamily: "Vazir", marginTop: 10}}
                 fullWidth
