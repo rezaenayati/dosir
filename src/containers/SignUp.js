@@ -5,6 +5,7 @@ import {
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import {connect} from 'react-redux';
+import { withRouter } from 'react-router-dom'
 
 import '../App.css';
 
@@ -35,20 +36,17 @@ class SignUp extends React.Component{
         }
         this.changeEmail = ev => this.setState({email: ev.target.value});
         this.changePassword = ev => this.setState({password: ev.target.value});
-        this.changePassword2 = ev => this.setState({password2: ev.target.value});
-
+        this.changePassword2 = ev => this.setState({password2: ev.target.value});       
         this.submit = ev => {
             
             ev.preventDefault();
             if(this.state.password === this.state.password2){
                 console.log(this.state.email);
                 this.props.onSubmit(this.state.email , this.state.password);
-                // document.location.assign('/dashboard');
+                this.props.history.push('/dashboard');
             }
             else
-            console.log("Password unmatch!");
-            
-            console.log("this is new :" + this.props.email);
+            console.log("Password unmatch!");            
         };
     }
 
@@ -104,4 +102,4 @@ class SignUp extends React.Component{
 
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SignUp);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SignUp));
