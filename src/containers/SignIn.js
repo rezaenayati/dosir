@@ -8,6 +8,7 @@ import {connect} from 'react-redux';
 import { withRouter } from 'react-router-dom'
 
 import '../App.css';
+import {fetchDoctor} from '../logics/api';
 
 const theme = createMuiTheme({
     direction: 'rtl', 
@@ -17,8 +18,6 @@ const mapStateToProps = state => ({ ...state, email: state.auth.email});
 
 const mapDispatchToProps = dispatch => ({
     onSubmit: (email) => {
-        //reguest from server and save it in payload
-        // const payload = {email: email};
         dispatch({type: 'REGISTER' , email});
     }
 });
@@ -32,15 +31,28 @@ class SignIn extends React.Component{
             email: null,
             password: null,
             showPassword: true,
+            loading: false,
+            doctor: {
+
+            }
         }
         this.changeEmail = ev => this.setState({email: ev.target.value});
         this.changePassword = ev => this.setState({password: ev.target.value});
         this.submit = ev => {
-            
             ev.preventDefault();
-            console.log(this.state.email);
-            this.props.onSubmit(this.state.email , this.state.password);
-            this.props.history.push('/dashboard');
+            // console.log(fetchDoctor(this.state.email));
+            this.setState({loading: true} , async () => {
+                try {
+                    const dU = await fetchDoctor(this.state.email);
+                    console.log(dU);
+                    this.setState({doctor: dU , loading: false});
+                    this.props.onSubmit(this.state.email , this.state.password);
+                    if(this.state.password == this.state.doctor.password)
+                        this.props.history.push('/dashboard');    
+                } catch (error) {
+                    
+                }
+            });
         };
     }
 
