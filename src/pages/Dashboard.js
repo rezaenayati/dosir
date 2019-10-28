@@ -2,13 +2,19 @@ import React from 'react';
 import {connect} from 'react-redux';
 import { Grid, Divider } from '@material-ui/core';
 import DoctorProfile from '../components/DoctorProfile';
+import DashboardDefault from '../components/DashboardDefault';
+import {withRouter} from 'react-router-dom';
 
-const mapStateToProps = state => ({ ...state, email: state.auth.email});
+import {fetchDoctor} from '../logics/api';
+
+const mapStateToProps = state => ({ 
+                            ...state, 
+                            email: state.auth.email,
+                            authenticated: state.auth.authenticated,
+                        });
 
 const mapDispatchToProps = dispatch => ({
-    onSubmit: (email , password) => {
-
-    }
+    // addDoctor: ({}) => {}
 });
 
 class Dashboard extends React.Component{
@@ -16,10 +22,22 @@ class Dashboard extends React.Component{
     constructor(props){
         super(props);
         this.state = {
+            auth: false,
+            loading: false,
+            doctor:{
+
+            }
         }
     }
 
     componentDidMount(){
+        this.setState({loading: true} , async () => {
+            const dU = await fetchDoctor(this.props.email);
+            this.setState({doctor: dU, loading: false});
+            // this.props.addDoctor(dU);
+        });
+        if(!this.props.authenticated) 
+            this.props.history.push('/');    
 
     }
 
@@ -34,12 +52,12 @@ class Dashboard extends React.Component{
                         <Grid item={true} xs={12} sm={8} md={3} style={{backgroundColor: '#f2fdff'}} component="div" elevation={6} square>
                             <DoctorProfile 
                                 email={this.props.email}
-                                name='همایون بهزادی'
-                                phone='09121234334'
-                                title='متخصص اعصاب و روان'
-                                address='تهران بزگراه عبدلله ویسی میدان اکبر میثاقیان خیابان میرزاعلی کرمانی کوچه پلدختر پلاک ۸ طبقه ۲ زنگآیفون خراب اسا'
-                                about='وی در خانواده ی مذهبی در جنوب سیستان چشم به جهان گشود. کودکی خود را در سواحل زیبای بوشهر گذراند و با سهمیه پدر جانبازش موفق به حضور در دانشگاه شهید مطهری هرمزگان شد '
-                                avatarUrl='https://www.mianfolio.com/kosimedic/v1.3.1/wide/img/doctor-profile.jpg'
+                                name={this.state.doctor.name + "    " + this.state.doctor.family}
+                                phone={this.state.doctor.phone}
+                                title={this.state.doctor.title}
+                                address={this.state.doctor.address}
+                                about={this.state.doctor.about}
+                                avatarUrl={this.state.doctor.image}
                                 />
                         </Grid>
             </Grid>
@@ -50,4 +68,4 @@ class Dashboard extends React.Component{
 
 }
 
-export default connect(mapStateToProps , mapDispatchToProps)(Dashboard);
+export default withRouter(connect(mapStateToProps , mapDispatchToProps)(Dashboard));

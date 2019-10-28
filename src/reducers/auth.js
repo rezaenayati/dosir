@@ -6,12 +6,14 @@ export default (state = {} , action) => {
         case 'REGISTER':            
             return {
                 ...state,
-                email: action.email
+                email: action.email,
+                authenticated: true
             };
         case 'SIGNIN':
             return {
                 ...state,
-                email: action.email
+                email: action.email,
+                authenticated: true
             }    
         default:
             return state;
