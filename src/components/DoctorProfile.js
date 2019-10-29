@@ -2,14 +2,18 @@ import React from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import { Divider, Button } from '@material-ui/core';
 import RoomIcon from '@material-ui/icons/Room';
+import { withRouter } from 'react-router-dom';
 
 
-export default class DoctorProfile extends React.Component {
+class DoctorProfile extends React.Component {
 
     constructor(props){
         super(props);
         this.state = {
             
+        }
+        this.editProfile = () => {
+            this.props.history.push('/editprofile');
         }
     }
 
@@ -25,7 +29,7 @@ export default class DoctorProfile extends React.Component {
                 <div style={styles.locationStyle}>
                     <RoomIcon fontSize='small' style={{}} />
                 </div>
-                <Button fullWidth style={styles.buttonStyle} >ویرایش پروفایل</Button>
+                <Button fullWidth onClick={this.editProfile} style={styles.buttonStyle} >ویرایش پروفایل</Button>
                 <Divider variant='middle' />
                 <div style={{height:  150}}>
                     <p dir='rtl' style={styles.textStyle}>درباره ی:</p>
@@ -77,3 +81,4 @@ const styles = {
         marginBottom: 5
     }
 }
+export default withRouter(DoctorProfile);

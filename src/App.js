@@ -5,6 +5,7 @@ import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import Profile from './pages/Profile';
 import Page404 from './pages/Page404';
+import EditProfile from './pages/EditProfile';
 import './App.css';
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
             <Route exact path="/"> <Register /> </Route>
             <Route path="/user/@:username"> <Profile /> </Route>
             <Route path="/dashboard"> <Dashboard /> </Route>
+            <Route path="/editprofile"> <EditProfile /> </Route>
             <Route component={Page404} />
         </Switch>
       </div>
