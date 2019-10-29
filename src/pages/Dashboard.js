@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import { Grid, Divider } from '@material-ui/core';
 import DoctorProfile from '../components/DoctorProfile';
-import DashboardDefault from '../components/DashboardDefault';
+import DashboardDetails from '../components/DashboardDetails';
 import {withRouter} from 'react-router-dom';
 
 import {fetchDoctor} from '../logics/api';
@@ -48,6 +48,7 @@ class Dashboard extends React.Component{
             </header>
             <Grid item={true} container component="main" style={{height: '100vh'}}>
                         <Grid item={true}  xs={false} sm={4} md={9} style={{backgroundSize: 'cover'}}>
+                            <DashboardDetails  />
                         </Grid>
                         <Grid item={true} xs={12} sm={8} md={3} style={{backgroundColor: '#f2fdff'}} component="div" elevation={6} square>
                             <DoctorProfile 
