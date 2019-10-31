@@ -1,6 +1,7 @@
 import { routerReducer } from 'react-router-redux';
 import { combineReducers } from 'redux';
 import auth from './reducers/auth';
+import currentUser from './reducers/currentUser';
 
 const testRedux = (state = {} , action) => {
     switch(action.type){
@@ -17,5 +18,6 @@ const testRedux = (state = {} , action) => {
 export default combineReducers({
     testRedux,
     auth,
+    currentUser,
     router: routerReducer,
 });

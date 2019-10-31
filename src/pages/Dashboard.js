@@ -1,20 +1,23 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import { Grid, Divider } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import DoctorProfile from '../components/DoctorProfile';
 import DashboardDetails from '../components/DashboardDetails';
-import {withRouter} from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
-import {fetchDoctor} from '../logics/api';
+import { fetchDoctor } from '../logics/api';
 
 const mapStateToProps = state => ({ 
                             ...state, 
                             email: state.auth.email,
                             authenticated: state.auth.authenticated,
+                            doctor: state.currentUser.doctor
                         });
 
 const mapDispatchToProps = dispatch => ({
-    // addDoctor: ({}) => {}
+    storeDoctorInfo: (doctor) => {
+        dispatch({type: 'LOADDOCTORINFO' , doctor});
+    }
 });
 
 class Dashboard extends React.Component{
@@ -34,7 +37,7 @@ class Dashboard extends React.Component{
         this.setState({loading: true} , async () => {
             const dU = await fetchDoctor(this.props.email);
             this.setState({doctor: dU, loading: false});
-            // this.props.addDoctor(dU);
+            this.props.storeDoctorInfo(dU);
         });
         if(!this.props.authenticated) 
             this.props.history.push('/');    
