@@ -62,6 +62,7 @@ class Dashboard extends React.Component{
                                 address={this.state.doctor.address}
                                 about={this.state.doctor.about}
                                 avatarUrl={this.state.doctor.image}
+                                city={this.state.doctor.city}
                                 />
                         </Grid>
             </Grid>

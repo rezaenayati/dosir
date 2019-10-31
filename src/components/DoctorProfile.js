@@ -28,6 +28,7 @@ class DoctorProfile extends React.Component {
                 <p dir='rtl' style={styles.titleStyle}>{this.props.title}</p>
                 <div style={styles.locationStyle}>
                     <RoomIcon fontSize='small' style={{}} />
+                    <p dir='rtl' style={styles.textStyle}>{this.props.city}</p>
                 </div>
                 <Button fullWidth onClick={this.editProfile} style={styles.buttonStyle} >ویرایش پروفایل</Button>
                 <Divider variant='middle' />
@@ -70,7 +71,7 @@ const styles = {
     },
     locationStyle: {
         textAlign:'center', 
-        flex: 1, 
+        display: 'flex',
         flexDirection: 'row', 
         justifyContent: 'center', 
         alignItems: 'center'
