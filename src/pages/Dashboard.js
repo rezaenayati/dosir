@@ -6,6 +6,7 @@ import DashboardDetails from '../components/DashboardDetails';
 import { withRouter } from 'react-router-dom';
 
 import { fetchDoctor } from '../logics/api';
+import Header from '../components/Header';
 
 const mapStateToProps = state => ({ 
                             ...state, 
@@ -48,6 +49,7 @@ class Dashboard extends React.Component{
         return(
             <div>
             <header>
+                <Header />
             </header>
             <Grid item={true} container component="main" style={{height: '100vh'}}>
                         <Grid item={true}  xs={false} sm={4} md={9} style={{backgroundSize: 'cover'}}>

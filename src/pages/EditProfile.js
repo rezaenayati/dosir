@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { Avatar, Paper, Button, TextField } from '@material-ui/core';
 import { withRouter } from 'react-router-dom';
 
+import Header from '../components/Header';
+
 const mapStateToProps = state => ({ 
     ...state, 
     email: state.auth.email,
@@ -37,63 +39,68 @@ class EditProfile extends React.Component{
     render(){
         const doctor = this.props.doctor;
         return(
-            <div style={styles.container}>
-                <Paper style={styles.paperContainer}>
-                    <p dir='rtl' style={styles.editProfileName}>ویرایش پروفایل</p>
-                    <Paper style={styles.avatarContainer}>
-                        <Avatar align='center' src={doctor.image} style={styles.avatar} />
-                        <Button style={styles.buttonUpoad}>عکس جدید</Button>
-                        <Button style={styles.buttonDelete}>حذف</Button>
+            <div>
+                <header>
+                    <Header />
+                </header>
+                <div style={styles.container}>
+                    <Paper style={styles.paperContainer}>
+                        <p dir='rtl' style={styles.editProfileName}>ویرایش پروفایل</p>
+                        <Paper style={styles.avatarContainer}>
+                            <Avatar align='center' src={doctor.image} style={styles.avatar} />
+                            <Button style={styles.buttonUpoad}>عکس جدید</Button>
+                            <Button style={styles.buttonDelete}>حذف</Button>
+                        </Paper>
+                        <Paper dir='rtl' style={styles.fieldContainer}>
+                            <TextField 
+                                label='نام'
+                                style={styles.textField}
+                                variant="outlined" 
+                                defaultValue={doctor.name} />
+                            <TextField 
+                                label='نام خانوادگی'
+                                style={styles.textField}
+                                variant="outlined" 
+                                defaultValue={doctor.family} />
+                        </Paper>
+                        <Paper style={styles.fieldContainer}>
+                            <TextField 
+                                label='ایمیل'
+                                style={styles.textField}
+                                variant="outlined" 
+                                defaultValue={doctor.email} />
+                            <TextField 
+                                label='شماره'
+                                style={styles.textField}
+                                variant="outlined" 
+                                defaultValue={doctor.phone} />
+                        </Paper>
+                        <Paper dir='rtl' style={styles.fieldContainer}>
+                            <TextField 
+                                multiline
+                                rows="4"                        
+                                label='آدرس'
+                                fullWidth
+                                style={styles.textField}
+                                variant="outlined" 
+                                defaultValue={doctor.address} />
+                        </Paper>
+                        <Paper dir='rtl' style={styles.fieldContainer}>
+                            <TextField 
+                                multiline
+                                rows="4"                        
+                                label='درباره ی'
+                                fullWidth
+                                style={styles.textField}
+                                variant="outlined" 
+                                defaultValue={doctor.about} />
+                        </Paper>
+                        <div style={styles.fieldContainer}>
+                            <Button style={styles.buttonSave}>ذخیره تغییرات</Button>
+                        </div>
                     </Paper>
-                    <Paper dir='rtl' style={styles.fieldContainer}>
-                        <TextField 
-                            label='نام'
-                            style={styles.textField}
-                            variant="outlined" 
-                            defaultValue={doctor.name} />
-                        <TextField 
-                            label='نام خانوادگی'
-                            style={styles.textField}
-                            variant="outlined" 
-                            defaultValue={doctor.family} />
-                    </Paper>
-                    <Paper style={styles.fieldContainer}>
-                        <TextField 
-                            label='ایمیل'
-                            style={styles.textField}
-                            variant="outlined" 
-                            defaultValue={doctor.email} />
-                        <TextField 
-                            label='شماره'
-                            style={styles.textField}
-                            variant="outlined" 
-                            defaultValue={doctor.phone} />
-                    </Paper>
-                    <Paper dir='rtl' style={styles.fieldContainer}>
-                        <TextField 
-                            multiline
-                            rows="4"                        
-                            label='آدرس'
-                            fullWidth
-                            style={styles.textField}
-                            variant="outlined" 
-                            defaultValue={doctor.address} />
-                    </Paper>
-                    <Paper dir='rtl' style={styles.fieldContainer}>
-                        <TextField 
-                            multiline
-                            rows="4"                        
-                            label='درباره ی'
-                            fullWidth
-                            style={styles.textField}
-                            variant="outlined" 
-                            defaultValue={doctor.about} />
-                    </Paper>
-                    <div style={styles.fieldContainer}>
-                        <Button style={styles.buttonSave}>ذخیره تغییرات</Button>
-                    </div>
-                </Paper>
-            </div>    
+                </div>    
+            </div>
         );
     }
 }
@@ -101,7 +108,10 @@ class EditProfile extends React.Component{
 const styles = {
     container: {
         position: 'absolute',
-        top: 0, right: 0, bottom: 0, left: 0,
+        top: 60,
+        right: 0, 
+        bottom: 0, 
+        left: 0,
         height: 850,
         backgroundColor: '#66ffa1'
        
