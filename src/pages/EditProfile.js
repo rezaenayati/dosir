@@ -24,20 +24,24 @@ class EditProfile extends React.Component{
         }
     }
 
-    componentDidMount(){
-        this.setState({doctor: this.props.doctor});
-        if(!this.props.authenticated) 
+    componentWillMount(){
+        console.log(this.props.authenticated);
+        
+        if(this.props.authenticated != true) {            
             this.props.history.push('/');    
+        }
 
     }
 
+
     render(){
+        const doctor = this.props.doctor;
         return(
             <div style={styles.container}>
                 <Paper style={styles.paperContainer}>
                     <p dir='rtl' style={styles.editProfileName}>ویرایش پروفایل</p>
                     <Paper style={styles.avatarContainer}>
-                        <Avatar align='center' src={this.state.doctor.image} style={styles.avatar} />
+                        <Avatar align='center' src={doctor.image} style={styles.avatar} />
                         <Button style={styles.buttonUpoad}>عکس جدید</Button>
                         <Button style={styles.buttonDelete}>حذف</Button>
                     </Paper>
@@ -46,24 +50,24 @@ class EditProfile extends React.Component{
                             label='نام'
                             style={styles.textField}
                             variant="outlined" 
-                            defaultValue='همایون' />
+                            defaultValue={doctor.name} />
                         <TextField 
                             label='نام خانوادگی'
                             style={styles.textField}
                             variant="outlined" 
-                            defaultValue='بهزادی' />
+                            defaultValue={doctor.family} />
                     </Paper>
                     <Paper style={styles.fieldContainer}>
                         <TextField 
                             label='ایمیل'
                             style={styles.textField}
                             variant="outlined" 
-                            defaultValue='enayatii@yahoo.com' />
+                            defaultValue={doctor.email} />
                         <TextField 
                             label='شماره'
                             style={styles.textField}
                             variant="outlined" 
-                            defaultValue='+989123232123' />
+                            defaultValue={doctor.phone} />
                     </Paper>
                     <Paper dir='rtl' style={styles.fieldContainer}>
                         <TextField 
@@ -73,7 +77,7 @@ class EditProfile extends React.Component{
                             fullWidth
                             style={styles.textField}
                             variant="outlined" 
-                            defaultValue='تهران' />
+                            defaultValue={doctor.address} />
                     </Paper>
                     <Paper dir='rtl' style={styles.fieldContainer}>
                         <TextField 
@@ -83,7 +87,7 @@ class EditProfile extends React.Component{
                             fullWidth
                             style={styles.textField}
                             variant="outlined" 
-                            defaultValue='من هستم' />
+                            defaultValue={doctor.about} />
                     </Paper>
                     <div style={styles.fieldContainer}>
                         <Button style={styles.buttonSave}>ذخیره تغییرات</Button>
@@ -124,7 +128,6 @@ const styles = {
         flexDirection: 'row'
     },
     buttonUpoad: {
-        margin: 10,
         height: 40,
         margin: 'auto',
         fontFamily: 'Vazir',
@@ -134,7 +137,6 @@ const styles = {
         marginRight: 'auto', 
     },
     buttonDelete: {
-        margin: 10,
         height: 33,
         backgroundColor: '#A7AEAC',
         margin: 'auto',
@@ -145,7 +147,6 @@ const styles = {
         marginRight: 'auto', 
     },
     buttonSave: {
-        margin: 10,
         height: 33,
         backgroundColor: '#056B2C',
         margin: 'auto',
