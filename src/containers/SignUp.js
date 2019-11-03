@@ -1,8 +1,7 @@
 import React from 'react';
 import { 
-    Checkbox, TextField, Button, FormControlLabel
+    Checkbox, TextField, Button, FormControlLabel, Avatar
 } from "@material-ui/core";
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import {connect} from 'react-redux';
 import { withRouter } from 'react-router-dom'
@@ -54,7 +53,7 @@ class SignUp extends React.Component{
         return(
             <form dir="rtl" style={{fontFamily: "Vazir", marginTop: 100, marginLeft: 100, marginRight: 100}}>
             <div dir="rtl">
-                <LockOutlinedIcon style={{color: 'red'}} />
+                <Avatar src="https://i.ibb.co/r799ZMz/logo-2sir-mehdi.png" />
                 <h1 style={{fontFamily: "Vazir"}}>ثبت نام</h1>
             </div>
             <ThemeProvider theme={theme}>
