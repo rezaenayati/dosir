@@ -2,6 +2,9 @@ import React from 'react';
 import { Avatar, AppBar, Typography, Link, Menu, Toolbar, MenuItem, IconButton, Button } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 
+import '../assets/colors/color.js';
+import { secondaryDark, primarylight } from '../assets/colors/color.js';
+
 class Header extends React.Component {
 
     constructor(props) {
@@ -31,7 +34,7 @@ class Header extends React.Component {
                             aria-controls="long-menu"
                             aria-haspopup="true"
                             onClick={this.handleClick}>
-                                <MenuIcon color='#FFF0B3' />
+                                <MenuIcon style={styles.menuIcon} />
                         </IconButton>
                         <Menu
                             id="menu"
@@ -43,14 +46,15 @@ class Header extends React.Component {
                             <MenuItem style={styles.menuItem} onClick={this.handleClose}>خروج</MenuItem>
                         </Menu>
 
-                        <Button variant="button" href="#" style={styles.link}>
-                            داشبورد
-                        </Button>
+                        
                         <Button variant="button" href="#" style={styles.link}>
                             درباره ما
                         </Button>
                         <Button variant="button" href="#" style={styles.link}>
                             تماس با ما
+                        </Button>
+                        <Button variant="button" href="#" style={styles.link}>
+                            داشبورد
                         </Button>
                     </nav>
                     <Typography variant="h6" noWrap style={styles.toolbarTitle}>
@@ -70,7 +74,7 @@ const styles = {
         justifyContent: 'space-around',
         margin: 'auto',
         height: 60,
-        backgroundColor: '#055fee'
+        backgroundColor: secondaryDark
     },
     toolbar: {
         flexWrap: 'wrap',
@@ -79,18 +83,21 @@ const styles = {
         flexGrow: 1,
         marginRight: 10,
         fontFamily: 'Vazir',
-        color: '#FFF0B3'
+        color: primarylight
     },
     link: {
         marginRight: 10,
         fontFamily: 'Vazir',
-        color: '#FFF0B3'
+        color: primarylight
     },
     links: {
         marginRight: 900
     },
     menuItem: {
         fontFamily: 'Vazir',
+    },
+    menuIcon: {
+        color: primarylight
     }
 }
 

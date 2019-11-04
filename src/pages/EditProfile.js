@@ -4,6 +4,8 @@ import { Avatar, Paper, Button, TextField } from '@material-ui/core';
 import { withRouter } from 'react-router-dom';
 
 import Header from '../components/Header';
+import '../assets/colors/color.js';
+import { primarylight, secondarylight, secondaryDark, primaryColor, primaryDark } from '../assets/colors/color.js';
 
 const mapStateToProps = state => ({ 
     ...state, 
@@ -95,7 +97,7 @@ class EditProfile extends React.Component{
                                 variant="outlined" 
                                 defaultValue={doctor.about} />
                         </Paper>
-                        <div style={styles.fieldContainer}>
+                        <div style={styles.buttonContainer}>
                             <Button style={styles.buttonSave}>ذخیره تغییرات</Button>
                         </div>
                     </Paper>
@@ -113,7 +115,7 @@ const styles = {
         bottom: 0, 
         left: 0,
         height: 850,
-        backgroundColor: '#66ffa1'
+        backgroundColor: primarylight
        
     },
     paperContainer: {
@@ -124,10 +126,12 @@ const styles = {
         marginRight: 'auto',
         marginTop: 20,
         marginBottom: 40,
+        backgroundColor: secondarylight
 
     },
     textField: {
         margin: 5,
+        color: primaryDark
     },
     fieldContainer: {
         marginLeft: 'auto',
@@ -135,34 +139,35 @@ const styles = {
         width: 450,
         marginTop: 20,
         display: 'flex',
-        flexDirection: 'row'
+        flexDirection: 'row',
+        backgroundColor: primarylight
     },
     buttonUpoad: {
         height: 40,
         margin: 'auto',
         fontFamily: 'Vazir',
-        backgroundColor: 'blue',
-        color: 'white',
+        backgroundColor: primaryDark,
+        color: primarylight,
         marginLeft: 'auto', 
         marginRight: 'auto', 
     },
     buttonDelete: {
         height: 33,
-        backgroundColor: '#A7AEAC',
+        backgroundColor: primaryColor,
         margin: 'auto',
         fontFamily: 'Vazir',
         fontSize: 13,
-        color: 'white',
+        color: primarylight,
         marginLeft: 'auto', 
         marginRight: 'auto', 
     },
     buttonSave: {
         height: 33,
-        backgroundColor: '#056B2C',
+        backgroundColor: secondaryDark,
         margin: 'auto',
         fontFamily: 'Vazir',
         fontSize: 13,
-        color: 'white',
+        color: primarylight,
         marginLeft: 'auto', 
         marginRight: 'auto', 
     },
@@ -173,7 +178,8 @@ const styles = {
         width: 400,
         height: 150,
         display: 'flex',
-        flexDirection: 'row'
+        flexDirection: 'row',
+        backgroundColor: primarylight
     },
     avatar: {
         marginTop: 20, 
@@ -184,8 +190,18 @@ const styles = {
     },
     editProfileName:{
         fontFamily: 'Vazir',
-        textAlign: 'center'
-    }
+        textAlign: 'center',
+        color: primaryDark
+    },
+    buttonContainer: {
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        width: 450,
+        marginTop: 20,
+        display: 'flex',
+        flexDirection: 'row',
+    },
+
 }
 
 export default withRouter(connect(mapStateToProps , mapDispatchToProps)(EditProfile));

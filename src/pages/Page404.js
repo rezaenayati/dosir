@@ -13,7 +13,7 @@ export default class Page404 extends React.Component{
                     style={{
                         height: "90vh",
                         width: '190vh',
-                        backgroundImage:'url(http://i.hmp.me/m/76092442a3fa33d63158abd6933510df.png)',
+                        backgroundImage:'url(http://uupload.ir/files/vbfe_undraw_page_not_found_su7k.png)',
                         backgroundSize:'cover',
                     }}>
                 </div>

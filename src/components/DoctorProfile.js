@@ -4,6 +4,9 @@ import { Divider, Button } from '@material-ui/core';
 import RoomIcon from '@material-ui/icons/Room';
 import { withRouter } from 'react-router-dom';
 
+import '../assets/colors/color.js';
+import { primaryDark, secondaryDark, primaryColor } from '../assets/colors/color.js';
+
 
 class DoctorProfile extends React.Component {
 
@@ -58,27 +61,31 @@ const styles = {
         fontSize:12,
         marginRight: 20,
         fontFamily: 'Vazir',
+        color: primaryDark
     },
     nameStyle: {
         fontFamily: 'Vazir', 
         textAlign:'center',
-        fontSize:22
+        fontSize:22,
+        color: primaryDark
     },
     titleStyle: {
         fontFamily: 'Vazir', 
         textAlign:'center',
-        fontSize:17
+        fontSize:17,
+        color: primaryDark
     },
     locationStyle: {
         textAlign:'center', 
         display: 'flex',
         flexDirection: 'row', 
         justifyContent: 'center', 
-        alignItems: 'center'
+        alignItems: 'center',
+        color: primaryDark
     },
     buttonStyle: {
         fontFamily: 'Vazir', 
-        color: '#056B2C', 
+        color: primaryColor, 
         marginBottom: 5
     }
 }

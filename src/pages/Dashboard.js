@@ -7,6 +7,8 @@ import { withRouter } from 'react-router-dom';
 
 import { fetchDoctor } from '../logics/api';
 import Header from '../components/Header';
+import '../assets/colors/color.js';
+import { primarylight, secondarylight } from '../assets/colors/color.js';
 
 const mapStateToProps = state => ({ 
                             ...state, 
@@ -52,10 +54,10 @@ class Dashboard extends React.Component{
                 <Header />
             </header>
             <Grid item={true} container component="main" style={{height: '100vh'}}>
-                        <Grid item={true}  xs={false} sm={4} md={9} style={{backgroundSize: 'cover'}}>
+                        <Grid item={true}  xs={false} sm={4} md={9} style={{backgroundSize: 'cover' , backgroundColor: primarylight}}>
                             <DashboardDetails  />
                         </Grid>
-                        <Grid item={true} xs={12} sm={8} md={3} style={{backgroundColor: '#f2fdff'}} component="div" elevation={6} square>
+                        <Grid item={true} xs={12} sm={8} md={3} style={{backgroundColor: secondarylight}} component="div" elevation={6} square>
                             <DoctorProfile 
                                 email={this.props.email}
                                 name={this.state.doctor.name + "    " + this.state.doctor.family}

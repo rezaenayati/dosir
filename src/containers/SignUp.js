@@ -7,6 +7,7 @@ import {connect} from 'react-redux';
 import { withRouter } from 'react-router-dom'
 
 import '../App.css';
+import { secondarylight, primaryDark, primarylight } from '../assets/colors/color.js';
 
 const theme = createMuiTheme({
     direction: 'rtl',
@@ -51,15 +52,15 @@ class SignUp extends React.Component{
 
     render(){
         return(
-            <form dir="rtl" style={{fontFamily: "Vazir", marginTop: 100, marginLeft: 100, marginRight: 100}}>
+            <form dir="rtl" style={styles.container}>
             <div dir="rtl">
                 <Avatar src="https://i.ibb.co/r799ZMz/logo-2sir-mehdi.png" />
-                <h1 style={{fontFamily: "Vazir"}}>ثبت نام</h1>
+                <h1 style={styles.title}>ثبت نام</h1>
             </div>
             <ThemeProvider theme={theme}>
             <TextField
                 placeholder='ایمیل'
-                style={{marginTop: 10}}
+                style={styles.textField}
                 fullWidth
                 variant="outlined"
                 autoComplete='email'
@@ -68,7 +69,7 @@ class SignUp extends React.Component{
             <TextField
                 type='password'
                 placeholder='رمز عبور'
-                style={{marginTop: 10}}
+                style={styles.textField}
                 fullWidth
                 variant="outlined"
                 autoComplete='password'
@@ -77,24 +78,20 @@ class SignUp extends React.Component{
             <TextField
                 type='password'
                 placeholder='تایید رمز عبور'
-                style={{marginTop: 10}}
+                style={styles.textField}
                 fullWidth
                 variant="outlined"
                 onChange={this.changePassword2}
             />
             </ThemeProvider>
             <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
+                control={<Checkbox value="remember" color={primaryDark} />}
                 label="مرا به خاطر داشته باش"
             />
             <Button
                 onClick={this.submit} 
                 fullWidth 
-                style={{
-                    fontFamily: "Vazir",
-                    color: 'white',
-                    marginTop: 10, 
-                    backgroundColor: 'blue'}}>
+                style={styles.button}>
                 ثبت نام
             </Button>
         </form>
@@ -105,3 +102,32 @@ class SignUp extends React.Component{
 }
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SignUp));
+
+
+const styles = {
+    container: {
+        fontFamily: "Vazir", 
+        marginTop: 100, 
+        marginLeft: 100, 
+        marginRight: 100
+    },
+    title: {
+        fontFamily: "Vazir",
+        color: primaryDark
+    },
+    textField: {
+        fontFamily: "Vazir", 
+        marginTop: 10,
+        color: primaryDark
+    }, 
+    label: {
+        fontFamily: "Vazir",
+        color: primaryDark
+    },
+    button: {
+        fontFamily: "Vazir",
+        color: primarylight, 
+        marginTop: 10, 
+        backgroundColor: primaryDark
+    }
+}
