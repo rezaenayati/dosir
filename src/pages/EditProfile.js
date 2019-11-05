@@ -6,6 +6,7 @@ import { withRouter } from 'react-router-dom';
 import Header from '../components/Header';
 import '../assets/colors/color.js';
 import { primarylight, secondarylight, secondaryDark, primaryColor, primaryDark } from '../assets/colors/color.js';
+import {editDoctor} from '../logics/api'; 
 
 const mapStateToProps = state => ({ 
     ...state, 
@@ -38,7 +39,10 @@ class EditProfile extends React.Component{
         this.changeAddress = updateFieldEvent('address');
         this.changeAbout = updateFieldEvent('about');
         this.changeTitle = updateFieldEvent('title');
-        this.submit = ev => this.props.onSubmit(); 
+        this.submit = ev => {
+            this.props.onSubmit();
+            editDoctor(this.props.doctor.email , this.props.doctor);
+        }; 
     }
 
     componentDidMount(){
@@ -154,7 +158,7 @@ const styles = {
         right: 0, 
         bottom: 0, 
         left: 0,
-        height: 850,
+        height: 1000,
         backgroundColor: primarylight
        
     },
