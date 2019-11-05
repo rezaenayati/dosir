@@ -37,6 +37,7 @@ class EditProfile extends React.Component{
         this.changeCity = updateFieldEvent('city');
         this.changeAddress = updateFieldEvent('address');
         this.changeAbout = updateFieldEvent('about');
+        this.changeTitle = updateFieldEvent('title');
         this.submit = ev => this.props.onSubmit(); 
     }
 
@@ -77,6 +78,15 @@ class EditProfile extends React.Component{
                                 onChange={this.changeFamily}
                                 defaultValue={doctor.family} />
                         </Paper>
+                        <Paper dir='rtl' style={styles.fieldContainer}>
+                            <TextField 
+                                label='تخصص'
+                                style={styles.textField}
+                                fullWidth
+                                variant="outlined"
+                                onChange={this.changeTitle} 
+                                defaultValue={doctor.title} />
+                        </Paper>     
                         <Paper style={styles.fieldContainer}>
                             <TextField 
                                 label='ایمیل'
@@ -93,18 +103,17 @@ class EditProfile extends React.Component{
                         </Paper>
                         <Paper dir='rtl' style={styles.fieldContainer}>
                             <TextField 
-                                label='شهر'
-                                onChange={this.changeCity}
-                                style={styles.textField}
-                                variant="outlined" 
-                                defaultValue={doctor.city} />
-                            <TextField 
                                 label='استان'
                                 onChange={this.changeProvince}
                                 style={styles.textField}
                                 variant="outlined" 
                                 defaultValue={doctor.province} />
-                            
+                            <TextField 
+                                label='شهر'
+                                onChange={this.changeCity}
+                                style={styles.textField}
+                                variant="outlined" 
+                                defaultValue={doctor.city} />
                         </Paper>
                         <Paper dir='rtl' style={styles.fieldContainer}>
                             <TextField 
@@ -152,7 +161,7 @@ const styles = {
     paperContainer: {
         felx: 1,
         width: 600,
-        height: 800,
+        height: 900,
         marginLeft: 'auto',
         marginRight: 'auto',
         marginTop: 20,
