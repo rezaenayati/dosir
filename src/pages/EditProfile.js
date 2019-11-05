@@ -15,6 +15,9 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+    onUpdateField: (key, value) => dispatch({ type: 'UPDATE_FIELD_EDITOR', key, value }),
+    onSubmit: () => dispatch({ type: 'SUBMIT_EDIT'}),
+    onStartEdit: () => dispatch({type: 'START_EDIT'})
 });
 
 class EditProfile extends React.Component{
@@ -22,21 +25,28 @@ class EditProfile extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            doctor: {
-
-            }
+            loading: false,
         }
+        const updateFieldEvent = key => ev => this.props.onUpdateField(key, ev.target.value);
+        this.startEdit = () => this.props.onStartEdit();
+        this.changeName = updateFieldEvent('name');
+        this.changeFamily = updateFieldEvent('family');
+        this.changeEmail = updateFieldEvent('email');
+        this.changePhone = updateFieldEvent('phone');
+        this.changeProvince = updateFieldEvent('province');
+        this.changeCity = updateFieldEvent('city');
+        this.changeAddress = updateFieldEvent('address');
+        this.changeAbout = updateFieldEvent('about');
+        this.submit = ev => this.props.onSubmit(); 
     }
 
-    componentWillMount(){
+    componentDidMount(){
+        this.startEdit();
         console.log(this.props.authenticated);
-        
-        if(this.props.authenticated != true) {            
+        if(!this.props.authenticated) {            
             this.props.history.push('/');    
         }
-
     }
-
 
     render(){
         const doctor = this.props.doctor;
@@ -57,12 +67,14 @@ class EditProfile extends React.Component{
                             <TextField 
                                 label='نام'
                                 style={styles.textField}
-                                variant="outlined" 
+                                variant="outlined"
+                                onChange={this.changeName} 
                                 defaultValue={doctor.name} />
                             <TextField 
                                 label='نام خانوادگی'
                                 style={styles.textField}
                                 variant="outlined" 
+                                onChange={this.changeFamily}
                                 defaultValue={doctor.family} />
                         </Paper>
                         <Paper style={styles.fieldContainer}>
@@ -70,18 +82,36 @@ class EditProfile extends React.Component{
                                 label='ایمیل'
                                 style={styles.textField}
                                 variant="outlined" 
+                                onChange={this.changeEmail}
                                 defaultValue={doctor.email} />
                             <TextField 
                                 label='شماره'
+                                onChange={this.changePhone}
                                 style={styles.textField}
                                 variant="outlined" 
                                 defaultValue={doctor.phone} />
                         </Paper>
                         <Paper dir='rtl' style={styles.fieldContainer}>
                             <TextField 
+                                label='شهر'
+                                onChange={this.changeCity}
+                                style={styles.textField}
+                                variant="outlined" 
+                                defaultValue={doctor.city} />
+                            <TextField 
+                                label='استان'
+                                onChange={this.changeProvince}
+                                style={styles.textField}
+                                variant="outlined" 
+                                defaultValue={doctor.province} />
+                            
+                        </Paper>
+                        <Paper dir='rtl' style={styles.fieldContainer}>
+                            <TextField 
                                 multiline
                                 rows="4"                        
                                 label='آدرس'
+                                onChange={this.changeAddress}
                                 fullWidth
                                 style={styles.textField}
                                 variant="outlined" 
@@ -92,13 +122,14 @@ class EditProfile extends React.Component{
                                 multiline
                                 rows="4"                        
                                 label='درباره ی'
+                                onChange={this.changeAbout}
                                 fullWidth
                                 style={styles.textField}
                                 variant="outlined" 
                                 defaultValue={doctor.about} />
                         </Paper>
                         <div style={styles.buttonContainer}>
-                            <Button style={styles.buttonSave}>ذخیره تغییرات</Button>
+                            <Button style={styles.buttonSave} onClick={this.submit}>ذخیره تغییرات</Button>
                         </div>
                     </Paper>
                 </div>    
@@ -121,7 +152,7 @@ const styles = {
     paperContainer: {
         felx: 1,
         width: 600,
-        height: 750,
+        height: 800,
         marginLeft: 'auto',
         marginRight: 'auto',
         marginTop: 20,
