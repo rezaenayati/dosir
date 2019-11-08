@@ -47,7 +47,6 @@ class EditProfile extends React.Component{
 
     componentDidMount(){
         this.startEdit();
-        console.log(this.props.authenticated);
         if(!this.props.authenticated) {            
             this.props.history.push('/');    
         }
@@ -55,6 +54,7 @@ class EditProfile extends React.Component{
 
     render(){
         const doctor = this.props.doctor;
+        if(!doctor) return null;
         return(
             <div>
                 <header>
