@@ -8,6 +8,7 @@ import { withRouter } from 'react-router-dom'
 
 import '../App.css';
 import { secondarylight, primaryDark, primarylight } from '../assets/colors/color.js';
+import { postNewDoctor } from '../logics/api';
 
 const theme = createMuiTheme({
     direction: 'rtl',
@@ -18,9 +19,10 @@ const mapStateToProps = state => ({ ...state, email: state.auth.email});
 
 const mapDispatchToProps = dispatch => ({
     onSubmit: (email) => {
-        //reguest from server and save it in payload
-        // const payload = {email: email};
         dispatch({type: 'REGISTER' , email});
+    },
+    storeDoctorInfo: (doctor) => {
+        dispatch({type: 'LOADDOCTORINFO' , doctor});
     }
 });
 
@@ -38,11 +40,26 @@ class SignUp extends React.Component{
         this.changePassword = ev => this.setState({password: ev.target.value});
         this.changePassword2 = ev => this.setState({password2: ev.target.value});       
         this.submit = ev => {
-            
             ev.preventDefault();
             if(this.state.password === this.state.password2){
                 console.log(this.state.email);
                 this.props.onSubmit(this.state.email , this.state.password);
+                const tempDoctor = {
+                    "name": "",
+                    "family": "",
+                    "title": "",
+                    "password": this.state.password,
+                    "city": "",
+                    "email": this.state.email,
+                    "phone": "",
+                    "image": "",
+                    "address": "",
+                    "about": "",
+                    "province": ""
+                  };
+                // add tempDoctor to the json-server
+                postNewDoctor(tempDoctor);
+                this.props.storeDoctorInfo(tempDoctor);
                 this.props.history.push('/dashboard');
             }
             else

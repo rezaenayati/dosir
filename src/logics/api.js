@@ -27,3 +27,23 @@ export const editDoctor = async (email , inputData) => {
     console.log(rsp);
     return rsp;
 }
+
+
+export const postNewDoctor = async (doctor) => {
+    console.log(doctor);
+    
+    const rsp = await fetch(`http://localhost:4000/doctor/` , {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(doctor)
+    })
+    .catch(err => {
+        console.log("Nashood");
+    })
+    console.log("raftim tosh");
+    
+    console.log(rsp);
+    return rsp;
+}
