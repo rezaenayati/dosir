@@ -60,7 +60,7 @@ class SignUp extends React.Component{
                 // add tempDoctor to the json-server
                 postNewDoctor(tempDoctor);
                 this.props.storeDoctorInfo(tempDoctor);
-                this.props.history.push('/dashboard');
+                this.props.history.push('/editprofile');
             }
             else
             console.log("Password unmatch!");            
