@@ -4,7 +4,8 @@ import {
 } from "@material-ui/core";
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import {connect} from 'react-redux';
-import { withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router-dom';
+import validator from 'validator';
 
 import '../App.css';
 import { secondarylight, primaryDark, primarylight } from '../assets/colors/color.js';
@@ -42,25 +43,27 @@ class SignUp extends React.Component{
         this.submit = ev => {
             ev.preventDefault();
             if(this.state.password === this.state.password2){
-                console.log(this.state.email);
-                this.props.onSubmit(this.state.email , this.state.password);
-                const tempDoctor = {
-                    "name": "",
-                    "family": "",
-                    "title": "",
-                    "password": this.state.password,
-                    "city": "",
-                    "email": this.state.email,
-                    "phone": "",
-                    "image": "",
-                    "address": "",
-                    "about": "",
-                    "province": ""
-                  };
-                // add tempDoctor to the json-server
-                postNewDoctor(tempDoctor);
-                this.props.storeDoctorInfo(tempDoctor);
-                this.props.history.push('/editprofile');
+                if(validator.isEmail(this.state.email)){
+                    console.log(this.state.email);
+                    this.props.onSubmit(this.state.email , this.state.password);
+                    const tempDoctor = {
+                        "name": "",
+                        "family": "",
+                        "title": "",
+                        "password": this.state.password,
+                        "city": "",
+                        "email": this.state.email,
+                        "phone": "",
+                        "image": "",
+                        "address": "",
+                        "about": "",
+                        "province": ""
+                    };
+                    // add tempDoctor to the json-server
+                    postNewDoctor(tempDoctor);
+                    this.props.storeDoctorInfo(tempDoctor);
+                    this.props.history.push('/editprofile');
+                }
             }
             else
             console.log("Password unmatch!");            
