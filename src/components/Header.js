@@ -27,7 +27,6 @@ class Header extends React.Component {
     render(){
         return(
             <AppBar position="static" color="default" elevation={0} style={styles.appBar}>
-                <Toolbar className={styles.toolbar}>
                     <nav style={styles.links}>
                         <IconButton
                             aria-label="more"
@@ -57,11 +56,12 @@ class Header extends React.Component {
                             داشبورد
                         </Button>
                     </nav>
-                    <Typography variant="h6" noWrap style={styles.toolbarTitle}>
-                            دو سیر
-                    </Typography>
-                    <Avatar src="https://i.ibb.co/r799ZMz/logo-2sir-mehdi.png" />
-                </Toolbar>
+                    <div style={styles.logo}>
+                        <Typography variant="h6"  style={styles.toolbarTitle}>
+                                دو سیر
+                        </Typography>
+                        <Avatar style={styles.avatar} src="https://i.ibb.co/r799ZMz/logo-2sir-mehdi.png" />
+                    </div>
             </AppBar>
         );
     }
@@ -71,33 +71,43 @@ const styles = {
     appBar: {
         display: 'flex',
         flexDirection: 'row',
-        justifyContent: 'space-around',
         margin: 'auto',
         height: 60,
         backgroundColor: secondaryDark
     },
-    toolbar: {
-        flexWrap: 'wrap',
-    },
     toolbarTitle: {
-        flexGrow: 1,
-        marginRight: 10,
+        margin: "auto",
+        alignItem: 'flex-start',
+        marginRight: 8,
         fontFamily: 'Vazir',
         color: primarylight
     },
+    logo: {
+        position: 'absolute',
+        right: 0,
+        top: 10,
+        display: 'flex',
+        flexDirection: 'row',
+    },
     link: {
-        marginRight: 10,
         fontFamily: 'Vazir',
         color: primarylight
     },
     links: {
-        marginRight: 900
+        position: 'absolute',
+        left: 0,
+        top: 6,
     },
     menuItem: {
         fontFamily: 'Vazir',
     },
     menuIcon: {
+        margin: "auto",
         color: primarylight
+    },
+    avatar: {
+        margin: "auto",
+        marginRight: 10
     }
 }
 
