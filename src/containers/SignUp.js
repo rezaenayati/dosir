@@ -33,6 +33,8 @@ class SignUp extends React.Component{
     constructor(props){
         super(props);
         this.state = {
+            passError: false,
+            emailError: false,
             email: null,
             password: null,
             password2: null,
@@ -42,6 +44,7 @@ class SignUp extends React.Component{
         this.changePassword2 = ev => this.setState({password2: ev.target.value});       
         this.submit = ev => {
             ev.preventDefault();
+            this.setState({emailError: false, passError: false});
             if(this.state.password === this.state.password2){
                 if(validator.isEmail(this.state.email)){
                     console.log(this.state.email);
@@ -64,9 +67,15 @@ class SignUp extends React.Component{
                     this.props.storeDoctorInfo(tempDoctor);
                     this.props.history.push('/editprofile');
                 }
+                else {
+                    console.log("Incorecct email");
+                    this.setState({emailError: true});
+                }
             }
-            else
-            console.log("Password unmatch!");            
+            else{
+                console.log("Password unmatch!");
+                this.setState({passError: true});
+            }
         };
     }
 
@@ -86,6 +95,7 @@ class SignUp extends React.Component{
                 autoComplete='email'
                 onChange={this.changeEmail}
             />
+            {this.state.emailError&&<p style={styles.errorMessage} visibilty="false">*** ایمیل نامعتبر</p>}
             <TextField
                 type='password'
                 placeholder='رمز عبور'
@@ -103,6 +113,7 @@ class SignUp extends React.Component{
                 variant="outlined"
                 onChange={this.changePassword2}
             />
+            {this.state.passError&&<p style={styles.errorMessage} visibilty="false">*** رمز عبور مطابقت ندارد</p>}
             </ThemeProvider>
             <FormControlLabel
                 control={<Checkbox value="remember" color={primaryDark} />}
@@ -130,6 +141,9 @@ const styles = {
         marginTop: 100, 
         marginLeft: 100, 
         marginRight: 100
+    },
+    errorMessage: {
+        color: 'red'
     },
     title: {
         fontFamily: "Vazir",
