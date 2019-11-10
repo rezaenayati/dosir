@@ -1,6 +1,7 @@
 import React from 'react';
 import { Avatar, AppBar, Typography, Link, Menu, Toolbar, MenuItem, IconButton, Button } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
+import { withRouter } from 'react-router-dom';
 
 import '../assets/colors/color.js';
 import { secondaryDark, primarylight } from '../assets/colors/color.js';
@@ -18,6 +19,10 @@ class Header extends React.Component {
         
         this.handleClose = () => {
             this.setState({anchorEl: null});
+        };
+
+        this.toDashboard = () => {
+            this.props.history.push('/dashboard');
         };
     
     }
@@ -52,7 +57,7 @@ class Header extends React.Component {
                         <Button variant="button" href="#" style={styles.link}>
                             تماس با ما
                         </Button>
-                        <Button variant="button" href="#" style={styles.link}>
+                        <Button variant="button" onClick={this.toDashboard} style={styles.link}>
                             داشبورد
                         </Button>
                     </nav>
@@ -111,4 +116,4 @@ const styles = {
     }
 }
 
-export default (Header);
+export default withRouter(Header);
