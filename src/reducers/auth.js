@@ -14,7 +14,13 @@ export default (state = {} , action) => {
                 ...state,
                 email: action.email,
                 authenticated: true
-            }    
+            };
+        case 'LOGOUT':
+            return {
+                ...state,
+                email: undefined,
+                authenticated: false
+            }
         default:
             return state;
     }

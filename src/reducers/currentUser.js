@@ -26,6 +26,13 @@ export default (state = {} , action) => {
             Object.assign(state.doctor , state.editedDoctor);
             state.editedDoctor = {};
             return state;
+        }
+        case 'REMOVE_DOCTOR_INFO':{
+            return {
+                ...state,
+                doctor: {},
+                editedDoctor: {}
+            }
         }    
         default:
             return state;     

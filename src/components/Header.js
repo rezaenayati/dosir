@@ -5,6 +5,14 @@ import { withRouter } from 'react-router-dom';
 
 import '../assets/colors/color.js';
 import { secondaryDark, primarylight } from '../assets/colors/color.js';
+import { connect } from 'react-redux';
+
+const mapStateToProps = state => ({ ...state, email: state.auth.email});
+
+const mapDispatchToProps = dispatch => ({
+    deleteCurrentUserData: () => dispatch({type: 'REMOVE_DOCTOR_INFO'}),
+    setNotAuthenticated: () => dispatch({type: 'LOGOUT'})
+});
 
 class Header extends React.Component {
 
@@ -19,11 +27,19 @@ class Header extends React.Component {
         
         this.handleClose = () => {
             this.setState({anchorEl: null});
+            this.handleLogOut();            
         };
 
         this.toDashboard = () => {
             this.props.history.push('/dashboard');
         };
+
+        this.handleLogOut = () => {
+            console.log("log out"); 
+            this.props.deleteCurrentUserData();
+            this.props.setNotAuthenticated();
+            this.props.history.push('/');
+        }
     
     }
 
@@ -116,4 +132,4 @@ const styles = {
     }
 }
 
-export default withRouter(Header);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Header));
