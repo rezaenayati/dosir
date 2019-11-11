@@ -1,5 +1,5 @@
 import React from 'react';
-import {BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import {BrowserRouter , Router, Route, Switch , HashRouter } from 'react-router-dom';
 
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
@@ -10,20 +10,28 @@ import './App.css';
 
 function App() {
   return (
-    <Router>
+    <HashRouter basename='/'>
       <div>
         <header></header>
         <Switch>
-            <Route exact path="/"> <Register /> </Route>
+            <Route exact path={publicPath}> <Register /> </Route>
             <Route path="/user/@:username"> <Profile /> </Route>
-            <Route path="/dashboard"> <Dashboard /> </Route>
-            <Route path="/editprofile"> <EditProfile /> </Route>
+            <Route path={routeCodes.Dashboard}> <Dashboard /> </Route>
+            <Route path={routeCodes.EditProfile}> <EditProfile /> </Route>
             <Route component={Page404} />
         </Switch>
       </div>
-    </Router>
+    </HashRouter>
 
   );
 }
 
 export default App;
+
+const publicPath = '/';
+
+export const routeCodes = {
+  HOME: publicPath,
+  Dashboard: `${ publicPath }dashboard`,
+  EditProfile: `${ publicPath }editprofile`,
+};
