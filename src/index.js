@@ -4,14 +4,18 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { Provider} from 'react-redux';
-import { store } from './store';
+import { PersistGate } from 'redux-persist/integration/react'
+
+import { store , persistor } from './store';
 import './assets/fonts/Vazir.ttf';
 import './assets/fonts/Vazir-Bold.ttf';
 
 
 ReactDOM.render(
     <Provider store={store}>
-        <App />
+        <PersistGate loading={null} persistor={persistor}>
+            <App />
+        </PersistGate>
     </Provider>
     
     , document.getElementById('root'));
