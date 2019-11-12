@@ -2,6 +2,8 @@ import React from 'react';
 import { 
     Link, Grid , Paper    
 } from "@material-ui/core";
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
 import '../App.css';
 import SignUp from '../containers/SignUp';
@@ -9,13 +11,28 @@ import SignIn from '../containers/SignIn';
 import '../assets/colors/color.js';
 import { primarylight, primaryDark } from '../assets/colors/color.js';
 
-export default class Register extends React.Component{
+const mapStateToProps = state => ({ 
+    ...state, 
+    authenticated: state.auth.authenticated,
+});
+
+const mapDispatchToProps = dispatch => ({
+});
+
+
+class Register extends React.Component{
     constructor(props){
         super(props);
         this.state = {
             signUp: true,
         }
     }
+
+    componentDidMount(){
+        if(this.props.authenticated)
+            this.props.history.push('/dashboard');    
+    }
+
     render(){
         const reverseSignUp = !this.state.signUp;
         return( 
@@ -55,3 +72,5 @@ const styles = {
         marginRight: 100
     }
 }
+
+export default withRouter(connect(mapStateToProps , mapDispatchToProps)(Register));
