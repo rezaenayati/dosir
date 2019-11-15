@@ -113,13 +113,13 @@ class EditProfile extends React.Component{
                         </Paper>
                         <Paper dir='rtl' style={styles.fieldContainer}>
                             <TextField 
-                                label='نام'
+                                placeholder='نام'
                                 style={styles.textField}
                                 variant="outlined"
                                 onChange={this.changeName} 
                                 defaultValue={doctor.name} />
                             <TextField 
-                                label='نام خانوادگی'
+                                placeholder='نام خانوادگی'
                                 style={styles.textField}
                                 variant="outlined" 
                                 onChange={this.changeFamily}
@@ -127,22 +127,22 @@ class EditProfile extends React.Component{
                         </Paper>
                         <Paper dir='rtl' style={styles.fieldContainer}>
                             <TextField 
-                                label='تخصص'
+                                placeholder='تخصص'
                                 style={styles.textField}
                                 fullWidth
                                 variant="outlined"
                                 onChange={this.changeTitle} 
                                 defaultValue={doctor.title} />
                         </Paper>     
-                        <Paper style={styles.fieldContainer}>
+                        <Paper dir='rtl' style={styles.fieldContainer}>
                             <TextField 
-                                label='ایمیل'
+                                placeholder='ایمیل'
                                 style={styles.textField}
                                 variant="outlined" 
                                 onChange={this.changeEmail}
                                 defaultValue={doctor.email} />
                             <TextField 
-                                label='شماره'
+                                placeholder='شماره'
                                 onChange={this.changePhone}
                                 style={styles.textField}
                                 variant="outlined" 
@@ -150,13 +150,13 @@ class EditProfile extends React.Component{
                         </Paper>
                         <Paper dir='rtl' style={styles.fieldContainer}>
                             <TextField 
-                                label='استان'
+                                placeholder='استان'
                                 onChange={this.changeProvince}
                                 style={styles.textField}
                                 variant="outlined" 
                                 defaultValue={doctor.province} />
                             <TextField 
-                                label='شهر'
+                                placeholder='شهر'
                                 onChange={this.changeCity}
                                 style={styles.textField}
                                 variant="outlined" 
@@ -166,7 +166,7 @@ class EditProfile extends React.Component{
                             <TextField 
                                 multiline
                                 rows="4"                        
-                                label='آدرس'
+                                placeholder='آدرس'
                                 onChange={this.changeAddress}
                                 fullWidth
                                 style={styles.textField}
@@ -177,7 +177,7 @@ class EditProfile extends React.Component{
                             <TextField 
                                 multiline
                                 rows="4"                        
-                                label='درباره ی'
+                                placeholder='درباره ی'
                                 onChange={this.changeAbout}
                                 fullWidth
                                 style={styles.textField}
