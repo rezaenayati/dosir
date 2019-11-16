@@ -7,9 +7,11 @@ import {connect} from 'react-redux';
 import { withRouter } from 'react-router-dom'
 
 import '../App.css';
+import ProgressBar from '../components/ProgressBar';
 import {fetchDoctor} from '../logics/api';
 import '../assets/colors/color.js';
 import { secondarylight, primaryDark, primarylight } from '../assets/colors/color.js';
+import { timeout } from 'q';
 
 const theme = createMuiTheme({
     direction: 'rtl', 
@@ -38,6 +40,13 @@ class SignIn extends React.Component{
             }
         }
         this.changeEmail = ev => this.setState({email: ev.target.value});
+        this.timeout = () => {
+            setTimeout(() => {
+                console.log('Test');
+                this.timeout();
+            }, 1000/60);
+        } 
+     
         this.changePassword = ev => this.setState({password: ev.target.value});
         this.submit = ev => {
             ev.preventDefault();
@@ -46,10 +55,16 @@ class SignIn extends React.Component{
                 try {
                     const dU = await fetchDoctor(this.state.email);
                     console.log(dU);
-                    this.setState({doctor: dU , loading: false});
-                    this.props.onSubmit(this.state.email , this.state.password);
-                    if(this.state.password == this.state.doctor.password)
-                        this.props.history.push('/dashboard');    
+                    // this.timeout()
+                    setTimeout(() => {
+                        console.log('Test');
+                        this.setState({doctor: dU , loading: false});
+                        this.timeout();
+                        this.props.onSubmit(this.state.email , this.state.password);
+                        if(this.state.password == this.state.doctor.password)
+                            this.props.history.push('/dashboard');    
+                    }, 2000);
+                          
                 } catch (error) {
                     
                 }
@@ -89,13 +104,14 @@ class SignIn extends React.Component{
                 control={<Checkbox value="remember" color={primaryDark} />}
                 label="مرا به خاطر داشته باش"
             />
-            <Button
+            {!this.state.loading&&<Button
                 onClick={this.submit}  
                 fullWidth 
                 style={styles.button}
                 >
                 ورود
-            </Button>
+            </Button>}
+            {this.state.loading&&<ProgressBar style={styles.progressBar} />}
         </form>
 
         );
@@ -110,6 +126,8 @@ const styles = {
         marginTop: 100, 
         marginLeft: 100, 
         marginRight: 100
+    },
+    progressBar: {
     },
     title: {
         fontFamily: "Vazir",
