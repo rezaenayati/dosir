@@ -1,8 +1,8 @@
 
-export const primaryDark = '#19354d';
-export const secondaryDark = '#2d5c86';
+export const primaryDark = '#025468';
+export const secondaryDark = '#93B2B6';
 
-export const primaryColor = '#4084bf';
+export const primaryColor = '#6BAFB1';
 
-export const secondarylight = '#79a9d2';
-export const primarylight = '#b3cee5';
+export const secondarylight = '#B2DCDF';
+export const primarylight = '#F3F8F9';

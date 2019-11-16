@@ -40,12 +40,6 @@ class SignIn extends React.Component{
             }
         }
         this.changeEmail = ev => this.setState({email: ev.target.value});
-        this.timeout = () => {
-            setTimeout(() => {
-                console.log('Test');
-                this.timeout();
-            }, 1000/60);
-        } 
      
         this.changePassword = ev => this.setState({password: ev.target.value});
         this.submit = ev => {
@@ -59,7 +53,6 @@ class SignIn extends React.Component{
                     setTimeout(() => {
                         console.log('Test');
                         this.setState({doctor: dU , loading: false});
-                        this.timeout();
                         this.props.onSubmit(this.state.email , this.state.password);
                         if(this.state.password == this.state.doctor.password)
                             this.props.history.push('/dashboard');    
