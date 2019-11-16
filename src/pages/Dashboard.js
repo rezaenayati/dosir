@@ -20,7 +20,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
     storeDoctorInfo: (doctor) => {
         dispatch({type: 'LOADDOCTORINFO' , doctor});
-    }
+    },
+    setNotAuthenticated: () => dispatch({type: 'LOGOUT'}),
 });
 
 class Dashboard extends React.Component{
@@ -48,6 +49,11 @@ class Dashboard extends React.Component{
     }
 
     render(){
+        const doctor = this.state.doctor;
+        if(!doctor){
+            this.props.setNotAuthenticated();
+            return null;
+        }
         return(
             <div>
             <header>
