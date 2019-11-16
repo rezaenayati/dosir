@@ -10,12 +10,13 @@ import validator from 'validator';
 import ProgressBar from '../components/ProgressBar';
 import '../App.css';
 import { secondarylight, primaryDark, primarylight } from '../assets/colors/color.js';
-import { postNewDoctor } from '../logics/api';
+import { createDoctor } from '../logics/api';
 
 const theme = createMuiTheme({
     direction: 'rtl',
 });
 
+// fix redux with phone number
 
 const mapStateToProps = state => ({ ...state, email: state.auth.email});
 
@@ -35,57 +36,34 @@ class SignUp extends React.Component{
         super(props);
         this.state = {
             passError: false,
-            emailError: false,
-            email: null,
+            phoneError: false,
+            phone: null,
             password: null,
             password2: null,
             loading: false,
         }
-        this.changeEmail = ev => this.setState({email: ev.target.value});
+        this.changePhone = ev => this.setState({phone: ev.target.value});
         this.changePassword = ev => this.setState({password: ev.target.value});
         this.changePassword2 = ev => this.setState({password2: ev.target.value});       
+        
         this.submit = ev => {
             ev.preventDefault();
-            this.setState({emailError: false, passError: false, loading: true});
-            setTimeout(() => {    
-
-            if(this.state.email == null){
-                this.setState({emailError: true});
-                return null;   
-            }
-
-            if(this.state.password === this.state.password2){
-                if(validator.isEmail(this.state.email)){
-                    console.log(this.state.email);
-                    this.props.onSubmit(this.state.email , this.state.password);
-                    const tempDoctor = {
-                        "name": "",
-                        "family": "",
-                        "title": "",
-                        "password": this.state.password,
-                        "city": "",
-                        "email": this.state.email,
-                        "phone": "",
-                        "image": "",
-                        "address": "",
-                        "about": "",
-                        "province": ""
-                    };
-                    // add tempDoctor to the json-server
-                    postNewDoctor(tempDoctor);
-                    this.props.storeDoctorInfo(tempDoctor);
-                    this.props.history.push('/editprofile');
+            this.setState({passError: false, loading: true});
+            setTimeout(() => {
+                //check phone number    
+                if(this.state.phone == null)
+                    return null;
+                   
+                if(this.state.password === this.state.password2){
+                        console.log(this.state.phone);
+                        this.props.onSubmit(this.state.phone);
+                        const d = createDoctor();
                 }
-                else {
-                    console.log("Incorecct email");
-                    this.setState({emailError: true});
+                else{
+                    console.log("Password unmatch!");
+                    this.setState({passError: true});
                 }
-            }
-            else{
-                console.log("Password unmatch!");
-                this.setState({passError: true});
-            }
-            this.setState({loading: false});
+                this.setState({loading: false});
         }, 2000);
 
         };
@@ -99,15 +77,28 @@ class SignUp extends React.Component{
                 <h1 style={styles.title}>ثبت نام</h1>
             </div>
             <ThemeProvider theme={theme}>
+            <div dir='rtl' style={styles.fieldContainer}>
+                            <TextField 
+                                placeholder='نام'
+                                style={styles.textField}
+                                variant="outlined"
+                                onChange={this.changeName} 
+                                />
+                            <TextField 
+                                placeholder='نام خانوادگی'
+                                style={styles.textField}
+                                variant="outlined" 
+                                onChange={this.changeFamily}
+                                />
+            </div>                    
             <TextField
-                placeholder='ایمیل'
+                placeholder='شماره موبایل'
                 style={styles.textField}
                 fullWidth
                 variant="outlined"
-                autoComplete='email'
-                onChange={this.changeEmail}
+                autoComplete='phone'
+                onChange={this.changePhone}
             />
-            {this.state.emailError&&<p style={styles.errorMessage} visibilty="false">*** ایمیل نامعتبر</p>}
             <TextField
                 type='password'
                 placeholder='رمز عبور'
@@ -166,6 +157,8 @@ const styles = {
     textField: {
         fontFamily: "Vazir", 
         marginTop: 10,
+        marginRight: 1,
+        marginLeft: 1,
         color: primaryDark
     }, 
     label: {
@@ -177,5 +170,14 @@ const styles = {
         color: primarylight, 
         marginTop: 10, 
         backgroundColor: primaryDark
-    }
+    },
+    fieldContainer: {
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        marginTop: 20,
+        display: 'flex',
+        flexDirection: 'row',
+        backgroundColor: primarylight
+    },
+
 }
