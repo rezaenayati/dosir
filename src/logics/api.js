@@ -1,3 +1,29 @@
+export const createDoctor = async (phone, password, name, family) => {
+    const response = await fetch('192.168.7.159:8000/api/v1/doctor/create' , {
+        body: {
+            'phone_num': phone,
+            'password': password,
+            'first_name': name,
+            'last_name': family
+        }
+    })
+    .catch(err => {
+        console.log("Nashood");
+    })
+    console.log(response);
+    return response;
+}
+
+
+
+
+
+
+
+
+
+
+////////////////////////////////////////////////////////////////////
 export const fetchDoctor = async email => {
     const response = await fetch(`http://localhost:4000/doctor?email=${email}`);
     const doctorUsers = await response.json();    

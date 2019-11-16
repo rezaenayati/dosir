@@ -2,7 +2,7 @@ export default (state = {} , action) => {
     // console.log("enter currentUser reducer");
     
     switch(action.type){
-        case 'LOADDOCTORINFO':
+        case 'LOAD_DOCTOR_INFO':
             return {
                 ...state,
                 doctor: action.doctor

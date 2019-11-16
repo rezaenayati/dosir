@@ -51,7 +51,6 @@ class Dashboard extends React.Component{
     render(){
         const doctor = this.state.doctor;
         if(!doctor){
-            this.props.setNotAuthenticated();
             return null;
         }
         return(
