@@ -1,5 +1,5 @@
 import React from 'react';
-import { Avatar, AppBar, Typography, Link, Menu, Toolbar, MenuItem, IconButton, Button } from '@material-ui/core';
+import { Avatar, Popper, AppBar, Paper, Typography, Link, Menu, Toolbar, MenuItem, IconButton, Button } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import { withRouter } from 'react-router-dom';
 
@@ -20,6 +20,7 @@ class Header extends React.Component {
         super(props);
         this.state = {
             anchorEl: null,
+            anchorElPop: null,
         }
         this.handleClick = event => {
             this.setState({anchorEl: event.currentTarget});
@@ -27,6 +28,18 @@ class Header extends React.Component {
         
         this.handleClose = () => {
             this.setState({anchorEl: null});
+            this.handleLogOut();            
+        };
+
+        this.handleClickPop = event => {
+            if(this.state.anchorElPop === null)
+                this.setState({anchorElPop: event.currentTarget});
+            else 
+                this.setState({anchorElPop: null});
+        };
+        
+        this.handleClosePop = () => {
+            this.setState({anchorElPop: null});
             this.handleLogOut();            
         };
 
@@ -46,6 +59,9 @@ class Header extends React.Component {
     
 
     render(){
+        const open = Boolean(this.state.anchorElPop);
+        const id = open ? 'simple-popper' : undefined;
+      
         return(
             <AppBar position="static" color="default" elevation={0} style={styles.appBar}>
                     <nav style={styles.links}>
@@ -67,10 +83,14 @@ class Header extends React.Component {
                         </Menu>
 
                         
-                        <Button variant="button" href="#" style={styles.link}>
+                        <Button variant="button" onClick={this.handleClickPop} style={styles.link}>
                             درباره ما
                         </Button>
-                        <Button variant="button" href="#" style={styles.link}>
+                        <Popper id={id} open={open} anchorEl={this.state.anchorElPop}>
+                            <Paper style={styles.popup}>این بخش برای اسپرینت بعدی است عجله نکن</Paper>
+                        </Popper>
+
+                        <Button variant="button" onClick={this.handleClickPop} style={styles.link}>
                             تماس با ما
                         </Button>
                         <Button variant="button" onClick={this.toDashboard} style={styles.link}>
@@ -95,6 +115,9 @@ const styles = {
         margin: 'auto',
         height: 60,
         backgroundColor: secondaryDark
+    },
+    popup: {
+        backgroundColor: 'white',
     },
     toolbarTitle: {
         margin: "auto",
