@@ -20,7 +20,7 @@ export default class DashboardDetails extends React.Component{
                     height={30}
                     width={121}
                 />
-                <p dir='rtl' style={{textAlign: 'center', fontFamily: 'Vazir'}}>شکیبا باش ...</p>
+                <p dir='rtl' style={{textAlign: 'center', fontFamily: 'Vazir'}}>{this.props.message}</p>
             </div>
         );
     }

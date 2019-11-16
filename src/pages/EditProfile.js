@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Avatar, Paper, Button, TextField, Input, RaisedButton } from '@material-ui/core';
 import { withRouter } from 'react-router-dom';
 
+import ProgressBar from '../components/ProgressBar';
 import Header from '../components/Header';
 import '../assets/colors/color.js';
 import { primarylight, secondarylight, secondaryDark, primaryColor, primaryDark } from '../assets/colors/color.js';
@@ -28,7 +29,8 @@ class EditProfile extends React.Component{
         this.state = {
             loading: false,
             file: '',
-            imagePreviewUrl: ''
+            imagePreviewUrl: '',
+            saved: false,
         }
         const updateFieldEvent = key => ev => this.props.onUpdateField(key, ev.target.value);
         this.startEdit = () => this.props.onStartEdit();
@@ -42,8 +44,13 @@ class EditProfile extends React.Component{
         this.changeAbout = updateFieldEvent('about');
         this.changeTitle = updateFieldEvent('title');
         this.submit = ev => {
-            this.props.onSubmit();
-            editDoctor(this.props.doctor.email , this.props.doctor);
+            this.setState({loading: true , saved: false});  
+            setTimeout(() => {  
+                this.props.onSubmit();
+                editDoctor(this.props.doctor.email , this.props.doctor);
+                console.log("asdlsjhaj");
+                this.setState({loading: false , saved: true});
+            }, 2000);
         };
         this.handleDeleteImage = () =>  {
             this.props.onUpdateField('image' , '');
@@ -185,8 +192,10 @@ class EditProfile extends React.Component{
                                 defaultValue={doctor.about} />
                         </Paper>
                         <div style={styles.buttonContainer}>
-                            <Button style={styles.buttonSave} onClick={this.submit}>ذخیره تغییرات</Button>
+                            {!this.state.loading&&<Button style={styles.buttonSave} onClick={this.submit}>ذخیره تغییرات</Button>}
+                            {this.state.loading&&<ProgressBar message='در حال ذخیره ...' style={styles.progressBar} />}
                         </div>
+                            {this.state.saved&&<p style={styles.editProfileName}> ذخیره شد </p>}
                     </Paper>
                 </div>    
             </div>
@@ -208,13 +217,17 @@ const styles = {
     paperContainer: {
         felx: 1,
         width: 600,
-        height: 900,
+        height: 935,
         marginLeft: 'auto',
         marginRight: 'auto',
         marginTop: 20,
         marginBottom: 40,
         backgroundColor: secondarylight
 
+    },
+    progressBar: {
+        marginLeft: 'auto',
+        marginRight: 'auto',
     },
     textField: {
         margin: 5,

@@ -104,7 +104,7 @@ class SignIn extends React.Component{
                 >
                 ورود
             </Button>}
-            {this.state.loading&&<ProgressBar style={styles.progressBar} />}
+            {this.state.loading&&<ProgressBar message='شکیبا باشید ...' style={styles.progressBar} />}
         </form>
 
         );

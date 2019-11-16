@@ -7,6 +7,7 @@ import {connect} from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import validator from 'validator';
 
+import ProgressBar from '../components/ProgressBar';
 import '../App.css';
 import { secondarylight, primaryDark, primarylight } from '../assets/colors/color.js';
 import { postNewDoctor } from '../logics/api';
@@ -38,13 +39,21 @@ class SignUp extends React.Component{
             email: null,
             password: null,
             password2: null,
+            loading: false,
         }
         this.changeEmail = ev => this.setState({email: ev.target.value});
         this.changePassword = ev => this.setState({password: ev.target.value});
         this.changePassword2 = ev => this.setState({password2: ev.target.value});       
         this.submit = ev => {
             ev.preventDefault();
-            this.setState({emailError: false, passError: false});
+            this.setState({emailError: false, passError: false, loading: true});
+            setTimeout(() => {    
+
+            if(this.state.email == null){
+                this.setState({emailError: true});
+                return null;   
+            }
+
             if(this.state.password === this.state.password2){
                 if(validator.isEmail(this.state.email)){
                     console.log(this.state.email);
@@ -76,6 +85,9 @@ class SignUp extends React.Component{
                 console.log("Password unmatch!");
                 this.setState({passError: true});
             }
+            this.setState({loading: false});
+        }, 2000);
+
         };
     }
 
@@ -119,12 +131,14 @@ class SignUp extends React.Component{
                 control={<Checkbox value="remember" color={primaryDark} />}
                 label="مرا به خاطر داشته باش"
             />
-            <Button
+            {!this.state.loading&&<Button
                 onClick={this.submit} 
                 fullWidth 
                 style={styles.button}>
                 ثبت نام
-            </Button>
+            </Button>}
+            {this.state.loading&&<ProgressBar message='شکیبا باشید ...' style={styles.progressBar} />}
+
         </form>
 
         );
