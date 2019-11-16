@@ -8,7 +8,7 @@ import { withRouter } from 'react-router-dom'
 
 import '../App.css';
 import ProgressBar from '../components/ProgressBar';
-import {fetchDoctor} from '../logics/api';
+import { logInDoctor } from '../logics/api';
 import '../assets/colors/color.js';
 import { secondarylight, primaryDark, primarylight } from '../assets/colors/color.js';
 import { timeout } from 'q';
@@ -17,11 +17,11 @@ const theme = createMuiTheme({
     direction: 'rtl', 
 });
 
-const mapStateToProps = state => ({ ...state, email: state.auth.email});
+const mapStateToProps = state => ({ ...state});
 
 const mapDispatchToProps = dispatch => ({
-    onSubmit: (email) => {
-        dispatch({type: 'REGISTER' , email});
+    onSubmit: (tokens) => {
+        dispatch({type: 'SIGNIN' , tokens});
     }
 });
 
@@ -31,31 +31,36 @@ class SignIn extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            email: null,
-            password: null,
-            showPassword: true,
-            loading: false,
-            doctor: {
+            phone: '',
+            password: '',
 
-            }
+            loading: false,
+            error: false,
+            emptyFiels: false,
         }
-        this.changeEmail = ev => this.setState({email: ev.target.value});
-     
+        this.changePhone = ev => this.setState({phone: ev.target.value});
         this.changePassword = ev => this.setState({password: ev.target.value});
         this.submit = ev => {
             ev.preventDefault();
-            // console.log(fetchDoctor(this.state.email));
-            this.setState({loading: true} , async () => {
+            this.setState({loading: true , error: false, emptyFiels: false} , async () => {
                 try {
-                    const dU = await fetchDoctor(this.state.email);
-                    console.log(dU);
-                    // this.timeout()
+                    console.log(this.state.phone);
+                    console.log(this.state.password);
+                    if(this.state.phone === '' || this.state.password === ''){
+                        this.setState({passError: false, loading: false, error: false, emptyFiels: true});
+                        return null;
+                    }        
                     setTimeout(() => {
-                        console.log('Test');
-                        this.setState({doctor: dU , loading: false});
-                        this.props.onSubmit(this.state.email , this.state.password);
-                        if(this.state.password == this.state.doctor.password)
-                            this.props.history.push('/dashboard');    
+                        const tokens = logInDoctor(this.state.phone, this.state.password);
+                        if(tokens.access === undefined){
+                            this.setState({error: true});
+                            console.log("true");
+                        }        
+                        else{
+                            this.props.onSubmit(tokens);
+                            console.log("false");      
+                        }
+                        this.setState({loading: false});
                     }, 2000);
                           
                 } catch (error) {
@@ -75,12 +80,12 @@ class SignIn extends React.Component{
             </div>
             <ThemeProvider theme={theme}>
             <TextField
-                placeholder='ایمیل'
+                placeholder='شماره موبایل'
                 style={styles.textField}
                 fullWidth
                 variant="outlined"
-                autoComplete='email'
-                onChange={this.changeEmail}
+                autoComplete='phone'
+                onChange={this.changePhone}
             />
             <TextField
                 type='password'
@@ -92,11 +97,8 @@ class SignIn extends React.Component{
                 onChange={this.changePassword}        
             />
             </ThemeProvider>
-            <FormControlLabel
-                style={styles.label}
-                control={<Checkbox value="remember" color={primaryDark} />}
-                label="مرا به خاطر داشته باش"
-            />
+            {this.state.emptyFiels&&<p style={styles.title}>فیلد های خالی را پر کنید</p>}
+            {this.state.error&&<p style={styles.title}>خطا در برقراری ارتباط</p>}
             {!this.state.loading&&<Button
                 onClick={this.submit}  
                 fullWidth 
@@ -121,6 +123,7 @@ const styles = {
         marginRight: 100
     },
     progressBar: {
+        marginTop: 5
     },
     title: {
         fontFamily: "Vazir",

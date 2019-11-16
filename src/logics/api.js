@@ -1,5 +1,6 @@
 export const createDoctor = async (phone, password, name, family) => {
     const response = await fetch('192.168.7.159:8000/api/v1/doctor/create' , {
+        method: 'POST',
         body: {
             'phone_num': phone,
             'password': password,
@@ -14,7 +15,21 @@ export const createDoctor = async (phone, password, name, family) => {
     return response;
 }
 
+export const logInDoctor = async (phone, password) => {
+    const response = await fetch('192.168.7.159:8000/api/v1/login/' , {
+        method: 'POST',
+        body: {
+            'phone_num': phone,
+            'password': password
+        }
+    })
+    .catch(err => {
+        console.log("Nashood");
+    })
+    console.log(response);
+    return response;
 
+}
 
 
 

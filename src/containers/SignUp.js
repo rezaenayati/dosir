@@ -31,12 +31,14 @@ class SignUp extends React.Component{
         this.state = {
             passError: false,
             loading: false,
+            error: false,
+            emptyFiels: false,
 
-            phone: null,
-            password: null,
-            password2: null,
-            name: null,
-            family: null,
+            phone: '',
+            password: '',
+            password2: '',
+            name: '',
+            family: '',
         }
         this.changePhone = ev => this.setState({phone: ev.target.value});
         this.changePassword = ev => this.setState({password: ev.target.value});
@@ -46,35 +48,27 @@ class SignUp extends React.Component{
         
         this.submit = ev => {
             ev.preventDefault();
-            this.setState({passError: false, loading: true});
+            this.setState({passError: false, loading: true, error: false , emptyFiels: false});
+            if(this.state.phone === '' || this.state.password === '' || this.state.password2 === '' || this.state.name === '' || this.state.family === '' ){
+                this.setState({passError: false, loading: false, error: false, emptyFiels: true});
+                return null;
+            }
             setTimeout(() => {
-                //check phone number    
-                if(this.state.phone == null)
-                    return null;
-                
                 if(this.state.password === this.state.password2){
-                        console.log(this.state.phone);
-                        const d = createDoctor(this.state.phone, this.state.password, this.state.name, this.state.family);
-                        console.log(this.state);
-                        //fake code : 
-                        const tempd = {
-                            access: "asdkasnd",
-                            refresh: "adaknf"
+                        const tokens = createDoctor(this.state.phone, this.state.password, this.state.name, this.state.family);
+                        console.log(tokens.access);
+                        if(tokens.access !== undefined){
+                            this.props.onSubmit(tokens);
+                            const doctor = {
+                                phone_num : this.state.phone,
+                                first_name: this.state.name,
+                                last_name: this.state.family
+                            }
+                            this.props.storeDoctorInfo(doctor);
+                            this.props.history.push('/dashboard');    
                         }
-                        //end faking
-
-                        
-                        //send tokens in redux
-                        this.props.onSubmit(tempd);
-
-                        //send info in redux
-                        const doctor = {
-                            phone_num : this.state.phone,
-                            first_name: this.state.name,
-                            last_name: this.state.family
-                        }
-                        this.props.storeDoctorInfo(doctor);
-                        this.props.history.push('/dashboard');    
+                        else
+                            this.setState({error: true})
                 }
                 else{
                     console.log("Password unmatch!");
@@ -135,10 +129,8 @@ class SignUp extends React.Component{
             />
             {this.state.passError&&<p style={styles.errorMessage} visibilty="false">*** رمز عبور مطابقت ندارد</p>}
             </ThemeProvider>
-            <FormControlLabel
-                control={<Checkbox value="remember" color={primaryDark} />}
-                label="مرا به خاطر داشته باش"
-            />
+            {this.state.error&&<p style={styles.title}>خطا در برقراری ارتباط</p>}
+            {this.state.emptyFiels&&<p style={styles.title}>فیلد های خالی را پر کنید</p>}
             {!this.state.loading&&<Button
                 onClick={this.submit} 
                 fullWidth 
@@ -178,6 +170,9 @@ const styles = {
         marginLeft: 1,
         color: primaryDark
     }, 
+    progressBar: {
+        marginTop: 5
+    },
     label: {
         fontFamily: "Vazir",
         color: primaryDark
