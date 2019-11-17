@@ -28,7 +28,6 @@ class Header extends React.Component {
         
         this.handleClose = () => {
             this.setState({anchorEl: null});
-            this.handleLogOut();            
         };
 
         this.handleClickPop = event => {
@@ -79,7 +78,7 @@ class Header extends React.Component {
                             open={Boolean(this.state.anchorEl)}
                             onClose={this.handleClose}
                         >
-                            <MenuItem style={styles.menuItem} onClick={this.handleClose}>خروج</MenuItem>
+                            <MenuItem style={styles.menuItem} onClick={this.handleLogOut}>خروج</MenuItem>
                         </Menu>
 
                         
