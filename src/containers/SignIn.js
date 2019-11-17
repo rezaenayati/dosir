@@ -51,7 +51,9 @@ class SignIn extends React.Component{
                         return null;
                     }        
                     setTimeout(() => {
+                        console.log("get tokens");
                         const tokens = logInDoctor(this.state.phone, this.state.password);
+                        console.log("token got");
                         if(tokens.access === undefined){
                             this.setState({error: true});
                             console.log("true");
@@ -61,8 +63,9 @@ class SignIn extends React.Component{
                             console.log("false");      
                         }
                         this.setState({loading: false});
+                        console.log(tokens);
+                        
                     }, 2000);
-                          
                 } catch (error) {
                     
                 }

@@ -1,12 +1,23 @@
 export const createDoctor = async (phone, password, name, family) => {
-    const response = await fetch('192.168.7.159:8000/api/v1/doctor/create' , {
+    const dc = {
+        "phone_num": "09124543212",
+        "password": "1234",
+        "first_name": "mr",
+        "last_name": "roozo"
+    };
+    console.log(JSON.stringify(dc));
+    
+    // var data = new FormData();
+    // data.append("phone_num", "+989121111111");
+    // data.append("password", "1234");
+    // data.append("first_name", "ali");
+    // data.append("last_name", "mirferdos");
+
+    // console.log(data);
+
+    const response = await fetch('http://192.168.5.54:8000/api/v1/doctor/create' , {
         method: 'POST',
-        body: {
-            'phone_num': phone,
-            'password': password,
-            'first_name': name,
-            'last_name': family
-        }
+        body: JSON.stringify(dc)
     })
     .catch(err => {
         console.log("Nashood");
@@ -14,14 +25,43 @@ export const createDoctor = async (phone, password, name, family) => {
     console.log(response);
     return response;
 }
+
+
+export const createDoctor2 = async (phone, password, name, family) => {
+    var data = new FormData();
+    data.append("phone_num", "+989121111111");
+    data.append("password", "1234");
+    data.append("first_name", "ali");
+    data.append("last_name", "mirferdos");
+
+    var xhr = new XMLHttpRequest();
+    xhr.withCredentials = true;
+
+    xhr.addEventListener("readystatechange", function () {
+    if (this.readyState === 4) {
+        console.log(this.responseText);
+    }
+    });
+
+    xhr.open("POST", "http://192.168.7.159:8000/api/v1/doctor/create");
+    xhr.setRequestHeader("cache-control", "no-cache");
+
+    xhr.send(data);
+}
+
+
 
 export const logInDoctor = async (phone, password) => {
-    const response = await fetch('192.168.7.159:8000/api/v1/login/' , {
+
+
+    const doctor = {
+        'phone_num': phone,
+        'password': password
+    }
+    console.log("logInDocotr");
+    const response = await fetch('http://192.168.43.46:8000/api/v1/login' , {
         method: 'POST',
-        body: {
-            'phone_num': phone,
-            'password': password
-        }
+        body: JSON.stringify(doctor) 
     })
     .catch(err => {
         console.log("Nashood");
@@ -33,6 +73,9 @@ export const logInDoctor = async (phone, password) => {
 
 
 
+export const logInDoctor2 = async (phone , password) => {
+    
+}
 
 
 
