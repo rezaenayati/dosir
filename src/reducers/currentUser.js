@@ -2,11 +2,14 @@ export default (state = {} , action) => {
     // console.log("enter currentUser reducer");
     
     switch(action.type){
-        case 'LOAD_DOCTOR_INFO':
+        case 'LOAD_DOCTOR_INFO':{
+            console.log(action.doctor);
+            
             return {
                 ...state,
                 doctor: action.doctor
             };
+        }
         case 'START_EDIT':{
             let t0 = {}; 
             t0 = Object.assign({}, state.doctor);   

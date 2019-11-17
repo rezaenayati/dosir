@@ -32,57 +32,25 @@ class SignIn extends React.Component{
         super(props);
         this.state = {
             email: '',
-            password: '',
 
-            passNotMatch: false,
-            showPassword: true,
             loading: false,
-            emptyFiels: false,
-            doctor: {
-
-            }
+            emptyFiedls: false,
+            error: false
         }
         this.changeEmail = ev => this.setState({email: ev.target.value});
-        this.changePassword = ev => this.setState({password: ev.target.value});
 
         this.submit = ev => {
             console.log(this.state.email);
-            console.log(this.state.password);
-            
-            
             ev.preventDefault();
-            this.setState({loading: true, error: false , emptyFiels: false, passNotMatch: false});
-            console.log(this.state.password);
-            
-            if(this.state.email === '' || this.state.password === ''){
-                console.log("ajkgfjahydkas,");
-                this.setState({loading: false, error: false, emptyFiels: true, passNotMatch: false});
+            this.setState({loading: true, error: false , emptyFiedls: false});            
+            if(this.state.email === ''){
+                console.log(":sdkljadsn");
+                this.setState({loading: false, error: false, emptyFiedls: true});
                 return null;
             }
-            this.setState({loading: true} , async () => {
-                try {
-                    const dU = await fetchDoctor(this.state.email);
-                    console.log(dU);
-                    if(dU === undefined){
-                        this.setState({passNotMatch: true, loading: false})
-                        return null;
-                    }
-                    console.log(dU);
                     setTimeout(() => {
-                        console.log(dU);
-                        this.setState({doctor: dU , loading: false});
-                        if(this.state.password === this.state.doctor.password){
-                            this.props.onSubmit(this.state.email);
-                            this.props.history.push('/dashboard');
-                        }
-                        else
-                            this.setState({passNotMatch: true, loading: false});    
-                    }, 2000);
-                          
-                } catch (error) {
-                    
-                }
-            });
+                        this.setState({loading: false, error: true})
+                    }, 2000);    
         };
     }
 
@@ -92,9 +60,10 @@ class SignIn extends React.Component{
             <form dir="rtl" style={styles.container}>
             <div dir="rtl">
                 <Avatar src="https://i.ibb.co/r799ZMz/logo-2sir-mehdi.png" />
-                <h1 style={styles.title}>ورود</h1>
+                <h1 style={styles.title}>فراموشی رمز</h1>
             </div>
             <ThemeProvider theme={theme}>
+            <p style={styles.title}>ایمیل خود را وارد کنید:</p>
             <TextField
                 placeholder='ایمیل'
                 style={styles.textField}
@@ -103,27 +72,18 @@ class SignIn extends React.Component{
                 autoComplete='email'
                 onChange={this.changeEmail}
             />
-            <TextField
-                type='password'
-                placeholder='رمز عبور'
-                style={styles.textField}
-                fullWidth
-                variant="outlined"
-                autoComplete='password'
-                onChange={this.changePassword}        
-            />
             </ThemeProvider>
             {!this.state.loading&&<Button
                 onClick={this.submit}  
                 fullWidth 
                 style={styles.button}
                 >
-                ورود
+                ارسال کد تایید
             </Button>}
-            {this.state.passNotMatch&&<p style={styles.title}>رمز عبور یا ایمیل اشتباه است</p>}
             {this.state.error&&<p style={styles.title}>خطا در برقراری ارتباط</p>}
-            {this.state.emptyFiels&&<p style={styles.title}>فیلد های خالی را پر کنید</p>}
+            {this.state.emptyFiedls&&<p style={styles.title}>فیلد های خالی را پر کنید</p>}
             {this.state.loading&&<ProgressBar message='شکیبا باشید ...' style={styles.progressBar} />}
+
         </form>
 
         );

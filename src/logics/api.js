@@ -83,9 +83,15 @@ export const logInDoctor2 = async (phone , password) => {
 
 ////////////////////////////////////////////////////////////////////
 export const fetchDoctor = async email => {
-    const response = await fetch(`http://localhost:4000/doctor?email=${email}`);
+    console.log(email);
+    
+    const response = await fetch(`http://localhost:4000/doctor?email=${email}`)
+    .catch(err => {
+        console.log("Nashood");
+        return false
+    });
     const doctorUsers = await response.json();    
-    console.log(doctorUsers);
+    console.log(doctorUsers[0]);
     return doctorUsers[0]
 }
 

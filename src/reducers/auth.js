@@ -6,19 +6,19 @@ export default (state = {} , action) => {
         case 'REGISTER':            
             return {
                 ...state,
-                tokens: action.tokens,
+                email: action.email,
                 authenticated: true
             };
         case 'SIGNIN':
             return {
                 ...state,
-                tokens: action.tokens,
+                email: action.email,
                 authenticated: true
             };
         case 'LOGOUT':
             return {
                 ...state,
-                phone: undefined,
+                email: undefined,
                 authenticated: false
             }
         default:

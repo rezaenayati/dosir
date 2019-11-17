@@ -18,9 +18,7 @@ const mapStateToProps = state => ({
                         });
 
 const mapDispatchToProps = dispatch => ({
-    storeDoctorInfo: (doctor) => {
-        dispatch({type: 'LOADDOCTORINFO' , doctor});
-    },
+    storeDoctorInfo: (doctor) => dispatch({type: 'LOAD_DOCTOR_INFO' , doctor}),
     setNotAuthenticated: () => dispatch({type: 'LOGOUT'}),
 });
 
@@ -42,6 +40,8 @@ class Dashboard extends React.Component{
             const dU = await fetchDoctor(this.props.email);
             this.setState({doctor: dU, loading: false});
             this.props.storeDoctorInfo(dU);
+            console.log(dU);
+                        
         });
         if(!this.props.authenticated) 
             this.props.history.push('/');    

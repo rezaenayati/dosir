@@ -8,6 +8,7 @@ import { withRouter } from 'react-router-dom';
 import '../App.css';
 import SignUp from '../containers/SignUp';
 import SignIn from '../containers/SignIn';
+import ForgetPass from '../containers/ForgetPass';
 import '../assets/colors/color.js';
 import { primarylight, primaryDark } from '../assets/colors/color.js';
 
@@ -25,6 +26,7 @@ class Register extends React.Component{
         super(props);
         this.state = {
             signUp: true,
+            forgetPass: false,
         }
     }
 
@@ -41,15 +43,21 @@ class Register extends React.Component{
                 <Grid item={true} style={styles.rightContainer} xs={12} sm={8} md={5} component={Paper} elevation={6} square>
                     <form>
                     </form>
-                    {!this.state.signUp&&<SignUp />}
-                    {this.state.signUp&&<SignIn />}
+                    {this.state.forgetPass&&<ForgetPass />}
+                    {!this.state.forgetPass&&!this.state.signUp&&<SignUp />}
+                    {!this.state.forgetPass&&this.state.signUp&&<SignIn />}
                     <div dir="rtl" style={{marginTop: 10}}>
                         <Link
                             style={styles.link}
-                            onClick={() => {this.setState({signUp: reverseSignUp})}}>
+                            onClick={() => {this.setState({forgetPass: false, signUp: reverseSignUp})}}>
                                 {reverseSignUp&&"ورود به حساب"}
                                 {!reverseSignUp&&"ایجاد حساب جدید"}
                         </Link>
+                       {!this.state.forgetPass&&<Link
+                                style={styles.link}
+                                onClick={() => {this.setState({forgetPass: true, signUp: false})}}>
+                                رمز عبور عبور را فراموش کرده اید؟
+                        </Link>}
                     </div>
                 </Grid>
             </Grid>

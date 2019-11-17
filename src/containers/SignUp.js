@@ -9,7 +9,7 @@ import { withRouter } from 'react-router-dom';
 import ProgressBar from '../components/ProgressBar';
 import '../App.css';
 import { secondarylight, primaryDark, primarylight } from '../assets/colors/color.js';
-import { createDoctor } from '../logics/api';
+import { postNewDoctor } from '../logics/api';
 
 const theme = createMuiTheme({
     direction: 'rtl',
@@ -19,7 +19,7 @@ const theme = createMuiTheme({
 const mapStateToProps = state => ({ ...state});
 
 const mapDispatchToProps = dispatch => ({
-    onSubmit: (tokens) => dispatch({type: 'REGISTER' , tokens}),
+    onSubmit: (email) => dispatch({type: 'REGISTER' , email}),
     storeDoctorInfo: (doctor) => dispatch({type: 'LOAD_DOCTOR_INFO' , doctor})
 });
 
@@ -34,13 +34,13 @@ class SignUp extends React.Component{
             error: false,
             emptyFiels: false,
 
-            phone: '',
+            email: '',
             password: '',
             password2: '',
             name: '',
             family: '',
         }
-        this.changePhone = ev => this.setState({phone: ev.target.value});
+        this.changeEmail = ev => this.setState({email: ev.target.value});
         this.changePassword = ev => this.setState({password: ev.target.value});
         this.changePassword2 = ev => this.setState({password2: ev.target.value});
         this.changeName = ev => this.setState({name: ev.target.value});
@@ -49,23 +49,26 @@ class SignUp extends React.Component{
         this.submit = ev => {
             ev.preventDefault();
             this.setState({passError: false, loading: true, error: false , emptyFiels: false});
-            if(this.state.phone === '' || this.state.password === '' || this.state.password2 === '' || this.state.name === '' || this.state.family === '' ){
+            if(this.state.email === '' || this.state.password === '' || this.state.password2 === '' || this.state.name === '' || this.state.family === '' ){
                 this.setState({passError: false, loading: false, error: false, emptyFiels: true});
                 return null;
             }
             setTimeout(() => {
                 if(this.state.password === this.state.password2){
-                        const tokens = createDoctor(this.state.phone, this.state.password, this.state.name, this.state.family);
-                        console.log(tokens.access);
-                        if(tokens.access !== undefined){
-                            this.props.onSubmit(tokens);
-                            const doctor = {
-                                phone_num : this.state.phone,
-                                first_name: this.state.name,
-                                last_name: this.state.family
-                            }
+                        // const tokens = createDoctor(this.state.phone, this.state.password, this.state.name, this.state.family);
+                        // console.log(tokens.access);
+                        const doctor = {
+                            email : this.state.email,
+                            name: this.state.name,
+                            family: this.state.family,
+                            password: this.state.password,
+                        }
+                        console.log(doctor);
+                        const dU = postNewDoctor(doctor)
+                        if(doctor !== undefined){
+                            this.props.onSubmit(this.state.email);
                             this.props.storeDoctorInfo(doctor);
-                            this.props.history.push('/dashboard');    
+                            this.props.history.push('/editprofile');    
                         }
                         else
                             this.setState({error: true})
@@ -103,12 +106,12 @@ class SignUp extends React.Component{
                                 />
             </div>                    
             <TextField
-                placeholder='شماره موبایل'
+                placeholder='ایمیل'
                 style={styles.textField}
                 fullWidth
                 variant="outlined"
-                autoComplete='phone'
-                onChange={this.changePhone}
+                autoComplete='email'
+                onChange={this.changeEmail}
             />
             <TextField
                 type='password'
