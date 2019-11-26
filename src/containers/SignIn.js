@@ -1,6 +1,6 @@
 import React from 'react';
 import { 
-    Checkbox, TextField, Button, FormControlLabel, Avatar, Link    
+    TextField, Button, Avatar    
 } from "@material-ui/core";
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import {connect} from 'react-redux';
@@ -8,20 +8,19 @@ import { withRouter } from 'react-router-dom'
 
 import '../App.css';
 import ProgressBar from '../components/ProgressBar';
-import {fetchDoctor} from '../logics/api';
+import { logInDoctor } from '../logics/api';
 import '../assets/colors/color.js';
-import { secondarylight, primaryDark, primarylight } from '../assets/colors/color.js';
-import { timeout } from 'q';
+import { primaryDark, primarylight } from '../assets/colors/color.js';
 
 const theme = createMuiTheme({
     direction: 'rtl', 
 });
 
-const mapStateToProps = state => ({ ...state, email: state.auth.email});
+const mapStateToProps = state => ({ ...state, tokens: state.auth.tokens});
 
 const mapDispatchToProps = dispatch => ({
-    onSubmit: (email) => {
-        dispatch({type: 'REGISTER' , email});
+    onSubmit: (tokens) => {
+        dispatch({type: 'REGISTER' , tokens});
     }
 });
 
@@ -31,61 +30,57 @@ class SignIn extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            email: '',
+            phone: '',
             password: '',
 
+            tokens: {},
+
             passNotMatch: false,
+            serverError: false,
             showPassword: true,
             loading: false,
             emptyFiels: false,
-            doctor: {
-
-            }
         }
-        this.changeEmail = ev => this.setState({email: ev.target.value});
+        this.changePhone = ev => this.setState({phone: ev.target.value});
         this.changePassword = ev => this.setState({password: ev.target.value});
 
+        this.completePhone = () => {
+            let phone = this.state.phone
+            let newPhone = phone.substring(1);
+            phone = "+98" + newPhone;
+            this.setState({phone: phone})
+        };
+
         this.submit = ev => {
-            console.log(this.state.email);
-            console.log(this.state.password);
-            
-            
             ev.preventDefault();
-            this.setState({loading: true, error: false , emptyFiels: false, passNotMatch: false});
-            console.log(this.state.password);
-            
-            if(this.state.email === '' || this.state.password === ''){
-                console.log("ajkgfjahydkas,");
+            this.setState({loading: true, serverError: false, error: false , emptyFiels: false, passNotMatch: false});            
+            if(this.state.phone === '' || this.state.password === ''){
                 this.setState({loading: false, error: false, emptyFiels: true, passNotMatch: false});
                 return null;
             }
+            this.completePhone();
             this.setState({loading: true} , async () => {
                 try {
-                    const dU = await fetchDoctor(this.state.email);
-                    console.log(dU);
-                    if(dU === undefined){
-                        this.setState({passNotMatch: true, loading: false})
-                        return null;
-                    }
-                    console.log(dU);
-                    setTimeout(() => {
-                        console.log(dU);
-                        this.setState({doctor: dU , loading: false});
-                        if(this.state.password === this.state.doctor.password){
-                            this.props.onSubmit(this.state.email);
-                            this.props.history.push('/dashboard');
-                        }
-                        else
-                            this.setState({passNotMatch: true, loading: false});    
-                    }, 2000);
-                          
-                } catch (error) {
-                    
-                }
+                    await logInDoctor(this.state.phone , this.state.password)
+                    .then(res => {
+                        console.log(res);
+                        setTimeout(() => {
+                            if(res === undefined){
+                                this.setState({serverError: true, loading: false})
+                                return null;
+                            }    
+                            // this.props.history.push('/dashboard');
+                            this.props.onSubmit(res);
+                        }, 2000);
+                    })
+                    .catch(err => {console.log(err)});
+                    this.setState({loading: false, error: false, emptyFiels: false, passNotMatch: false});
+                } catch (error) {}
             });
         };
     }
 
+    
 
     render(){
         return(
@@ -96,12 +91,12 @@ class SignIn extends React.Component{
             </div>
             <ThemeProvider theme={theme}>
             <TextField
-                placeholder='ایمیل'
+                placeholder='شماره همراه'
                 style={styles.textField}
                 fullWidth
                 variant="outlined"
-                autoComplete='email'
-                onChange={this.changeEmail}
+                autoComplete='phone'
+                onChange={this.changePhone}
             />
             <TextField
                 type='password'
@@ -121,7 +116,7 @@ class SignIn extends React.Component{
                 ورود
             </Button>}
             {this.state.passNotMatch&&<p style={styles.title}>رمز عبور یا ایمیل اشتباه است</p>}
-            {this.state.error&&<p style={styles.title}>خطا در برقراری ارتباط</p>}
+            {this.state.serverError&&<p style={styles.title}>خطا در برقراری ارتباط</p>}
             {this.state.emptyFiels&&<p style={styles.title}>فیلد های خالی را پر کنید</p>}
             {this.state.loading&&<ProgressBar message='شکیبا باشید ...' style={styles.progressBar} />}
         </form>
