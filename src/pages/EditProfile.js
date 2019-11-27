@@ -7,13 +7,14 @@ import ProgressBar from '../components/ProgressBar';
 import Header from '../components/Header';
 import '../assets/colors/color.js';
 import { primarylight, secondarylight, secondaryDark, primaryColor, primaryDark } from '../assets/colors/color.js';
-import {editDoctor} from '../logics/api'; 
+import { editDoctorInfo } from '../logics/api'; 
 
 const mapStateToProps = state => ({ 
     ...state, 
-    email: state.auth.email,
+    tokens: state.auth.tokens,
     authenticated: state.auth.authenticated,
-    doctor: state.currentUser.doctor
+    doctor: state.currentUser.doctor,
+    editedDoctor: state.currentUser.editedDoctor
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -46,8 +47,8 @@ class EditProfile extends React.Component{
         this.submit = ev => {
             this.setState({loading: true , saved: false});  
             setTimeout(() => {  
+                editDoctorInfo(this.props.tokens.access , this.props.doctor , this.props.editedDoctor);
                 this.props.onSubmit();
-                editDoctor(this.props.doctor.email , this.props.doctor);
                 console.log("asdlsjhaj");
                 this.setState({loading: false , saved: true});
             }, 2000);
@@ -124,13 +125,13 @@ class EditProfile extends React.Component{
                                 style={styles.textField}
                                 variant="outlined"
                                 onChange={this.changeName} 
-                                defaultValue={doctor.name} />
+                                defaultValue={doctor.first_name} />
                             <TextField 
                                 placeholder='نام خانوادگی'
                                 style={styles.textField}
                                 variant="outlined" 
                                 onChange={this.changeFamily}
-                                defaultValue={doctor.family} />
+                                defaultValue={doctor.last_name} />
                         </Paper>
                         <Paper dir='rtl' style={styles.fieldContainer}>
                             <TextField 
@@ -153,7 +154,7 @@ class EditProfile extends React.Component{
                                 onChange={this.changePhone}
                                 style={styles.textField}
                                 variant="outlined" 
-                                defaultValue={doctor.phone} />
+                                defaultValue={doctor.phone_num} />
                         </Paper>
                         <Paper dir='rtl' style={styles.fieldContainer}>
                             <TextField 

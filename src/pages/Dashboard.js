@@ -40,8 +40,8 @@ class Dashboard extends React.Component{
                 .then(response => {
                     console.log(response);
                     this.setState({doctor: response, loading: false});
+                    this.props.storeDoctorInfo(response);
                 })
-            // this.props.storeDoctorInfo(dU);
             // console.log(dU);
                         
         });
