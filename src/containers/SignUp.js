@@ -72,6 +72,12 @@ class SignUp extends React.Component{
                     .then(response => {
                         console.log(response);
                         this.props.onSubmit(response);
+                        const doctor = {
+                            phone: this.state.phone,
+                            name: this.state.name,
+                            family: this.state.family
+                        }
+                        this.props.storeDoctorInfo(doctor);
                         // this.props.history.push('/editprofile');
                     })
                     .catch();
