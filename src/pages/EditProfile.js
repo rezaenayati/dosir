@@ -35,10 +35,10 @@ class EditProfile extends React.Component{
         }
         const updateFieldEvent = key => ev => this.props.onUpdateField(key, ev.target.value);
         this.startEdit = () => this.props.onStartEdit();
-        this.changeName = updateFieldEvent('name');
-        this.changeFamily = updateFieldEvent('family');
+        this.changeName = updateFieldEvent('first_name');
+        this.changeFamily = updateFieldEvent('last_name');
         this.changeEmail = updateFieldEvent('email');
-        this.changePhone = updateFieldEvent('phone');
+        this.changePhone = updateFieldEvent('phone_num');
         this.changeProvince = updateFieldEvent('province');
         this.changeCity = updateFieldEvent('city');
         this.changeAddress = updateFieldEvent('address');
