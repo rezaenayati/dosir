@@ -31,6 +31,7 @@ class SignUp extends React.Component{
         super(props);
         this.state = {
             passError: false,
+            phoneError: false,
             loading: false,
             error: false,
             emptyFiels: false,
@@ -57,15 +58,15 @@ class SignUp extends React.Component{
         this.submit = ev => {
             ev.preventDefault();
             this.completePhone();
-            this.setState({passError: false, loading: true, error: false , emptyFiels: false});
+            this.setState({phoneError: false, passError: false, loading: true, error: false , emptyFiels: false});
             if(this.state.phone === '' || this.state.password === '' || this.state.password2 === '' || this.state.name === '' || this.state.family === '' ){
-                this.setState({passError: false, loading: false, error: false, emptyFiels: true});
+                this.setState({phoneError: false, passError: false, loading: false, error: false, emptyFiels: true});
                 return null;
             }
             setTimeout(async () => {
                 if(this.state.password !== this.state.password2){
                     console.log("Password unmatch!");
-                    this.setState({passError: true});
+                    this.setState({passError: true , loading: false});
                     return null;
                 }
                 await createDoctor(this.state.validPhone, this.state.password, this.state.name, this.state.family)
@@ -73,14 +74,16 @@ class SignUp extends React.Component{
                         console.log(response);
                         this.props.onSubmit(response);
                         const doctor = {
-                            phone: this.state.phone,
-                            name: this.state.name,
-                            family: this.state.family
+                            phone_num: this.state.phone,
+                            first_name: this.state.name,
+                            last_name: this.state.family
                         }
                         this.props.storeDoctorInfo(doctor);
-                        // this.props.history.push('/editprofile');
+                        this.props.history.push('/editprofile');
                     })
-                    .catch();
+                    .catch(er => {
+                        this.setState({phoneError: true })
+                    });
                 this.setState({loading: false});
         }, 2000);
 
