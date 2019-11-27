@@ -32,10 +32,11 @@ class SignIn extends React.Component{
         this.state = {
             phone: '',
             password: '',
+            validPhone: '',
 
             tokens: {},
 
-            passNotMatch: false,
+            fieldsNotMatch: false,
             serverError: false,
             showPassword: true,
             loading: false,
@@ -48,33 +49,36 @@ class SignIn extends React.Component{
             let phone = this.state.phone
             let newPhone = phone.substring(1);
             phone = "+98" + newPhone;
-            this.setState({phone: phone})
+            this.setState({validPhone: phone})
         };
 
         this.submit = ev => {
             ev.preventDefault();
-            this.setState({loading: true, serverError: false, error: false , emptyFiels: false, passNotMatch: false});            
+            this.setState({loading: true, serverError: false, error: false , emptyFiels: false, fieldsNotMatch: false});            
             if(this.state.phone === '' || this.state.password === ''){
-                this.setState({loading: false, error: false, emptyFiels: true, passNotMatch: false});
+                this.setState({loading: false, error: false, emptyFiels: true, fieldsNotMatch: false});
                 return null;
             }
             this.completePhone();
             this.setState({loading: true} , async () => {
                 try {
-                    await logInDoctor(this.state.phone , this.state.password)
-                    .then(res => {
-                        console.log(res);
-                        setTimeout(() => {
+                    setTimeout(async () => {
+                        await logInDoctor(this.state.validPhone , this.state.password)
+                        .then(res => {
+                            console.log(res);
+                            this.props.onSubmit(res);
                             if(res === undefined){
                                 this.setState({serverError: true, loading: false})
                                 return null;
                             }    
-                            // this.props.history.push('/dashboard');
-                            this.props.onSubmit(res);
-                        }, 2000);
-                    })
-                    .catch(err => {console.log(err)});
-                    this.setState({loading: false, error: false, emptyFiels: false, passNotMatch: false});
+                            this.props.history.push('/dashboard');
+                            this.setState({loading: false, error: false, emptyFiels: false});
+                        })
+                        .catch(err => {
+                            console.log(err)
+                            this.setState({fieldsNotMatch: true, loading: false})
+                        });
+                    }, 2000);
                 } catch (error) {}
             });
         };
@@ -115,7 +119,7 @@ class SignIn extends React.Component{
                 >
                 ورود
             </Button>}
-            {this.state.passNotMatch&&<p style={styles.title}>رمز عبور یا ایمیل اشتباه است</p>}
+            {this.state.fieldsNotMatch&&<p style={styles.title}>رمز عبور یا ایمیل اشتباه است</p>}
             {this.state.serverError&&<p style={styles.title}>خطا در برقراری ارتباط</p>}
             {this.state.emptyFiels&&<p style={styles.title}>فیلد های خالی را پر کنید</p>}
             {this.state.loading&&<ProgressBar message='شکیبا باشید ...' style={styles.progressBar} />}

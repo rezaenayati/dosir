@@ -30,10 +30,6 @@ export const createDoctor = async (phone, password, name, family) => {
 
 }
 
-////////////// Log In Methods
-
-///////////////this method works only in development mode
-
 export const logInDoctor = async (phone, password) => {
     console.log("axios");
     var body = JSON.stringify({
@@ -56,7 +52,7 @@ export const logInDoctor = async (phone, password) => {
             }
         })
         .then(response => resolve(response.data) )
-        .catch((er) => console.log(er))
+        .catch((er) => reject(er))
     });
 }
 
@@ -80,7 +76,7 @@ export const fetchDoctorInfo = async (access) => {
             }
         })
         .then(response => resolve(response.data) )
-        .catch((er) => console.log(er))
+        .catch((er) => reject(er))
     });
 }
 
@@ -104,31 +100,7 @@ export const editDoctorInfo = async (access , doctor , editedDoctor) => {
             }
         })
         .then(response => resolve(response.data) )
-        .catch((er) => console.log(er))
+        .catch((er) => reject(er))
     });
 
-}
-
-
-export const editDoctor = async (email , inputData) => {
-    const response = await fetch(`http://localhost:4000/doctor?email=${email}`);
-    const doctorUsers = await response.json();
-    const id = doctorUsers[0].id;    
-    Object.assign(doctorUsers[0] , inputData);
-    // console.log(doctorUsers);
-    console.log(inputData);
-
-
-    const rsp = await fetch(`http://localhost:4000/doctor/${id}` , {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(doctorUsers[0])
-    })
-    .catch(err => {
-        console.log("Nashood");
-    })
-    console.log(rsp);
-    return rsp;
 }
