@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import { Grid } from '@material-ui/core';
 import DoctorProfile from '../components/DoctorProfile';
-import DashboardDetails from '../components/DashboardDetails';
+import DashboardDetails from '../containers/DashboardDetails';
 import { withRouter } from 'react-router-dom';
 
 import { fetchDoctorInfo } from '../logics/api';
