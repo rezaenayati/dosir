@@ -1,42 +1,5 @@
 import axios from 'axios';
 
-export const createDoctor213123 = async (phone, password, name, family) => {
-
-    let formData = new FormData();
-    formData.append("phone_num", phone);
-    formData.append("password", password);
-    formData.append("first_name", name);
-    formData.append("last_name", family);
-    
-    console.log();
-    
-    const response = await fetch('http://127.0.0.1:8000/api/v1/doctor/create' , {
-        method: 'POST',
-        body: formData,
-        mode: 'no-cors',
-        headers: {'Content-Type': 'multipart/form-data; boundary=764284731520932820366877'}
-    })
-    .catch(err => {
-        console.log("Nashood");
-    })
-    console.log(response);
-    return response;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 export const createDoctor = async (phone, password, name, family) => {
 
     console.log("axios");
@@ -66,34 +29,6 @@ export const createDoctor = async (phone, password, name, family) => {
     });
 
 }
-
-
-
-
-
-
-
-
-
-
-export const fetchPost = id => {
-    return new Promise((resolve, reject) => {
-      axios
-        .get(`http://localhost:3000/photos?id=${id}`)
-        .then(({ data }) => resolve(data[0]))
-        .catch(e => reject(e));
-    });
-};
-
-
-
-
-
-
-
-
-
-
 
 ////////////// Log In Methods
 
@@ -127,148 +62,28 @@ export const logInDoctor = async (phone, password) => {
 
 
 
-
-//////////////////////
-
-
-
-
-
-
-
-
-
-
-
-export const logInDoctor43567 = async (phone, password) => {
-      var bodyFormData = new FormData();
-      bodyFormData.append("phone_num", "+989124541112");
-      bodyFormData.append("password", "1234");
-
-    console.log("logInDocotr");
+export const fetchDoctorInfo = async (access) => {
+    console.log("axios");
+    console.log(access);
     
-    fetch('http://127.0.0.1:8000/api/v1/login' , {
-        method: 'POST',
-        body: bodyFormData,
-        mode: 'no-cors',
-        headers: {
-            'Content-Type': 'application/form-data', 
-            'Access-Control-Allow-Origin': '*',
-            "Accept": '*/*',
-        }
-    }).then(response => {console.log(response)})
-    .catch(err => { 
-        console.log("Nashood");
-    })
-}
-
-
-
-export const logInDoctor31312 = async (phone , password) => {
-
-    var data = JSON.stringify({
-        "phone_num": "+989192007074",
-        "password": "1234"
-      });
-
-    var xhr = new XMLHttpRequest();
-    xhr.withCredentials = true;
-
-    xhr.addEventListener("readystatechange", function () {
-    if (this.readyState === 4) {
-        console.log(this.responseText);
-    }
+    return new Promise((resolve, reject) => {
+        axios({
+            method: 'get',
+            url: 'http://127.0.0.1:8000/api/v1/doctor/info',
+            crossDomain: true,
+            headers:{
+                'Authorization': 'Bearer ' + access,
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'POST'
+            }
+        })
+        .then(response => resolve(response.data) )
+        .catch((er) => console.log(er))
     });
-
-    xhr.open("POST", "http://127.0.0.1:8000/api/v1/login");
-    xhr.setRequestHeader("Content-Type", "application/json");
-    xhr.setRequestHeader("Accept", "*/*");
-    xhr.setRequestHeader("Cache-Control", "no-cache");
-    xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
-    xhr.setRequestHeader("cache-control", "no-cache");
-    xhr.withCredentials = true;
-    // xhr.onreadystatechange = someHandler;
-    xhr.send(data);
-    
 }
 
-////////////////////////////// end of login methods
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-////////////////////////////////////////////////////////////////////
-export const fetchDoctor = async email => {
-    // console.log(email);
+export const editDoctor = { 
     
-    // const response = await fetch(`http://localhost:4000/doctor?email=${email}`)
-    // .catch(err => {
-    //     console.log("Nashood");
-    //     return false
-    // });
-    // const doctorUsers = await response.json();    
-    // console.log(doctorUsers[0]);
-    // return doctorUsers[0]
-}
-
-export const editDoctor = async (email , inputData) => {
-    const response = await fetch(`http://localhost:4000/doctor?email=${email}`);
-    const doctorUsers = await response.json();
-    const id = doctorUsers[0].id;    
-    Object.assign(doctorUsers[0] , inputData);
-    // console.log(doctorUsers);
-    console.log(inputData);
-
-
-    const rsp = await fetch(`http://localhost:4000/doctor/${id}` , {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(doctorUsers[0])
-    })
-    .catch(err => {
-        console.log("Nashood");
-    })
-    console.log(rsp);
-    return rsp;
-}
-
-
-export const postNewDoctor = async (doctor) => {
-    console.log(doctor);
-    
-    const rsp = await fetch(`http://localhost:4000/doctor/` , {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(doctor)
-    })
-    .catch(err => {
-        console.log("Nashood");
-    })
-    console.log("raftim tosh");
-    
-    console.log(rsp);
-    return rsp;
 }
