@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const createDoctor = async (phone, password, name, family) => {
+export const createDoctor213123 = async (phone, password, name, family) => {
 
     let formData = new FormData();
     formData.append("phone_num", phone);
@@ -24,27 +24,47 @@ export const createDoctor = async (phone, password, name, family) => {
 }
 
 
-export const createDoctor2 = async (phone, password, name, family) => {
 
-    var bodyFormData = new FormData();
-    bodyFormData.set("phone_num", "+989124541112");
-    bodyFormData.set("password", "1234");
-    bodyFormData.set("first_name", "reza");
-    bodyFormData.set("last_name", "enayati");
-    return new Promise((resolve, reject) => {
-            let url = "http://127.0.0.1:8000/api/v1/doctor/create";
-            axios.post(url)
-              .body(bodyFormData)
-              .headers({'Content-Type': 'multipart/form-data' })
-              .then(({ data }) => {
-                // cache.photos = data;
-                // cache.timestamp = new Date();
-                console.log(data);
-                return data;
-              })
-              .then(data => resolve(data))
-              .catch(e => reject(e));
+
+
+
+
+
+
+
+
+
+
+
+
+export const createDoctor = async (phone, password, name, family) => {
+
+    console.log("axios");
+    var body = JSON.stringify({
+        "phone_num": phone,
+        "password": password,
+        "first_name": name,
+        "last_name": family
     });
+    console.log(phone);
+    
+    return new Promise((resolve, reject) => {
+        axios({
+            method: 'post',
+            url: 'http://127.0.0.1:8000/api/v1/doctor/create',
+            data: body,
+            crossDomain: true,
+            headers:{
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'POST'
+            }
+        })
+        .then(response => resolve(response.data) )
+        .catch((er) => reject(er))
+    });
+
 }
 
 

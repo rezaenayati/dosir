@@ -9,7 +9,8 @@ import { withRouter } from 'react-router-dom';
 import ProgressBar from '../components/ProgressBar';
 import '../App.css';
 import { secondarylight, primaryDark, primarylight } from '../assets/colors/color.js';
-import { postNewDoctor } from '../logics/api';
+import { postNewDoctor , createDoctor , logInDoctor } from '../logics/api';
+import axios from 'axios';
 
 const theme = createMuiTheme({
     direction: 'rtl',
@@ -19,7 +20,7 @@ const theme = createMuiTheme({
 const mapStateToProps = state => ({ ...state});
 
 const mapDispatchToProps = dispatch => ({
-    onSubmit: (email) => dispatch({type: 'REGISTER' , email}),
+    onSubmit: (tokens) => dispatch({type: 'REGISTER' , tokens}),
     storeDoctorInfo: (doctor) => dispatch({type: 'LOAD_DOCTOR_INFO' , doctor})
 });
 
@@ -34,49 +35,46 @@ class SignUp extends React.Component{
             error: false,
             emptyFiels: false,
 
-            email: '',
+            phone: '',
             password: '',
             password2: '',
             name: '',
             family: '',
+            validPhone: '',
         }
-        this.changeEmail = ev => this.setState({email: ev.target.value});
+
+        this.changePhone = ev => this.setState({phone: ev.target.value});
         this.changePassword = ev => this.setState({password: ev.target.value});
         this.changePassword2 = ev => this.setState({password2: ev.target.value});
         this.changeName = ev => this.setState({name: ev.target.value});
         this.changeFamily = ev => this.setState({family: ev.target.value});       
-        
+        this.completePhone = () => {
+            let phone = this.state.phone
+            let newPhone = phone.substring(1);
+            phone = "+98" + newPhone;
+            this.setState({validPhone: phone})
+        };
         this.submit = ev => {
             ev.preventDefault();
+            this.completePhone();
             this.setState({passError: false, loading: true, error: false , emptyFiels: false});
-            if(this.state.email === '' || this.state.password === '' || this.state.password2 === '' || this.state.name === '' || this.state.family === '' ){
+            if(this.state.phone === '' || this.state.password === '' || this.state.password2 === '' || this.state.name === '' || this.state.family === '' ){
                 this.setState({passError: false, loading: false, error: false, emptyFiels: true});
                 return null;
             }
-            setTimeout(() => {
-                if(this.state.password === this.state.password2){
-                        // const tokens = createDoctor(this.state.phone, this.state.password, this.state.name, this.state.family);
-                        // console.log(tokens.access);
-                        const doctor = {
-                            email : this.state.email,
-                            name: this.state.name,
-                            family: this.state.family,
-                            password: this.state.password,
-                        }
-                        console.log(doctor);
-                        const dU = postNewDoctor(doctor)
-                        if(doctor !== undefined){
-                            this.props.onSubmit(this.state.email);
-                            this.props.storeDoctorInfo(doctor);
-                            this.props.history.push('/editprofile');    
-                        }
-                        else
-                            this.setState({error: true})
-                }
-                else{
+            setTimeout(async () => {
+                if(this.state.password !== this.state.password2){
                     console.log("Password unmatch!");
                     this.setState({passError: true});
+                    return null;
                 }
+                await createDoctor(this.state.validPhone, this.state.password, this.state.name, this.state.family)
+                    .then(response => {
+                        console.log(response);
+                        this.props.onSubmit(response);
+                        // this.props.history.push('/editprofile');
+                    })
+                    .catch();
                 this.setState({loading: false});
         }, 2000);
 
@@ -93,12 +91,14 @@ class SignUp extends React.Component{
             <ThemeProvider theme={theme}>
             <div dir='rtl' style={styles.fieldContainer}>
                             <TextField 
+                                fullWidth
                                 placeholder='نام'
                                 style={styles.textField}
                                 variant="outlined"
                                 onChange={this.changeName} 
                                 />
                             <TextField 
+                                fullWidth
                                 placeholder='نام خانوادگی'
                                 style={styles.textField}
                                 variant="outlined" 
@@ -106,12 +106,12 @@ class SignUp extends React.Component{
                                 />
             </div>                    
             <TextField
-                placeholder='ایمیل'
+                placeholder='شماره همراه'
                 style={styles.textField}
                 fullWidth
                 variant="outlined"
-                autoComplete='email'
-                onChange={this.changeEmail}
+                autoComplete='phone'
+                onChange={this.changePhone}
             />
             <TextField
                 type='password'
@@ -132,14 +132,15 @@ class SignUp extends React.Component{
             />
             {this.state.passError&&<p style={styles.errorMessage} visibilty="false">*** رمز عبور مطابقت ندارد</p>}
             </ThemeProvider>
+            {this.state.phoneError&&<p style={styles.title}>شماره وارد شده معتبر نیست</p>}
             {this.state.error&&<p style={styles.title}>خطا در برقراری ارتباط</p>}
             {this.state.emptyFiels&&<p style={styles.title}>فیلد های خالی را پر کنید</p>}
-            {!this.state.loading&&<Button
-                onClick={this.submit} 
-                fullWidth 
-                style={styles.button}>
-                ثبت نام
-            </Button>}
+            {!this.state.loading&& <Button
+                                        onClick={this.submit} 
+                                        fullWidth 
+                                        style={styles.button}>
+                                        ثبت نام
+                                    </Button>}
             {this.state.loading&&<ProgressBar message='شکیبا باشید ...' style={styles.progressBar} />}
 
         </form>
