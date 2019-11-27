@@ -1,7 +1,19 @@
 import React from 'react';
 import { Paper, Avatar, Card, CardActionArea } from '@material-ui/core';
+import {Bar} from 'react-chartjs-2';
 
 import DashboardButton from '../components/DashboardButton';
+
+const data = {
+    labels: ["شنبه", "یکشنبه", "دوشنبه", "سه شنبه", "چهارشنبه", "پنج شنبه", "جمعه"],
+    datasets: [{
+    label: "تعداد ویزیت ها در روز",
+    backgroundColor: '#6bafb1',
+    borderColor: '#025468',
+    data: [4, 10, 5, 2, 7, 6, 0],
+    }]
+}
+
 
 export default class DashboardDetails extends React.Component{
     render(){
@@ -21,33 +33,16 @@ export default class DashboardDetails extends React.Component{
                         imageUrl='http://uupload.ir/files/l8zw_undraw_files1_9ool.png'
                         title='افزودن گزارش معاینه'
                     />
-                </div>    
+                </div>
+                <div style={Styles.chartContainer}>
+                    <Bar style={Styles.chart}  data={data} />    
+                </div>
             </div>
         );
     }
 }
 
 const Styles = {
-    cardContainer: {
-        display: 'flex',
-        flexDirection: 'row',
-        // marginRight: 15,
-        borderRadios: 13,
-        width: 330,
-        height: 150
-    },
-    cardActionContainer: {
-        display: 'flex',
-        flexDirection: 'row',
-    },
-    title: {
-        fontFamily: 'Vazir',
-        fontSize: 18,
-        marginRight: 5
-    },
-    iconImage: {
-        width: 145
-    },
     rowContainer: {
         display: 'flex',
         flexDirection: 'row',
@@ -56,5 +51,15 @@ const Styles = {
         marginBottom: 10,
         marginLeft: 20,
         justifyContent: 'space-between'
+    },
+    chartContainer: {
+        height: 750,
+        width: 750,
+        marginRight: 'auto',
+        marginLeft: 'auto',
+        marginTop: 50
+    },
+    chart: {
+
     }
 }
