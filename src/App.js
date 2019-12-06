@@ -6,6 +6,7 @@ import Dashboard from './pages/Dashboard';
 import Profile from './pages/Profile';
 import Page404 from './pages/Page404';
 import EditProfile from './pages/EditProfile';
+import CreateReport from './pages/CreateReport';
 import './App.css';
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
             <Route path="/user/@:username"> <Profile /> </Route>
             <Route path={routeCodes.Dashboard}> <Dashboard /> </Route>
             <Route path={routeCodes.EditProfile}> <EditProfile /> </Route>
+            <Route path={routeCodes.CreateReport}> <CreateReport /> </Route>
             <Route component={Page404} />
         </Switch>
       </div>
@@ -34,4 +36,5 @@ export const routeCodes = {
   HOME: publicPath,
   Dashboard: `${ publicPath }dashboard`,
   EditProfile: `${ publicPath }editprofile`,
+  CreateReport: `${ publicPath }createreport`,
 };
