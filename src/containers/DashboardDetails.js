@@ -1,6 +1,7 @@
 import React from 'react';
 import { Paper, Avatar, Card, CardActionArea } from '@material-ui/core';
 import {Bar} from 'react-chartjs-2';
+import { withRouter } from 'react-router-dom'
 
 import DashboardButton from '../components/DashboardButton';
 
@@ -15,7 +16,7 @@ const data = {
 }
 
 
-export default class DashboardDetails extends React.Component{
+class DashboardDetails extends React.Component{
     render(){
         return(
             <div>
@@ -32,6 +33,8 @@ export default class DashboardDetails extends React.Component{
                     <DashboardButton
                         imageUrl='http://uupload.ir/files/l8zw_undraw_files1_9ool.png'
                         title='افزودن گزارش معاینه'
+                        onClick={() => {this.props.history.push('/createreport')}}
+                        
                     />
                 </div>
                 <div style={Styles.chartContainer}>
@@ -41,6 +44,8 @@ export default class DashboardDetails extends React.Component{
         );
     }
 }
+
+export default withRouter(DashboardDetails);
 
 const Styles = {
     rowContainer: {

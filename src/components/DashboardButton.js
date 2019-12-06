@@ -16,7 +16,7 @@ export default class DashboardButtons extends React.Component{
     render(){
         return(
             <Card style={Styles.cardContainer}>
-                    <CardActionArea onClick={() => {console.log("Thats my boy!")}} style={Styles.cardActionContainer}>
+                    <CardActionArea onClick={this.props.onClick} style={Styles.cardActionContainer}>
                         <p style={Styles.title}>{this.props.title}</p>
                         <img style={Styles.iconImage} src={this.props.imageUrl} />
                     </CardActionArea>
