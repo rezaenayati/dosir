@@ -1,9 +1,11 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import { TextField, Paper, Fab, CircularProgress, Button } from '@material-ui/core'
-import CheckIcon from '@material-ui/icons/Check';
-import SaveIcon from '@material-ui/icons/Save';
 import AddIcon from '@material-ui/icons/Add';
+import DatePicker from "react-modern-calendar-datepicker";
+import 'react-modern-calendar-datepicker/lib/DatePicker.css';
+import { Calendar } from "react-modern-calendar-datepicker";
+
 
 import Header from '../components/Header';
 import { primaryColor , secondarylight, primarylight, secondaryDark } from '../assets/colors/color';
@@ -25,6 +27,8 @@ class CreateReport extends React.Component{
             success: false,
             loading: false,
             prescription: [],
+            drugNumber: 0,
+            selectedDay: null,
         }
 
         this.handleButtonClick = () => {
@@ -35,9 +39,8 @@ class CreateReport extends React.Component{
         }
 
         this.addDrug = () => {
-            this.state.prescription.push(0);
-            this.setState({loading: true})
-            this.setState({loading: false})
+            this.setState({drugNumber: ++this.state.drugNumber})
+            this.state.prescription.push(this.state.drugNumber);
         }
     }
 
@@ -51,7 +54,10 @@ class CreateReport extends React.Component{
 
     render(){
         const renderDrugNameField = this.state.prescription.map((number) =>
-            <TextField style={styles.drugName} dir='rtl' fullWidth variant="outlined" />
+            <div style={styles.rowContainer}>
+                <p style={styles.textStyle}>{number + ". "}</p>
+                <TextField style={styles.drugName} dir='rtl' fullWidth variant="outlined" />
+            </div>
         );
         const renderDrugDose = this.state.prescription.map((number) =>
             <TextField dir='rtl' style={styles.drugDose} fullWidth variant="outlined" />
@@ -88,7 +94,17 @@ class CreateReport extends React.Component{
                                 <p style={styles.textStyle}>تشخیص نهایی :</p>
                                 <TextField multiline fullWidth rows='2' variant="outlined" />
                                 <p style={styles.textStyle}>تاریخ مراجعه بعدی :</p>
-                                <TextField fullWidth  variant="outlined" />
+                                <div style={styles.datePicker}>
+                                    <DatePicker
+                                        value={this.state.selectedDay}
+                                        onChange={(input) => this.setState({selectedDay: input})}
+                                        inputPlaceholder="انتخاب تاریخ"
+                                        colorPrimary={primaryColor}
+                                        colorPrimaryLight={primarylight}
+                                        shouldHighlightWeekends
+                                        locale="fa" // add this
+                                    />
+                                </div>
                                 <div style={styles.buttonContainer}>
                                     {!this.state.loading&&<Button style={styles.buttonSave} onClick={this.submit}>ثبت</Button>}
                                     {this.state.loading&&<ProgressBar message='در حال ذخیره ...' style={styles.progressBar} />}
@@ -152,12 +168,6 @@ const styles = {
         marginRight: 240, 
         fontFamily:'Vazir',
     },
-    profileButton: {
-        marginLeft: 10,
-        marginRight: 10, 
-        fontFamily:'Vazir',
-        backgroundColor: primarylight,
-    },
     infoContainer: {
         display: 'flex',
         flexDirection: 'row',
@@ -185,4 +195,8 @@ const styles = {
         height: 300 ,
         width: 600
     },
+    datePicker: {
+        marginTop: 'auto', 
+        marginBottom: 'auto', 
+    }
 }
