@@ -7,6 +7,8 @@ import Profile from './pages/Profile';
 import Page404 from './pages/Page404';
 import EditProfile from './pages/EditProfile';
 import CreateReport from './pages/CreateReport';
+import PatientProfile from './pages/PatientProfile';
+
 import './App.css';
 
 function App() {
@@ -17,6 +19,7 @@ function App() {
         <Switch>
             <Route exact path={publicPath}> <Register /> </Route>
             <Route path="/user/@:username"> <Profile /> </Route>
+            <Route path={routeCodes.PatientProfile}> <PatientProfile /> </Route>
             <Route path={routeCodes.Dashboard}> <Dashboard /> </Route>
             <Route path={routeCodes.EditProfile}> <EditProfile /> </Route>
             <Route path={routeCodes.CreateReport}> <CreateReport /> </Route>
@@ -37,4 +40,5 @@ export const routeCodes = {
   Dashboard: `${ publicPath }dashboard`,
   EditProfile: `${ publicPath }editprofile`,
   CreateReport: `${ publicPath }createreport`,
+  PatientProfile: `${ publicPath }patientprofile`
 };
