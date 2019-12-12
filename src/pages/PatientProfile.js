@@ -1,12 +1,19 @@
 import React from 'react';
 import { 
-    Link, Grid , Paper, Avatar, Divider    
+    Link, Grid , Paper, Avatar, Divider, Button    
 } from "@material-ui/core";
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import { VerticalTimeline, VerticalTimelineElement }  from 'react-vertical-timeline-component';
+import CheckIcon from '@material-ui/icons/Check';
+import SaveIcon from '@material-ui/icons/Save';
+import AddIcon from '@material-ui/icons/Add';
+import 'react-vertical-timeline-component/style.min.css';
+
 
 import Header from '../components/Header';
-import { primarylight } from '../assets/colors/color';
+import TimelineElement from '../components/TimelineElement';
+import { primarylight , primaryDark, primaryColor, secondarylight, secondaryDark } from '../assets/colors/color';
 
 const mapStateToProps = state => ({ 
     ...state, 
@@ -35,7 +42,29 @@ class PatientProfile extends React.Component{
                 </header>
                     <Grid item={true} container component="main" style={{height: '100vh'}}>
                         <Grid item={true}  xs={false} sm={4} md={9} style={styles.leftContainer} >
-                            Time Line
+                        <VerticalTimeline>
+                            <TimelineElement diagnosis='سرماخوردگی' doctorName='احمد جلالی' doctorTitle='اعصاب و  روان' date='۱۳۹۸/۲/۲۱' />
+                            <TimelineElement />
+                            <TimelineElement />
+                            <TimelineElement />
+                            <TimelineElement />
+                            <TimelineElement />
+                            <TimelineElement />
+                            <TimelineElement />
+                            <TimelineElement />
+                            <TimelineElement />
+                            <TimelineElement />
+                            <TimelineElement />
+                            <TimelineElement />
+                            <TimelineElement />
+                            <TimelineElement />
+                            <TimelineElement />
+                            <TimelineElement />
+                            <TimelineElement />
+                            <TimelineElement />
+
+                        </VerticalTimeline>
+
                         </Grid>
                         <Grid item={true} style={styles.rightContainer} component={Paper} xs={12} sm={8} md={3} elevation={1} square>
                             <div style={{display: 'flex' , flexDirection: 'column'}} >
@@ -82,6 +111,9 @@ class PatientProfile extends React.Component{
 }
 
 const styles = {
+    leftContainer: {
+      backgroundColor: secondarylight  
+    },
     rightContainer: {
         backgroundColor: primarylight
     },
