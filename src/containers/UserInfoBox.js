@@ -32,6 +32,10 @@ class UserInfoBox extends React.Component{
 
         this.changePhone = ev => this.setState({phone: ev.target.value});
 
+        this.handlePatientProfileButton = () => {
+            this.props.history.push('/patientprofile');
+        }
+
         this.handleButtonClick = () => {
 
             //this is sample patient
@@ -46,6 +50,7 @@ class UserInfoBox extends React.Component{
                 birthTown: 'ملارد',
                 email: 'mehditorabi@gmail.com',
                 phone: '09122222222',
+                image: 'https://playerswiki.com/uploads/thumb/mehdi-torabi-300-300.jpeg'
             }
 
 
@@ -106,7 +111,7 @@ class UserInfoBox extends React.Component{
                             </div>
                         </div>
 
-                        {this.state.success&&<Button style={styles.profileButton}>مشاهده پروفایل بیمار</Button>}     
+                        {this.state.success&&<Button onClick={this.handlePatientProfileButton} style={styles.profileButton}>مشاهده پروفایل بیمار</Button>}     
                         
                     </div>
 

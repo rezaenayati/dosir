@@ -14,9 +14,11 @@ import 'react-vertical-timeline-component/style.min.css';
 import Header from '../components/Header';
 import TimelineElement from '../components/TimelineElement';
 import { primarylight , primaryDark, primaryColor, secondarylight, secondaryDark } from '../assets/colors/color';
+import PatientInfo from '../components/PatientInfo';
 
 const mapStateToProps = state => ({ 
     ...state, 
+    patientInfo: state.currentPatient.info
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -31,6 +33,7 @@ class PatientProfile extends React.Component{
     }
 
     componentDidMount(){
+        
     }
 
     render(){
@@ -67,42 +70,18 @@ class PatientProfile extends React.Component{
 
                         </Grid>
                         <Grid item={true} style={styles.rightContainer} component={Paper} xs={12} sm={8} md={3} elevation={1} square>
-                            <div style={{display: 'flex' , flexDirection: 'column'}} >
-                                <div dir='rtl' style={{marginTop: 15, display: 'flex', flexDirection: 'row'}}>
-                                            <Avatar style={{   
-                                                        marginTop: 'auto', 
-                                                        marginLeft: 'auto', 
-                                                        marginRight: 'auto', 
-                                                        width: 134, 
-                                                        height: 134}}
-                                                        src='https://playerswiki.com/uploads/thumb/mehdi-torabi-300-300.jpeg'
-                                                        /> 
-                                            <div style={{ 
-                                                        marginTop: 'auto', 
-                                                        marginBottom: 'auto',
-                                                        marginLeft: 'auto', 
-                                                        marginRight: 'auto',}}>
-                                                <p style={styles.largeText}> مهدی ترابی</p>
-                                            </div>        
-                                </div> 
-                                    <div dir='rtl' style={{ 
-                                                marginTop: 10,
-                                                marginLeft: 'auto', 
-                                                        marginRight: 'auto',}}>
-                                        <Divider variant='middle' />                                                            
-                                        <p style={styles.text}> جنسیت: مرد</p>
-                                        <p style={styles.text}> وضعیت تاهل: این رل ویت ع خ</p>
-                                        <Divider variant='middle' />
-                                        <p style={styles.text}> تاریخ تولد: ۱۳۷۴/۱۲/۲</p>
-                                        <p style={styles.text}> محل تولد: ملارد</p>
-                                        <Divider variant='middle' />
-                                        <p style={styles.text}> قد: ۱۸۵</p>
-                                        <p style={styles.text}> وزن: ۸۵</p>
-                                        <Divider variant='middle' />
-                                        <p style={styles.text}> شماره همراه: 09122222222</p>
-                                        <p style={styles.text}> ایمیل: mehditorabi@gmail.com</p>
-                                    </div>                                                        
-                            </div>
+                            <PatientInfo 
+                                name={this.props.patientInfo.name} 
+                                family={this.props.patientInfo.family}
+                                height={this.props.patientInfo.height}
+                                weight={this.props.patientInfo.weight}
+                                gender={this.props.patientInfo.gender}
+                                marriageStatus={this.props.patientInfo.marriageStatus}
+                                birthdate={this.props.patientInfo.birthdate}
+                                birthTown={this.props.patientInfo.birthTown}
+                                email={this.props.patientInfo.email}
+                                phone={this.props.patientInfo.phone}
+                                />
                         </Grid>
                     </Grid>
             </div>
