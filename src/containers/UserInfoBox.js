@@ -3,24 +3,67 @@ import { TextField, Paper, Fab, CircularProgress, Button } from '@material-ui/co
 import CheckIcon from '@material-ui/icons/Check';
 import SaveIcon from '@material-ui/icons/Save';
 import AddIcon from '@material-ui/icons/Add';
+import {connect} from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
 import { primaryColor , secondarylight, primarylight, secondaryDark } from '../assets/colors/color';
 
+const mapStateToProps = state => ({ ...state});
 
-export default class UserInfoBox extends React.Component{
+const mapDispatchToProps = dispatch => ({
+    submitPatientInfo: (info) => {
+        dispatch({type: 'SUBMIT_PATIENT_INFO' , info});
+    }
+});
+
+class UserInfoBox extends React.Component{
 
     constructor(props){
         super(props);
         this.state = {
+            phone: '',
+            name: '',
+            birthdate: '',
+            gender: '',
+
             success: false,
             loading: false,
         }
 
+        this.changePhone = ev => this.setState({phone: ev.target.value});
+
         this.handleButtonClick = () => {
+
+            //this is sample patient
+            const patient = {
+                name: 'مهدی',
+                family: 'ترابی',
+                height: 185,
+                weight: 85,
+                gender: 'مرد',
+                birthdate: '۱۳۷۸/۰۲/۲۱',
+                marriageStatus: 'مجرد',
+                birthTown: 'ملارد',
+                email: 'mehditorabi@gmail.com',
+                phone: '09122222222',
+            }
+
+
             if (!this.state.loading) {
                 this.setState({success: false, loading: true})
             }
-            setTimeout(() => {this.setState({success: true, loading: false})} , 2000);
+            setTimeout(() => {
+                //request phone to the server and get response()
+                //save response in the redux
+                this.props.submitPatientInfo(patient)
+                this.setState({
+                    name: patient.name+" "+patient.family,
+                    birthdate: patient.birthdate,
+                    gender: patient.gender,
+                    success: true, 
+                    loading: false
+                })
+            } , 2000);
         }
 
     }
@@ -39,7 +82,7 @@ export default class UserInfoBox extends React.Component{
                             <div dir='rtl' style={styles.checkNumberContainer}>
                                 <div style={styles.rowMargeTopContainer}>
                                     <p style={styles.textStyle}>شماره همراه بیمار:</p>
-                                    <TextField variant="outlined"/>
+                                    <TextField onChange={this.changePhone} variant="outlined"/>
                                     <div style={styles.fabContainer}>
                                         <Fab aria-label="save" color="primary" onClick={this.handleButtonClick} style={styles.fab}>
                                         {this.state.success ? <CheckIcon /> : <p style={styles.text}>بررسی</p>}
@@ -53,12 +96,12 @@ export default class UserInfoBox extends React.Component{
                             <div>   
                                 <p style={styles.textStyle}>اطلاعات بیمار</p>
                                 <div style={styles.infoContainer}>
-                                    <p style={styles.textStyle}>نام :  {this.state.success&&"مهدی ترابی"} </p>
-                                    <p style={styles.textStyle}>تاریخ تولد: {this.state.success&&"۱۳۷۸/۱۲/۱۹"}  </p>
+                                    <p style={styles.textStyle}>نام :  {this.state.success&&this.state.name} </p>
+                                    <p style={styles.textStyle}>تاریخ تولد: {this.state.success&&this.state.birthdate}  </p>
                                 </div>
                                 <div style={styles.infoContainer}>
                                     <p style={styles.textStyle}>تاریخ ویزیت : ۱۳۹۸/۲/۲۳</p>
-                                    <p style={styles.textStyle}>جنسیت:  {this.state.success&&"مرد"} </p>
+                                    <p style={styles.textStyle}>جنسیت:  {this.state.success&&this.state.gender} </p>
                                 </div>
                             </div>
                         </div>
@@ -73,6 +116,8 @@ export default class UserInfoBox extends React.Component{
         );
     }
 }
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(UserInfoBox));
 
 
 const styles = {
@@ -128,5 +173,11 @@ const styles = {
         marginTop: 10, 
         height: 300 ,
         width: 600
+    },
+    profileButton: {
+        marginLeft: 10,
+        marginRight: 10, 
+        fontFamily:'Vazir',
+        backgroundColor: primarylight,
     },
 }

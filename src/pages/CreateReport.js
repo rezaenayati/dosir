@@ -10,7 +10,7 @@ import { Calendar } from "react-modern-calendar-datepicker";
 import Header from '../components/Header';
 import { primaryColor , secondarylight, primarylight, secondaryDark } from '../assets/colors/color';
 import ProgressBar from '../components/ProgressBar';
-import UserInfoBox from '../components/UserInfoBox';
+import UserInfoBox from '../containers/UserInfoBox';
 
 const mapStateToProps = state => ({ ...state});
 
