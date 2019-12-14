@@ -7,7 +7,7 @@ import '../assets/colors/color.js';
 import { secondaryDark, primarylight, primaryDark } from '../assets/colors/color.js';
 import { connect } from 'react-redux';
 
-const mapStateToProps = state => ({ ...state, email: state.auth.email});
+const mapStateToProps = state => ({ ...state, email: state.auth.email, auth: state.auth.authenticated});
 
 const mapDispatchToProps = dispatch => ({
     deleteCurrentUserData: () => dispatch({type: 'REMOVE_DOCTOR_INFO'}),
@@ -64,14 +64,14 @@ class Header extends React.Component {
         return(
             <AppBar position="static" color="default" elevation={0} style={styles.appBar}>
                     <nav style={styles.links}>
-                        <IconButton
+                        {this.props.auth&&<IconButton
                             aria-label="more"
                             aria-controls="long-menu"
                             aria-haspopup="true"
                             onClick={this.handleClick}>
                                 <MenuIcon style={styles.menuIcon} />
-                        </IconButton>
-                        <Menu
+                        </IconButton>}
+                        {this.props.auth&&<Menu
                             id="menu"
                             anchorEl={this.state.anchorEl}
                             keepMounted
@@ -79,7 +79,7 @@ class Header extends React.Component {
                             onClose={this.handleClose}
                         >
                             <MenuItem style={styles.menuItem} onClick={this.handleLogOut}>خروج</MenuItem>
-                        </Menu>
+                        </Menu>}
 
                         
                         <Button variant="button" onClick={this.handleClickPop} style={styles.link}>
