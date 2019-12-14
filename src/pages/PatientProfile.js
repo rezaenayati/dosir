@@ -44,7 +44,7 @@ class PatientProfile extends React.Component{
                     <Header />
                 </header>
                     <Grid item={true} container component="main" style={{height: '100vh'}}>
-                        <Grid item={true}  xs={false} sm={4} md={9} style={styles.leftContainer} >
+                        <Grid item={true}  xs={false} sm={4} md={8} style={styles.leftContainer} >
                         <VerticalTimeline>
                             <TimelineElement diagnosis='سرماخوردگی' doctorName='احمد جلالی' doctorTitle='اعصاب و  روان' date='۱۳۹۸/۲/۲۱' />
                             <TimelineElement />
@@ -69,18 +69,34 @@ class PatientProfile extends React.Component{
                         </VerticalTimeline>
 
                         </Grid>
-                        <Grid item={true} style={styles.rightContainer} component={Paper} xs={12} sm={8} md={3} elevation={1} square>
+                        <Grid item={true} style={styles.rightContainer} component={Paper} xs={12} sm={8} md={4} elevation={1} square>
                             <PatientInfo 
-                                name={this.props.patientInfo.name} 
-                                family={this.props.patientInfo.family}
-                                height={this.props.patientInfo.height}
-                                weight={this.props.patientInfo.weight}
+
+
+                                name={this.props.patientInfo.first_name} 
+                                family={this.props.patientInfo.last_name}
                                 gender={this.props.patientInfo.gender}
-                                marriageStatus={this.props.patientInfo.marriageStatus}
-                                birthdate={this.props.patientInfo.birthdate}
-                                birthTown={this.props.patientInfo.birthTown}
-                                email={this.props.patientInfo.email}
-                                phone={this.props.patientInfo.phone}
+                                marriageStatus={this.props.patientInfo.is_married}
+                                birthdate={this.props.patientInfo.birth_date}
+                                phone={this.props.patientInfo.phone_num}
+                                job={this.props.patientInfo.job}
+                                education={this.props.patientInfo.education}
+                                current_disease={this.props.patientInfo.current_disease}
+
+
+                                accident_experience={this.props.patientInfo.accident_experience}
+                                blood_transition={this.props.patientInfo.blood_transition}
+                                allergies={this.props.patientInfo.allergies}
+                                drug_consumption={this.props.patientInfo.drug_consumption}
+                                alcohol_consumption={this.props.patientInfo.alcohol_consumption}
+                                PPD={this.props.patientInfo.PPD}
+                                pop_smear={this.props.patientInfo.pop_smear}
+                                BIS={this.props.patientInfo.BIS}
+                                other_tests={this.props.patientInfo.other_tests}
+
+                                particular_disease={this.props.patientInfo.particular_disease}
+                                cause_of_siblings_death={this.props.patientInfo.cause_of_siblings_death}
+
                                 />
                         </Grid>
                     </Grid>

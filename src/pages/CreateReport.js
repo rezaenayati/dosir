@@ -24,18 +24,35 @@ class CreateReport extends React.Component{
         super(props);
         this.state = {
             username: null,
-            success: false,
-            loading: false,
+
+            selectedDay: null,
+            clinicalFindings: '',
+            actions: '',
+            finalDiag: '',
+            nextDate: '',
+
             prescription: [],
             drugNumber: 0,
-            selectedDay: null,
+
+            success: false,
+            loading: false,
+
+
         }
 
-        this.handleButtonClick = () => {
-            if (!this.state.loading) {
-                this.setState({success: false, loading: true})
-            }
-            setTimeout(() => {this.setState({success: true, loading: false})} , 2000);
+        this.changeclinicalFindings = ev => this.setState({clinicalFindings: ev.target.value});
+        this.changeactions = ev => this.setState({actions: ev.target.value});
+        this.changefinalDiag = ev => this.setState({finalDiag: ev.target.value});
+        this.changenextDate = ev => this.setState({nextDate: ev.target.value});
+
+        this.changeDrugName = ev => {
+            // let drug = prescription[drugNumber] ;
+            // drug = {name: "dasd"};
+        };
+        this.changeDrugDose = ev => this.setState({nextDate: ev.target.value});
+
+        this.submit = () => {
+            console.log(this.state)
         }
 
         this.addDrug = () => {
@@ -56,11 +73,11 @@ class CreateReport extends React.Component{
         const renderDrugNameField = this.state.prescription.map((number) =>
             <div style={styles.rowContainer}>
                 <p style={styles.textStyle}>{number + ". "}</p>
-                <TextField style={styles.drugName} dir='rtl' fullWidth variant="outlined" />
+                <TextField onChange={this.changeDrugName} style={styles.drugName} dir='rtl' fullWidth variant="outlined" />
             </div>
         );
         const renderDrugDose = this.state.prescription.map((number) =>
-            <TextField dir='rtl' style={styles.drugDose} fullWidth variant="outlined" />
+            <TextField dir='rtl' onChange={this.changeDrugDose} style={styles.drugDose} fullWidth variant="outlined" />
         );
         return(
             <div>
@@ -74,7 +91,12 @@ class CreateReport extends React.Component{
 
                         <Paper dir='rtl' style={styles.paperContainer}>
                                 <p style={styles.textStyle}>یافته های بالینی(‬ ‫علائم‬ ‫سير‬ ‫‪،‬‬ ‫معاينه‬ ‫‪،‬‬ ‫حال‬ ‫شرح‬ ‫)‬:</p>
-                                <TextField multiline fullWidth rows='5' variant="outlined" />
+                                <TextField 
+                                    onChange={this.changeclinicalFindings}
+                                    multiline
+                                    fullWidth
+                                    rows='5' 
+                                    variant="outlined" />
                         </Paper> 
                         <Paper dir='rtl' style={styles.paperContainer}>
                                 <p style={styles.textStyle}>نسخه دارویی:</p>
@@ -90,9 +112,19 @@ class CreateReport extends React.Component{
                         </Paper> 
                         <Paper dir='rtl' style={styles.paperContainer}>
                                 <p style={styles.textStyle}>اقدامات درمانی (غیردارویی) : </p>
-                                <TextField multiline fullWidth rows='3' variant="outlined" />
+                                <TextField 
+                                    multiline
+                                    onChange={this.changeactions} 
+                                    fullWidth 
+                                    rows='3' 
+                                    variant="outlined" />
                                 <p style={styles.textStyle}>تشخیص نهایی :</p>
-                                <TextField multiline fullWidth rows='2' variant="outlined" />
+                                <TextField 
+                                    multiline 
+                                    fullWidth 
+                                    rows='2' 
+                                    onChange={this.changefinalDiag}
+                                    variant="outlined" />
                                 <p style={styles.textStyle}>تاریخ مراجعه بعدی :</p>
                                 <div style={styles.datePicker}>
                                     <DatePicker

@@ -40,17 +40,28 @@ class UserInfoBox extends React.Component{
 
             //this is sample patient
             const patient = {
-                name: 'مهدی',
-                family: 'ترابی',
-                height: 185,
-                weight: 85,
-                gender: 'مرد',
-                birthdate: '۱۳۷۸/۰۲/۲۱',
-                marriageStatus: 'مجرد',
-                birthTown: 'ملارد',
-                email: 'mehditorabi@gmail.com',
-                phone: '09122222222',
-                image: 'https://playerswiki.com/uploads/thumb/mehdi-torabi-300-300.jpeg'
+                "phone_num": "+989123555555",
+                "first_name": "مهدی",
+                "last_name": "همتی",
+                "profile_pic": "",
+                "birth_date": "1398/2/1",
+                "gender": "مرد",
+                "disease_history_duration": "درد بیدرمان",
+                "education": "بی سواد",
+                "job": "بیکار",
+                "cause_of_siblings_death": "خیلی",
+                "particular_disease": "زیاد",
+                "allergies": "فراوان",
+                "current_disease": "مرگ",
+                "accident_experience": false,
+                "blood_transition": false,
+                "drug_consumption": false,
+                "alcohol_consumption": false,
+                "is_married": false,
+                "PPD": false,
+                "BIS": false,
+                "pop_smear": false,
+                "other_tests": false
             }
 
 
@@ -62,8 +73,8 @@ class UserInfoBox extends React.Component{
                 //save response in the redux
                 this.props.submitPatientInfo(patient)
                 this.setState({
-                    name: patient.name+" "+patient.family,
-                    birthdate: patient.birthdate,
+                    name: patient.first_name+" "+patient.last_name,
+                    birthdate: patient.birth_date,
                     gender: patient.gender,
                     success: true, 
                     loading: false
