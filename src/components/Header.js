@@ -4,7 +4,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import { withRouter } from 'react-router-dom';
 
 import '../assets/colors/color.js';
-import { secondaryDark, primarylight } from '../assets/colors/color.js';
+import { secondaryDark, primarylight, primaryDark } from '../assets/colors/color.js';
 import { connect } from 'react-redux';
 
 const mapStateToProps = state => ({ ...state, email: state.auth.email});
@@ -113,7 +113,7 @@ const styles = {
         flexDirection: 'row',
         margin: 'auto',
         height: 60,
-        backgroundColor: secondaryDark
+        backgroundColor: primaryDark
     },
     popup: {
         backgroundColor: 'white',
