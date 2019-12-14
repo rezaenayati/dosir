@@ -45,11 +45,18 @@ class CreateReport extends React.Component{
         this.changefinalDiag = ev => this.setState({finalDiag: ev.target.value});
         this.changenextDate = ev => this.setState({nextDate: ev.target.value});
 
-        this.changeDrugName = ev => {
-            // let drug = prescription[drugNumber] ;
-            // drug = {name: "dasd"};
+        this.changeDrugName = number => ev => {
+            const temp = {
+                name: ev.target.value
+            }
+            Object.assign(this.state.prescription[number-1] , temp);
         };
-        this.changeDrugDose = ev => this.setState({nextDate: ev.target.value});
+        this.changeDrugDose = number => ev => {
+            const temp = {
+                dose: ev.target.value
+            }
+            Object.assign(this.state.prescription[number-1] , temp);
+        }
 
         this.submit = () => {
             console.log(this.state)
@@ -57,7 +64,7 @@ class CreateReport extends React.Component{
 
         this.addDrug = () => {
             this.setState({drugNumber: ++this.state.drugNumber})
-            this.state.prescription.push(this.state.drugNumber);
+            this.state.prescription.push({number: this.state.drugNumber, name: '', dose: ''});
         }
     }
 
@@ -70,14 +77,14 @@ class CreateReport extends React.Component{
 
 
     render(){
-        const renderDrugNameField = this.state.prescription.map((number) =>
+        const renderDrugNameField = this.state.prescription.map((drug) =>
             <div style={styles.rowContainer}>
-                <p style={styles.textStyle}>{number + ". "}</p>
-                <TextField onChange={this.changeDrugName} style={styles.drugName} dir='rtl' fullWidth variant="outlined" />
+                <p style={styles.textStyle}>{drug.number + ". "}</p>
+                <TextField onChange={this.changeDrugName(drug.number)} style={styles.drugName} dir='rtl' fullWidth variant="outlined" />
             </div>
         );
-        const renderDrugDose = this.state.prescription.map((number) =>
-            <TextField dir='rtl' onChange={this.changeDrugDose} style={styles.drugDose} fullWidth variant="outlined" />
+        const renderDrugDose = this.state.prescription.map((drug) =>
+            <TextField dir='rtl' onChange={this.changeDrugDose(drug.number)} style={styles.drugDose} fullWidth variant="outlined" />
         );
         return(
             <div>
