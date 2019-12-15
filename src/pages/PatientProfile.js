@@ -44,11 +44,14 @@ class PatientProfile extends React.Component{
         }
     }
 
-    componentDidMount(){
-        
+    componentWillMount(){
+        if(this.props.patientInfo === undefined)
+            this.props.history.push('/dashboard');    
     }
 
     render(){
+        if(this.props.patientInfo === undefined)
+            return null;   
         const reverseSignUp = !this.state.signUp;
         return( 
             <div>
