@@ -15,6 +15,7 @@ import Header from '../components/Header';
 import TimelineElement from '../components/TimelineElement';
 import { primarylight , primaryDark, primaryColor, secondarylight, secondaryDark } from '../assets/colors/color';
 import PatientInfo from '../components/PatientInfo';
+import ReportDetail from '../components/ReportDetail';
 
 const mapStateToProps = state => ({ 
     ...state, 
@@ -66,19 +67,7 @@ class PatientProfile extends React.Component{
                                 </Fab>
                         </Tooltip>
                         
-                        {this.state.reportDetail&&<div dir="rtl">
-                            <Button onClick={this.back}>بازگشت</Button>
-                            <p>تاریخ ویزیت: ۱۳۹۸/۲/۱۲</p>
-                            <p>نام پزشک :‌ احمد جلالی</p>
-                            <p>تخصص پزشک : اعصاب و روان</p>
-                            <p> یافته های بالینی: نیافتیم نگرد</p>
-                            <p>نسخه تجویز شده: </p>
-                            <p>۱. آسپرین روزی سه بار</p>
-                            <p>۲. قرص ضد بارداری: پس از انجام</p>
-                            <p>اقدامات درمانی : هر چی کرمشون بود دیگه</p>
-                            <p>تشخیص نهایی: مرگ</p>
-                            <p>تاریخ بعدی ویزیت: ۱۳۹۸/۱۲/۱</p>
-                        </div>}
+                        {this.state.reportDetail&&<ReportDetail onBack={this.back} />}
 
                         {!this.state.reportDetail&&<VerticalTimeline>
                             <TimelineElement onClick={this.toReportDetail} diagnosis='سرماخوردگی' doctorName='احمد جلالی' doctorTitle='اعصاب و  روان' date='۱۳۹۸/۲/۲۱' />
