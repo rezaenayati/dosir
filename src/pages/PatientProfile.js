@@ -30,6 +30,10 @@ class PatientProfile extends React.Component{
         super(props);
         this.state = {
         }
+
+        this.toCreateReport = () => {
+            this.props.history.push('/createreport');    
+        }
     }
 
     componentDidMount(){
@@ -68,7 +72,7 @@ class PatientProfile extends React.Component{
 
                         </VerticalTimeline>
                         <Tooltip placement="top" title="اضافه کردن ریپورت جدید" aria-label="add">
-                            <Fab style={styles.fabStyle}>
+                            <Fab onClick={this.toCreateReport} style={styles.fabStyle}>
                             <AddIcon />
                             </Fab>
                         </Tooltip>

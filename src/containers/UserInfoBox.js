@@ -8,7 +8,7 @@ import { withRouter } from 'react-router-dom';
 
 import { primaryColor , secondarylight, primarylight, secondaryDark } from '../assets/colors/color';
 
-const mapStateToProps = state => ({ ...state});
+const mapStateToProps = state => ({ ...state, patient: state.currentPatient.info});
 
 const mapDispatchToProps = dispatch => ({
     submitPatientInfo: (info) => {
@@ -84,10 +84,19 @@ class UserInfoBox extends React.Component{
 
     }
 
+    componentDidMount() {
+        if(this.props.patient !== undefined) {
+            this.handleButtonClick();
+        };
+    }
 
     render(){
+        let phone = '';
+        if(this.props.patient !== undefined) {
+            phone = this.props.patient.phone_num;
+            // this.handleButtonClick();
+        };
         return(
-            
             <div style={styles.userIdentity}>
                 <Paper dir="rtl" style={styles.userInfoContainer}>
 
@@ -98,7 +107,7 @@ class UserInfoBox extends React.Component{
                             <div dir='rtl' style={styles.checkNumberContainer}>
                                 <div style={styles.rowMargeTopContainer}>
                                     <p style={styles.textStyle}>شماره همراه بیمار:</p>
-                                    <TextField onChange={this.changePhone} variant="outlined"/>
+                                    <TextField defaultValue={phone} onChange={this.changePhone} variant="outlined"/>
                                     <div style={styles.fabContainer}>
                                         <Fab aria-label="save" color="primary" onClick={this.handleButtonClick} style={styles.fab}>
                                         {this.state.success ? <CheckIcon /> : <p style={styles.text}>بررسی</p>}
