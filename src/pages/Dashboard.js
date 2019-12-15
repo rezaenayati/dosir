@@ -35,11 +35,12 @@ class Dashboard extends React.Component{
     }
 
     componentDidMount(){
+        this.setState({doctor: this.props.doctor})    
         this.setState({loading: true} , async () => {
             await fetchDoctorInfo(this.props.tokens.access)
                 .then(response => {
                     console.log(response);
-                    this.setState({doctor: response, loading: false});
+                    // this.setState({doctor: response, loading: false});
                     this.props.storeDoctorInfo(response);
                 })
             // console.log(dU);
