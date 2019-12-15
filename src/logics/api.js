@@ -1,5 +1,8 @@
 import axios from 'axios';
 
+
+const mainUrl = "http://192.168.6.177:8000/api/v1/";
+
 export const createDoctor = async (phone, password, name, family) => {
 
     console.log("axios");
@@ -14,7 +17,7 @@ export const createDoctor = async (phone, password, name, family) => {
     return new Promise((resolve, reject) => {
         axios({
             method: 'post',
-            url: 'http://127.0.0.1:8000/api/v1/doctor/create',
+            url: `${mainUrl}account/doctor/create/`,
             data: body,
             crossDomain: true,
             headers:{
@@ -41,7 +44,7 @@ export const logInDoctor = async (phone, password) => {
     return new Promise((resolve, reject) => {
         axios({
             method: 'post',
-            url: 'http://127.0.0.1:8000/api/v1/login',
+            url: `${mainUrl}account/login/`,
             data: body,
             crossDomain: true,
             headers:{
@@ -56,8 +59,6 @@ export const logInDoctor = async (phone, password) => {
     });
 }
 
-
-
 export const fetchDoctorInfo = async (access) => {
     console.log("axios");
     console.log(access);
@@ -65,14 +66,14 @@ export const fetchDoctorInfo = async (access) => {
     return new Promise((resolve, reject) => {
         axios({
             method: 'get',
-            url: 'http://127.0.0.1:8000/api/v1/doctor/info',
+            url: `${mainUrl}account/doctor/info/`,
             crossDomain: true,
             headers:{
-                'Authorization': 'Bearer ' + access,
+                'Authorization': `Bearer ${access}`,
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
                 'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Methods': 'POST'
+                'Access-Control-Allow-Methods': "POST, GET, PUT, OPTIONS, PATCH, DELETE"
             }
         })
         .then(response => resolve(response.data) )
@@ -87,20 +88,22 @@ export const editDoctorInfo = async (access , doctor , editedDoctor) => {
     
     return new Promise((resolve, reject) => {
         axios({
-            method: 'patch',
-            url: 'http://127.0.0.1:8000/api/v1/doctor/info',
+            method: 'put',
+            url: `${mainUrl}account/doctor/info/`,
             crossDomain: true,
             data: editedDoctor,
             headers:{
-                'Authorization': 'Bearer ' + access,
+                'Authorization': `Bearer ${access}`,
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
                 'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Methods': 'POST'
+                'Access-Control-Allow-Methods': 'put'
             }
         })
+        .then(response => console.log(response))
         .then(response => resolve(response.data) )
-        .catch((er) => reject(er))
+        .catch((er) => console.log(er))
     });
 
 }
+
