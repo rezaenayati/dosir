@@ -1,6 +1,6 @@
 import React from 'react';
 import { 
-    Link, Grid , Paper, Avatar, Divider, Button    
+    Link, Grid , Paper, Avatar, Divider, Button, Tooltip, Fab    
 } from "@material-ui/core";
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
@@ -67,6 +67,11 @@ class PatientProfile extends React.Component{
                             <TimelineElement />
 
                         </VerticalTimeline>
+                        <Tooltip placement="top" title="اضافه کردن ریپورت جدید" aria-label="add">
+                            <Fab style={styles.fabStyle}>
+                            <AddIcon />
+                            </Fab>
+                        </Tooltip>
 
                         </Grid>
                         <Grid item={true} style={styles.rightContainer} component={Paper} xs={12} sm={8} md={4} elevation={1} square>
@@ -118,6 +123,13 @@ const styles = {
     largeText: {
         fontFamily: 'Vazir',
         fontSize: 35
+    },
+    fabStyle: {
+        color: primaryDark,
+        backgroundColor: primarylight,
+        position: 'fixed',
+        bottom: 16,
+        left: 24,
     }
 }
 
