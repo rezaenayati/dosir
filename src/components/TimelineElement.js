@@ -37,7 +37,7 @@ export default class TimelineElement extends React.Component{
                                 تشخیص نهایی: {this.props.diagnosis}
                             </p>
                         </div>
-                        <Button style={styles.buttonStyle}>مشاهده جزئیات</Button>
+                        <Button onClick={this.props.onClick} style={styles.buttonStyle}>مشاهده جزئیات</Button>
                     </div>
             </VerticalTimelineElement>
         );

@@ -29,10 +29,17 @@ class PatientProfile extends React.Component{
     constructor(props){
         super(props);
         this.state = {
+            reportDetail: false
         }
 
         this.toCreateReport = () => {
             this.props.history.push('/createreport');    
+        }
+        this.toReportDetail = () => {
+            this.setState({reportDetail: true})
+        }
+        this.back = () => {
+            this.setState({reportDetail: false})
         }
     }
 
@@ -47,37 +54,42 @@ class PatientProfile extends React.Component{
                 <header>
                     <Header />
                 </header>
+                   
                     <Grid item={true} container component="main" style={{height: '100vh'}}>
+                        
+                        
                         <Grid item={true}  xs={false} sm={4} md={8} style={styles.leftContainer} >
-                        <VerticalTimeline>
-                            <TimelineElement diagnosis='سرماخوردگی' doctorName='احمد جلالی' doctorTitle='اعصاب و  روان' date='۱۳۹۸/۲/۲۱' />
-                            <TimelineElement />
-                            <TimelineElement />
-                            <TimelineElement />
-                            <TimelineElement />
-                            <TimelineElement />
-                            <TimelineElement />
-                            <TimelineElement />
-                            <TimelineElement />
-                            <TimelineElement />
-                            <TimelineElement />
-                            <TimelineElement />
-                            <TimelineElement />
-                            <TimelineElement />
-                            <TimelineElement />
-                            <TimelineElement />
-                            <TimelineElement />
-                            <TimelineElement />
-                            <TimelineElement />
-
-                        </VerticalTimeline>
+                        
                         <Tooltip placement="top" title="اضافه کردن ریپورت جدید" aria-label="add">
-                            <Fab onClick={this.toCreateReport} style={styles.fabStyle}>
-                            <AddIcon />
-                            </Fab>
+                                <Fab onClick={this.toCreateReport} style={styles.fabStyle}>
+                                <AddIcon />
+                                </Fab>
                         </Tooltip>
+                        
+                        {this.state.reportDetail&&<div dir="rtl">
+                            <Button onClick={this.back}>بازگشت</Button>
+                            <p>تاریخ ویزیت: ۱۳۹۸/۲/۱۲</p>
+                            <p>نام پزشک :‌ احمد جلالی</p>
+                            <p>تخصص پزشک : اعصاب و روان</p>
+                            <p> یافته های بالینی: نیافتیم نگرد</p>
+                            <p>نسخه تجویز شده: </p>
+                            <p>۱. آسپرین روزی سه بار</p>
+                            <p>۲. قرص ضد بارداری: پس از انجام</p>
+                            <p>اقدامات درمانی : هر چی کرمشون بود دیگه</p>
+                            <p>تشخیص نهایی: مرگ</p>
+                            <p>تاریخ بعدی ویزیت: ۱۳۹۸/۱۲/۱</p>
+                        </div>}
+
+                        {!this.state.reportDetail&&<VerticalTimeline>
+                            <TimelineElement onClick={this.toReportDetail} diagnosis='سرماخوردگی' doctorName='احمد جلالی' doctorTitle='اعصاب و  روان' date='۱۳۹۸/۲/۲۱' />
+                            <TimelineElement />
+                            <TimelineElement />
+                        </VerticalTimeline>}
+
 
                         </Grid>
+                        
+                        
                         <Grid item={true} style={styles.rightContainer} component={Paper} xs={12} sm={8} md={4} elevation={1} square>
                             <PatientInfo 
 
