@@ -1,8 +1,9 @@
 import React from 'react';
 import Avatar from '@material-ui/core/Avatar';
-import { Divider, Button, Paper } from '@material-ui/core';
+import { Divider, Button, Paper, Modal } from '@material-ui/core';
 import RoomIcon from '@material-ui/icons/Room';
 import { withRouter } from 'react-router-dom';
+import CloseIcon from '@material-ui/icons/Close';
 
 import '../assets/colors/color.js';
 import { primaryDark, secondaryDark, primaryColor } from '../assets/colors/color.js';
@@ -20,9 +21,10 @@ export default class ReportDetail extends React.Component {
 
     render(){
         return(
-                <div dir="rtl">
-                    <Paper style={{margin: 20}}>
-                            <Button style={styles.text} dir='ltr' onClick={this.props.onBack}>بازگشت</Button>
+                <Modal  
+                    open={this.props.open} onClose={this.props.onClose} dir="rtl">
+                    <Paper style={styles.container}>
+                            <Button style={styles.text} onClick={this.props.onClose}><CloseIcon /></Button>
                             <p style={styles.text}>تاریخ ویزیت: ۱۳۹۸/۲/۱۲</p>
                             <p style={styles.text}>نام پزشک :‌ احمد جلالی</p>
                             <p style={styles.text}>تخصص پزشک : اعصاب و روان</p>
@@ -39,12 +41,19 @@ export default class ReportDetail extends React.Component {
                             <Divider variant='middle' />
                             <p style={styles.text}>تاریخ بعدی ویزیت: ۱۳۹۸/۱۲/۱</p>
                     </Paper>
-                </div>
+                </Modal>
         );
     }
 }
 
 const styles = {
+    container: {
+        width: 400,
+        margin: 'auto',
+        marginTop: 'auto',
+        marginBottom: 'auto',
+        outline: 'none'
+    },
     text: {
         fontFamily: 'Vazir',
         margin: 10,

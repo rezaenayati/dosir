@@ -70,13 +70,16 @@ class PatientProfile extends React.Component{
                                 </Fab>
                         </Tooltip>
                         
-                        {this.state.reportDetail&&<ReportDetail onBack={this.back} />}
+                        <ReportDetail
+                                onClose={this.back}
+                                open={this.state.reportDetail}
+                                />
 
-                        {!this.state.reportDetail&&<VerticalTimeline>
+                        <VerticalTimeline>
                             <TimelineElement onClick={this.toReportDetail} diagnosis='سرماخوردگی' doctorName='احمد جلالی' doctorTitle='اعصاب و  روان' date='۱۳۹۸/۲/۲۱' />
                             <TimelineElement />
                             <TimelineElement />
-                        </VerticalTimeline>}
+                        </VerticalTimeline>
 
 
                         </Grid>
