@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import { Grid } from '@material-ui/core';
+import { Grid, Modal, Paper, Card } from '@material-ui/core';
 import DoctorProfile from '../components/DoctorProfile';
 import DashboardDetails from '../containers/DashboardDetails';
 import { withRouter } from 'react-router-dom';
@@ -9,6 +9,7 @@ import { fetchDoctorInfo } from '../logics/api';
 import Header from '../components/Header';
 import '../assets/colors/color.js';
 import { primarylight, secondarylight } from '../assets/colors/color.js';
+import WaitingProgressBar from '../components/WaitingProgressBar';
 
 const mapStateToProps = state => ({ 
                             ...state, 
@@ -59,6 +60,7 @@ class Dashboard extends React.Component{
             <header>
                 <Header />
             </header>
+            <WaitingProgressBar wait={this.state.loading} />
             <Grid item={true} container component="main" style={{height: '100vh'}}>
                         <Grid item={true}  xs={false} sm={4} md={9} style={{backgroundSize: 'cover' , backgroundColor: primarylight}}>
                             <DashboardDetails  />
