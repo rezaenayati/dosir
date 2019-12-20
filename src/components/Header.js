@@ -46,6 +46,10 @@ class Header extends React.Component {
             this.props.history.push('/dashboard');
         };
 
+        this.toAboutUsPage = () => {
+            this.props.history.push('aboutus');
+        };
+
         this.handleLogOut = () => {
             console.log("log out"); 
             this.props.deleteCurrentUserData();
@@ -82,7 +86,7 @@ class Header extends React.Component {
                         </Menu>}
 
                         
-                        <Button variant="button" onClick={this.handleClickPop} style={styles.link}>
+                        <Button variant="button" onClick={this.toAboutUsPage} style={styles.link}>
                             درباره ما
                         </Button>
                         <Popper id={id} open={open} anchorEl={this.state.anchorElPop}>
