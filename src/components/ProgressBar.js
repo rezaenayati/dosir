@@ -12,7 +12,7 @@ const defaultOptions = {
     }
 };
 
-export default class DashboardDetails extends React.Component{
+export default class ProgressBar extends React.Component{
     render(){
         return(
             <div style={this.props.style}>
