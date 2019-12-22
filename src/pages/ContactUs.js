@@ -12,8 +12,19 @@ import FacebookIcon from '@material-ui/icons/Facebook';
 import PhoneIcon from '@material-ui/icons/Phone';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import EmailIcon from '@material-ui/icons/Email';
+import { connect } from 'react-redux';
 
-export default class ContactUs extends React.Component{
+
+const mapStateToProps = state => ({ 
+    ...state, 
+    isMobile: state.device.isMobile
+});
+
+const mapDispatchToProps = dispatch => ({
+});
+
+
+class ContactUs extends React.Component{
 
     static defaultProps = {
         center: {
@@ -35,7 +46,7 @@ export default class ContactUs extends React.Component{
                         <div>
                             <h2 style={styles.text}>تماس با ما</h2>
                         </div>
-                        <Paper style={{display:'flex', flexDirection:'row', justifyContent: 'space-around'}}>
+                        <Paper style={this.props.isMobile ? styles.mobileContainer : styles.container}>
                             <div>
                                 <p style={styles.text}><RoomIcon />آدرس :خیابان شریعتی نرسیده به پل سیدخندان دانشکده برق و کامپیوتر دانشگاه خواجه نصیر</p>
                                 <p style={styles.text}><PhoneIcon />شماره تماس : 88218821</p>
@@ -48,7 +59,7 @@ export default class ContactUs extends React.Component{
                                     <Link dir='ltr' href='https://twitter.com/rezam_6/' style={styles.text}><TwitterIcon />: @mostafaashrafi</Link>
                                 </div>
                             </div>
-                            <div style={{height: 400, width: 500}}>
+                            <div style={this.props.isMobile ? styles.mobileMapContainer : styles.mapContainer}>
                                 <GoogleMapReact
                                 // bootstrapURLKeys={{key: 'AIzaSyD9cET7qfg1GEhEZy_tdUNwnfGihocQjVo'}}
                                 defaultCenter={this.props.center}
@@ -70,23 +81,37 @@ export default class ContactUs extends React.Component{
     }
 }
 
+export default connect(mapStateToProps , mapDispatchToProps)(ContactUs);
+
 const styles = {
+    container: {
+        display:'flex', 
+        flexDirection:'row', 
+        justifyContent: 'space-around'
+    },
+    mobileContainer: {
+        display:'flex', 
+        flexDirection:'column', 
+        justifyContent: 'space-around'
+    },
     textContainer: {
         marginRight: 10
     },
-    image: {
-        maxWidth: 1000,
-        maxHeight: 350,
+    mobileMapContainer: {
+        marginRight: 'auto',
+        marginLeft: 'auto',
+        height: window.innerHeight/2, 
+        width: window.innerWidth* 5/6
+    },
+    mapContainer: {
+        height: window.innerHeight/2, 
+        width: window.innerWidth* 1/2
     },
     text: {
         fontFamily: 'Vazir'
     },
     paperContainer: {
         margin: 25
-    },
-    cardContainer: {
-        maxWidth: 345,
-        margin: 15
     },
     teamContainer: {
         margin: 25,
