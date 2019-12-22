@@ -3,6 +3,7 @@ import { combineReducers } from 'redux';
 import auth from './reducers/auth';
 import currentUser from './reducers/currentUser';
 import currentPatient from './reducers/currentPatient';
+import device from './reducers/device';
 
 const testRedux = (state = {} , action) => {
     switch(action.type){
@@ -21,5 +22,6 @@ export default combineReducers({
     auth,
     currentUser,
     currentPatient,
+    device,
     router: routerReducer,
 });

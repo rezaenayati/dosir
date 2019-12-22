@@ -11,13 +11,17 @@ import SignIn from '../containers/SignIn';
 import ForgetPass from '../containers/ForgetPass';
 import '../assets/colors/color.js';
 import { primarylight, primaryDark } from '../assets/colors/color.js';
+import Responsive from 'react-responsive-decorator';
 
 const mapStateToProps = state => ({ 
     ...state, 
     authenticated: state.auth.authenticated,
+    isMobile: state.device.isMobile
 });
 
 const mapDispatchToProps = dispatch => ({
+    setDeviceMobile: () => dispatch({ type: 'SET_DEVICE_MOBILE'}), 
+    setDeviceDesktop: () => dispatch({ type: 'SET_DEVICE_DESKTOP'}),
 });
 
 
@@ -27,19 +31,36 @@ class Register extends React.Component{
         this.state = {
             signUp: true,
             forgetPass: false,
+            isMobile: false
         }
     }
 
     componentDidMount(){
         if(this.props.authenticated)
-            this.props.history.push('/dashboard');    
+            this.props.history.push('/dashboard');
+            
+        this.props.media({ minWidth: 768 }, () => {
+            this.setState({
+                isMobile: false
+            });
+            this.props.setDeviceDesktop();
+        });
+    
+        this.props.media({ maxWidth: 768 }, () => {
+            this.setState({
+                isMobile: true
+            });        
+            this.props.setDeviceMobile();
+        });
+    
+        console.log(this.state.isMobile);
     }
 
     render(){
         const reverseSignUp = !this.state.signUp;
         return( 
             <Grid item={true} container component="main" style={{height: '100vh'}}>
-                <Grid item={true}  xs={false} sm={4} md={7} style={styles.leftContainer} />
+                {!this.state.isMobile&&<Grid item={true}  xs={false} sm={4} md={7} style={styles.leftContainer} />}
                 <Grid item={true} style={styles.rightContainer} xs={12} sm={8} md={5} component={Paper} elevation={6} square>
                     <form>
                     </form>
@@ -47,17 +68,19 @@ class Register extends React.Component{
                     {!this.state.forgetPass&&!this.state.signUp&&<SignUp />}
                     {!this.state.forgetPass&&this.state.signUp&&<SignIn />}
                     <div dir="rtl" style={{marginTop: 10}}>
-                        <Link
-                            style={styles.link}
-                            onClick={() => {this.setState({forgetPass: false, signUp: reverseSignUp})}}>
-                                {reverseSignUp&&"ورود به حساب"}
-                                {!reverseSignUp&&"ایجاد حساب جدید"}
-                        </Link>
-                       {!this.state.forgetPass&&<Link
+                        <div style={this.props.isMobile ? styles.MobilelinkContainer : styles.linkContainer}>     
+                            <Link
                                 style={styles.link}
-                                onClick={() => {this.setState({forgetPass: true, signUp: false})}}>
-                                رمز عبور عبور را فراموش کرده اید؟
-                        </Link>}
+                                onClick={() => {this.setState({forgetPass: false, signUp: reverseSignUp})}}>
+                                    {reverseSignUp&&"ورود به حساب"}
+                                    {!reverseSignUp&&"ایجاد حساب جدید"}
+                            </Link>
+                        {!this.state.forgetPass&&<Link
+                                    style={styles.link}
+                                    onClick={() => {this.setState({forgetPass: true, signUp: false})}}>
+                                    رمز عبور عبور را فراموش کرده اید؟
+                            </Link>}
+                        </div>
                     </div>
                 </Grid>
             </Grid>
@@ -73,12 +96,20 @@ const styles = {
     rightContainer: {
         backgroundColor: primarylight
     },
+    linkContainer: {
+        display: 'flex',
+    },
+    MobilelinkContainer: {
+        display: 'flex',
+        flexDirection: 'Column'
+    },
     link: {
         fontFamily: "Vazir", 
+        // fontSize: (isMobile ? 16 : 10),
         color: primaryDark, 
         marginTop: 10 , 
         marginRight: 100
     }
 }
 
-export default withRouter(connect(mapStateToProps , mapDispatchToProps)(Register));
+export default Responsive(withRouter(connect(mapStateToProps , mapDispatchToProps)(Register)));
