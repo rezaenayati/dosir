@@ -20,8 +20,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    setDeviceMobile: () => dispatch({ type: 'SET_DEVICE_MOBILE'}), 
-    setDeviceDesktop: () => dispatch({ type: 'SET_DEVICE_DESKTOP'}),
 });
 
 
@@ -31,36 +29,19 @@ class Register extends React.Component{
         this.state = {
             signUp: true,
             forgetPass: false,
-            isMobile: false
         }
     }
 
     componentDidMount(){
         if(this.props.authenticated)
             this.props.history.push('/dashboard');
-            
-        this.props.media({ minWidth: 768 }, () => {
-            this.setState({
-                isMobile: false
-            });
-            this.props.setDeviceDesktop();
-        });
-    
-        this.props.media({ maxWidth: 768 }, () => {
-            this.setState({
-                isMobile: true
-            });        
-            this.props.setDeviceMobile();
-        });
-    
-        console.log(this.state.isMobile);
-    }
+        }
 
     render(){
         const reverseSignUp = !this.state.signUp;
         return( 
             <Grid item={true} container component="main" style={{height: '100vh'}}>
-                {!this.state.isMobile&&<Grid item={true}  xs={false} sm={4} md={7} style={styles.leftContainer} />}
+                {!this.props.isMobile&&<Grid item={true}  xs={false} sm={4} md={7} style={styles.leftContainer} />}
                 <Grid item={true} style={styles.rightContainer} xs={12} sm={8} md={5} component={Paper} elevation={6} square>
                     <form>
                     </form>
