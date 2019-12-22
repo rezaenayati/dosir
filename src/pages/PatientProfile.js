@@ -16,6 +16,7 @@ import TimelineElement from '../components/TimelineElement';
 import { primarylight , primaryDark, primaryColor, secondarylight, secondaryDark } from '../assets/colors/color';
 import PatientInfo from '../components/PatientInfo';
 import ReportDetail from '../components/ReportDetail';
+import { width } from '@material-ui/system';
 
 const mapStateToProps = state => ({ 
     ...state, 
@@ -58,31 +59,9 @@ class PatientProfile extends React.Component{
                 <header>
                     <Header />
                 </header>
+               
                    
                     <Grid item={true} container component="main" style={{height: '100vh'}}>
-                        
-                        
-                        <Grid item={true}  xs={false} sm={4} md={8} style={styles.leftContainer} >
-                        
-                        <Tooltip placement="top" title="اضافه کردن ریپورت جدید" aria-label="add">
-                                <Fab onClick={this.toCreateReport} style={styles.fabStyle}>
-                                <AddIcon />
-                                </Fab>
-                        </Tooltip>
-                        
-                        <ReportDetail
-                                onClose={this.back}
-                                open={this.state.reportDetail}
-                                />
-
-                        <VerticalTimeline>
-                            <TimelineElement onClick={this.toReportDetail} diagnosis='سرماخوردگی' doctorName='احمد جلالی' doctorTitle='اعصاب و  روان' date='۱۳۹۸/۲/۲۱' />
-                            <TimelineElement />
-                            <TimelineElement />
-                        </VerticalTimeline>
-
-
-                        </Grid>
                         
                         
                         <Grid item={true} style={styles.rightContainer} component={Paper} xs={12} sm={8} md={4} elevation={1} square>
@@ -115,6 +94,28 @@ class PatientProfile extends React.Component{
 
                                 />
                         </Grid>
+                         
+                        <Grid item={true}  xs={false} sm={4} md={8} style={styles.leftContainer} >
+                        
+                        
+                        
+                            <ReportDetail
+                                    onClose={this.back}
+                                    open={this.state.reportDetail}
+                                    />
+
+                            <VerticalTimeline>
+                                <TimelineElement onClick={this.toReportDetail} diagnosis='سرماخوردگی' doctorName='احمد جلالی' doctorTitle='اعصاب و  روان' date='۱۳۹۸/۲/۲۱' />
+                                <TimelineElement />
+                                <TimelineElement />
+                            </VerticalTimeline>
+
+                            <Tooltip title="اضافه کردن ریپورت جدید" aria-label="add">
+                                    <Fab onClick={this.toCreateReport} style={styles.fabStyle}>
+                                    <AddIcon />
+                                    </Fab>
+                            </Tooltip>
+                        </Grid>
                     </Grid>
             </div>
         );
@@ -123,10 +124,12 @@ class PatientProfile extends React.Component{
 
 const styles = {
     leftContainer: {
-      backgroundColor: secondarylight  
+      backgroundColor: secondarylight,
+      width : window.innerWidth 
     },
     rightContainer: {
-        backgroundColor: primarylight
+        backgroundColor: primarylight,
+        width : window.innerWidth 
     },
     text: {
         fontFamily: 'Vazir'
@@ -140,7 +143,7 @@ const styles = {
         backgroundColor: primarylight,
         position: 'fixed',
         bottom: 16,
-        left: 24,
+        right: 24,
     }
 }
 

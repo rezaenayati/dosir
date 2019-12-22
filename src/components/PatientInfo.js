@@ -24,7 +24,7 @@ class PatientInfo extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            value: 1   
+            value: 0  
         }
         this.editProfile = () => {
             this.props.history.push('/editprofile');
