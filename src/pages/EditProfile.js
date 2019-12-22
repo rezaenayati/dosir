@@ -14,7 +14,8 @@ const mapStateToProps = state => ({
     tokens: state.auth.tokens,
     authenticated: state.auth.authenticated,
     doctor: state.currentUser.doctor,
-    editedDoctor: state.currentUser.editedDoctor
+    editedDoctor: state.currentUser.editedDoctor,
+    isMobile: state.device.isMobile
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -91,7 +92,6 @@ class EditProfile extends React.Component{
         reader.readAsDataURL(file)
     }
   
-
     render(){
         const doctor = this.props.doctor;
         if(!doctor) return null;
@@ -100,10 +100,10 @@ class EditProfile extends React.Component{
                 <header>
                     <Header />
                 </header>
-                <div style={styles.container}>
-                    <Paper style={styles.paperContainer}>
+                <div style={this.props.isMobile ? styles.mobileContainer : styles.container}>
+                    <Paper style={this.props.isMobile ? styles.mobilePaperContainer : styles.paperContainer}>
                         <p dir='rtl' style={styles.editProfileName}>ویرایش پروفایل</p>
-                        <Paper style={styles.avatarContainer}>
+                        <Paper style={this.props.isMobile ? styles.mobileAvatarContainer : styles.avatarContainer}>
                             <Avatar align='center' src={this.state.imagePreviewUrl} style={styles.avatar} />
                             <Button onClick={this.handleDeleteImage} style={styles.buttonDelete}>حذف</Button> 
                                     <div style={styles.uploadContainer} dir='rtl'>
@@ -119,7 +119,7 @@ class EditProfile extends React.Component{
                                         </Button>
                                     </div>
                         </Paper>
-                        <Paper dir='rtl' style={styles.fieldContainer}>
+                        <Paper dir='rtl' style={this.props.isMobile ? styles.mobileFieldContainer : styles.fieldContainer}>
                             <TextField 
                                 placeholder='نام'
                                 style={styles.textField}
@@ -133,7 +133,7 @@ class EditProfile extends React.Component{
                                 onChange={this.changeFamily}
                                 defaultValue={doctor.last_name} />
                         </Paper>
-                        <Paper dir='rtl' style={styles.fieldContainer}>
+                        <Paper dir='rtl' style={this.props.isMobile ? styles.mobileFieldContainer : styles.fieldContainer}>
                             <TextField 
                                 placeholder='تخصص'
                                 style={styles.textField}
@@ -142,7 +142,7 @@ class EditProfile extends React.Component{
                                 onChange={this.changeTitle} 
                                 defaultValue={doctor.title} />
                         </Paper>     
-                        <Paper dir='rtl' style={styles.fieldContainer}>
+                        <Paper dir='rtl' style={this.props.isMobile ? styles.mobileFieldContainer : styles.fieldContainer}>
                             <TextField 
                                 placeholder='ایمیل'
                                 style={styles.textField}
@@ -156,7 +156,7 @@ class EditProfile extends React.Component{
                                 variant="outlined" 
                                 defaultValue={doctor.phone_num} />
                         </Paper>
-                        <Paper dir='rtl' style={styles.fieldContainer}>
+                        <Paper dir='rtl' style={this.props.isMobile ? styles.mobileFieldContainer : styles.fieldContainer}>
                             <TextField 
                                 placeholder='استان'
                                 onChange={this.changeProvince}
@@ -170,7 +170,7 @@ class EditProfile extends React.Component{
                                 variant="outlined" 
                                 defaultValue={doctor.city} />
                         </Paper>
-                        <Paper dir='rtl' style={styles.fieldContainer}>
+                        <Paper dir='rtl' style={this.props.isMobile ? styles.mobileFieldContainer : styles.fieldContainer}>
                             <TextField 
                                 multiline
                                 rows="4"                        
@@ -181,7 +181,7 @@ class EditProfile extends React.Component{
                                 variant="outlined" 
                                 defaultValue={doctor.address} />
                         </Paper>
-                        <Paper dir='rtl' style={styles.fieldContainer}>
+                        <Paper dir='rtl' style={this.props.isMobile ? styles.mobileFieldContainer : styles.fieldContainer}>
                             <TextField 
                                 multiline
                                 rows="4"                        
@@ -213,7 +213,19 @@ const styles = {
         left: 0,
         height: 1000,
         backgroundColor: primarylight
-       
+    },
+    mobileContainer: {
+        backgroundColor: primarylight,
+        width: window.innerWidth
+    },
+    mobilePaperContainer: {
+        felx: 1,
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        marginTop: 20,
+        marginBottom: 40,
+        backgroundColor: secondarylight,
+        width: window.innerWidth-10
     },
     paperContainer: {
         felx: 1,
@@ -224,7 +236,6 @@ const styles = {
         marginTop: 20,
         marginBottom: 40,
         backgroundColor: secondarylight
-
     },
     progressBar: {
         marginLeft: 'auto',
@@ -234,6 +245,15 @@ const styles = {
         margin: 5,
         color: primaryDark
     },
+    mobileFieldContainer: {
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        width: window.innerWidth-18,
+        marginTop: 20,
+        display: 'flex',
+        flexDirection: 'row',
+        backgroundColor: primarylight,
+    },
     fieldContainer: {
         marginLeft: 'auto',
         marginRight: 'auto',
@@ -241,7 +261,7 @@ const styles = {
         marginTop: 20,
         display: 'flex',
         flexDirection: 'row',
-        backgroundColor: primarylight
+        backgroundColor: primarylight,
     },
     buttonDelete: {
         height: 33,
@@ -277,6 +297,17 @@ const styles = {
     uploadContainer: {
         marginRight: 10,
         marginLeft: 10
+    },
+    mobileAvatarContainer: {
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        marginTop: 20,
+        width: window.innerWidth-18,
+        height: 150,
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        backgroundColor: primarylight
     },
     avatarContainer: {
         marginLeft: 'auto',

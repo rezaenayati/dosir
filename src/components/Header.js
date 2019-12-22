@@ -6,7 +6,7 @@ import { withRouter } from 'react-router-dom';
 import '../assets/colors/color.js';
 import { secondaryDark, primarylight, primaryDark } from '../assets/colors/color.js';
 import { connect } from 'react-redux';
-import { fontSize } from '@material-ui/system';
+import { fontSize, width } from '@material-ui/system';
 
 const mapStateToProps = state => ({ ...state, 
     email: state.auth.email, 
@@ -71,7 +71,7 @@ class Header extends React.Component {
         const id = open ? 'simple-popper' : undefined;
       
         return(
-            <AppBar position="static" color="default" elevation={0} style={styles.appBar}>
+            <AppBar position="static" color="default" elevation={0} style={this.props.isMobile ? styles.mobileAppBar : styles.appBar}>
                     <nav style={styles.links}>
                         {this.props.auth&&<IconButton
                             aria-label="more"
@@ -123,6 +123,14 @@ const styles = {
         margin: 'auto',
         height: 60,
         backgroundColor: primaryDark
+    },
+    mobileAppBar: {
+        display: 'flex',
+        flexDirection: 'row',
+        margin: 'auto',
+        height: 60,
+        backgroundColor: primaryDark,
+        width: window.innerWidth
     },
     popup: {
         backgroundColor: 'white',
