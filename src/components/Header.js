@@ -6,8 +6,13 @@ import { withRouter } from 'react-router-dom';
 import '../assets/colors/color.js';
 import { secondaryDark, primarylight, primaryDark } from '../assets/colors/color.js';
 import { connect } from 'react-redux';
+import { fontSize } from '@material-ui/system';
 
-const mapStateToProps = state => ({ ...state, email: state.auth.email, auth: state.auth.authenticated});
+const mapStateToProps = state => ({ ...state, 
+    email: state.auth.email, 
+    auth: state.auth.authenticated,
+    isMobile: state.device.isMobile
+});
 
 const mapDispatchToProps = dispatch => ({
     deleteCurrentUserData: () => dispatch({type: 'REMOVE_DOCTOR_INFO'}),
@@ -86,24 +91,24 @@ class Header extends React.Component {
                         </Menu>}
 
                         
-                        <Button variant="button" onClick={this.toAboutUsPage} style={styles.link}>
+                        <Button variant="button" onClick={this.toAboutUsPage} style={(this.props.isMobile ? styles.Mobilelink : styles.link)}>
                             درباره ما
                         </Button>
                         <Popper id={id} open={open} anchorEl={this.state.anchorElPop}>
                             <Paper style={styles.popup}>این بخش برای اسپرینت بعدی است عجله نکن</Paper>
                         </Popper>
 
-                        <Button variant="button" onClick={this.handleClickPop} style={styles.link}>
+                        <Button variant="button" onClick={this.handleClickPop} style={(this.props.isMobile ? styles.Mobilelink : styles.link)}>
                             تماس با ما
                         </Button>
-                        <Button variant="button" onClick={this.toDashboard} style={styles.link}>
+                        <Button variant="button" onClick={this.toDashboard} style={(this.props.isMobile ? styles.Mobilelink : styles.link)}>
                             داشبورد
                         </Button>
                     </nav>
                     <div style={styles.logo}>
-                        <Typography variant="h6"  style={styles.toolbarTitle}>
+                        {!this.props.isMobile&&<Typography variant="h6"  style={styles.toolbarTitle}>
                                 دو سیر
-                        </Typography>
+                        </Typography>}
                         <Avatar style={styles.avatar} src="https://i.ibb.co/r799ZMz/logo-2sir-mehdi.png" />
                     </div>
             </AppBar>
@@ -139,6 +144,11 @@ const styles = {
     link: {
         fontFamily: 'Vazir',
         color: primarylight
+    },
+    Mobilelink: {
+        fontFamily: 'Vazir',
+        color: primarylight,
+        fontSize: 10,
     },
     links: {
         position: 'absolute',
