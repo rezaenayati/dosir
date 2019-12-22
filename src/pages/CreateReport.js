@@ -12,7 +12,7 @@ import { primaryColor , secondarylight, primarylight, secondaryDark } from '../a
 import ProgressBar from '../components/ProgressBar';
 import UserInfoBox from '../containers/UserInfoBox';
 
-const mapStateToProps = state => ({ ...state});
+const mapStateToProps = state => ({ ...state, isMobile: state.device.isMobile});
 
 const mapDispatchToProps = dispatch => ({
     
@@ -80,11 +80,11 @@ class CreateReport extends React.Component{
         const renderDrugNameField = this.state.prescription.map((drug) =>
             <div style={styles.rowContainer}>
                 <p style={styles.textStyle}>{drug.number + ". "}</p>
-                <TextField onChange={this.changeDrugName(drug.number)} style={styles.drugName} dir='rtl' fullWidth variant="outlined" />
+                <TextField onChange={this.changeDrugName(drug.number)} style={this.props.isMobile ? styles.mobileDrugName : styles.drugName} dir='rtl'  variant="outlined" />
             </div>
         );
         const renderDrugDose = this.state.prescription.map((drug) =>
-            <TextField dir='rtl' onChange={this.changeDrugDose(drug.number)} style={styles.drugDose} fullWidth variant="outlined" />
+            <TextField dir='rtl' onChange={this.changeDrugDose(drug.number)} style={this.props.isMobile ? styles.mobileDrugDose :styles.drugDose}  variant="outlined" />
         );
         return(
             <div>
@@ -96,7 +96,7 @@ class CreateReport extends React.Component{
 
                         <UserInfoBox />
 
-                        <Paper dir='rtl' style={styles.paperContainer}>
+                        <Paper dir='rtl' style={this.props.isMobile ? styles.mobilePaperContainer : styles.paperContainer}>
                                 <p style={styles.textStyle}>یافته های بالینی(‬ ‫علائم‬ ‫سير‬ ‫‪،‬‬ ‫معاينه‬ ‫‪،‬‬ ‫حال‬ ‫شرح‬ ‫)‬:</p>
                                 <TextField 
                                     onChange={this.changeclinicalFindings}
@@ -105,7 +105,7 @@ class CreateReport extends React.Component{
                                     rows='5' 
                                     variant="outlined" />
                         </Paper> 
-                        <Paper dir='rtl' style={styles.paperContainer}>
+                        <Paper dir='rtl' style={this.props.isMobile ? styles.mobilePaperContainer : styles.paperContainer}>
                                 <p style={styles.textStyle}>نسخه دارویی:</p>
                                 <div style={styles.rowContainer}>
                                     <p style={styles.textDrugStyle}>نام دارو</p>
@@ -117,7 +117,7 @@ class CreateReport extends React.Component{
                                     <ul dir="rtl">{renderDrugDose}</ul>
                                 </div>
                         </Paper> 
-                        <Paper dir='rtl' style={styles.paperContainer}>
+                        <Paper dir='rtl' style={this.props.isMobile ? styles.mobilePaperContainer : styles.paperContainer}>
                                 <p style={styles.textStyle}>اقدامات درمانی (غیردارویی) : </p>
                                 <TextField 
                                     multiline
@@ -163,10 +163,22 @@ export default connect(mapStateToProps , mapDispatchToProps)(CreateReport);
 
 const styles = {
     drugName: {
-        width: 250,
+        width: window.innerWidth * 1/5,
     },
     drugDose: {
-        width: 150,
+        width: window.innerWidth * 1/9,
+    },
+    mobileDrugName: {
+        width: window.innerWidth * 2/5,
+    },
+    mobileDrugDose: {
+        width: window.innerWidth * 1/5,
+    },
+    mobilePaperContainer: {
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        marginTop: 15,
+        width: window.innerWidth,
     },
     paperContainer: {
         marginLeft: 'auto',
@@ -187,7 +199,6 @@ const styles = {
     buttonContainer: {
         marginLeft: 'auto',
         marginRight: 'auto',
-        width: 450,
         marginTop: 20,
         display: 'flex',
         flexDirection: 'row',
@@ -198,13 +209,9 @@ const styles = {
         fontFamily:'Vazir',
     },
     textDrugStyle: {
-        marginLeft: 5,
-        marginRight: 40, 
         fontFamily:'Vazir',
     },
     textDoseStyle: {
-        marginLeft: 100,
-        marginRight: 240, 
         fontFamily:'Vazir',
     },
     infoContainer: {
@@ -215,6 +222,7 @@ const styles = {
     rowContainer: {
         display: 'flex',
         flexDirection: 'row',
+        justifyContent: 'space-around'
     },
     userIdentity: {
         display: 'flex',
@@ -222,17 +230,6 @@ const styles = {
         marginLeft: 'auto',
         marginRight: 'auto',
         // backgroundColor: primaryColor
-    },
-    checkNumberContainer: {
-        marginTop: 'auto', 
-        marginBottom: 'auto', 
-        height: 100 ,
-        width: 500
-    },
-    userInfoContainer: {
-        marginTop: 10, 
-        height: 300 ,
-        width: 600
     },
     datePicker: {
         marginTop: 'auto', 

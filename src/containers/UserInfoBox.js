@@ -6,9 +6,15 @@ import AddIcon from '@material-ui/icons/Add';
 import {connect} from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
+import { fetchPatientInfo , fetchPatientInfo2 } from '../logics/api';
 import { primaryColor , secondarylight, primarylight, secondaryDark } from '../assets/colors/color';
 
-const mapStateToProps = state => ({ ...state, patient: state.currentPatient.info});
+const mapStateToProps = state => ({ 
+        ...state, 
+        patient: state.currentPatient.info, 
+        tokens: state.auth.tokens,
+        isMobile: state.device.isMobile,
+    });
 
 const mapDispatchToProps = dispatch => ({
     submitPatientInfo: (info) => {
@@ -68,7 +74,7 @@ class UserInfoBox extends React.Component{
             if (!this.state.loading) {
                 this.setState({success: false, loading: true})
             }
-            setTimeout(() => {
+            setTimeout(async () => {
                 //request phone to the server and get response()
                 //save response in the redux
                 this.props.submitPatientInfo(patient)
@@ -84,7 +90,9 @@ class UserInfoBox extends React.Component{
 
     }
 
-    componentDidMount() {
+    async componentDidMount() {
+        // await fetchPatientInfo2(this.props.tokens.access)
+        // await fetchPatientInfo(this.props.tokens.access).then(response => console.log(response))
         if(this.props.patient !== undefined) {
             this.handleButtonClick();
         };
@@ -98,13 +106,13 @@ class UserInfoBox extends React.Component{
         };
         return(
             <div style={styles.userIdentity}>
-                <Paper dir="rtl" style={styles.userInfoContainer}>
+                <Paper dir="rtl" style={this.props.isMobile ? styles.mobileUserInfoContainer : styles.userInfoContainer}>
 
                     <div style={styles.rowContainer}>
                         <div>
                             
 
-                            <div dir='rtl' style={styles.checkNumberContainer}>
+                            <div dir='rtl' style={this.props.isMobile ? styles.mobileCheckNumberContainer : styles.checkNumberContainer}>
                                 <div style={styles.rowMargeTopContainer}>
                                     <p style={styles.textStyle}>شماره همراه بیمار:</p>
                                     <TextField defaultValue={phone} onChange={this.changePhone} variant="outlined"/>
@@ -188,15 +196,21 @@ const styles = {
         marginLeft: 'auto',
         marginRight: 'auto',
     },
+    mobileCheckNumberContainer: {
+        marginTop: 'auto', 
+        marginBottom: 'auto', 
+        width: window.innerWidth * 2/3
+    },
     checkNumberContainer: {
         marginTop: 'auto', 
         marginBottom: 'auto', 
-        height: 100 ,
-        width: 500
+    },
+    mobileUserInfoContainer: {
+        marginTop: 10, 
+        width: window.innerWidth
     },
     userInfoContainer: {
         marginTop: 10, 
-        height: 300 ,
         width: 600
     },
     profileButton: {
