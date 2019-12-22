@@ -9,6 +9,7 @@ import EditProfile from './pages/EditProfile';
 import CreateReport from './pages/CreateReport';
 import PatientProfile from './pages/PatientProfile';
 import AboutUs from './pages/AboutUs';
+import ContactUs from './pages/ContactUs';
 
 import './App.css';
 
@@ -25,6 +26,7 @@ function App() {
             <Route path={routeCodes.EditProfile}> <EditProfile /> </Route>
             <Route path={routeCodes.CreateReport}> <CreateReport /> </Route>
             <Route path={routeCodes.AboutUs}> <AboutUs /> </Route>
+            <Route path={routeCodes.ContactUs}> <ContactUs /> </Route>
             <Route component={Page404} />
         </Switch>
       </div>
@@ -43,5 +45,6 @@ export const routeCodes = {
   EditProfile: `${ publicPath }editprofile`,
   CreateReport: `${ publicPath }createreport`,
   PatientProfile: `${ publicPath }patientprofile`,
-  AboutUs: `${ publicPath }aboutus`
+  AboutUs: `${ publicPath }aboutus`,
+  ContactUs: `${ publicPath }contactus`
 };
