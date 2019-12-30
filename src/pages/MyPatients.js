@@ -37,10 +37,9 @@ class MyPatients extends React.Component {
         }
 
     render(){
-        const patients = this.state.patients
-        console.log(patients);
-        // if(this.state.patients === [])
-        //     return
+        const renderItemList = this.state.patients.map((patient) =>
+            <MyPatientListItem first_name={patient.first_name} last_name={patient.last_name} phone_num={patient.phone_num} next_date="1398/12/2" last_date="1398/2/1" />
+        );
         if(this.state.loading)
             return <WaitingProgressBar />
         else
@@ -54,9 +53,7 @@ class MyPatients extends React.Component {
                         <Paper  dir="rtl" style={{display: 'flex', flexDirection: 'column'}}>
                             <p style={styles.title}>لیست بیمار های من :</p>
                             {!this.state.progressShow&&<List>
-                                <MyPatientListItem first_name={this.state.patients[0].first_name} last_name="اشرفی" phone_num="0912222222" next_date="1398/12/2" last_date="1398/2/1" />
-                                <MyPatientListItem />
-                                <MyPatientListItem />
+                                <div dir="rtl">{renderItemList}</div>
                             </List>}
                             <WaitingProgressBar wait={this.state.progressShow} />
                         </Paper>
