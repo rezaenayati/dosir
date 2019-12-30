@@ -8,6 +8,14 @@ export const fakeFetchPatientInfo = async (phone) => {
     return null;
 }
 
+export const fakeFetchPatinetsList = async () => {
+    return new Promise((resolve, reject) => {
+        resolve(db.patients)
+    });
+    // console.log(db.patients);
+    // return db.patients
+}
+
 const db = {
     patients: [
         {
