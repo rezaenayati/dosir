@@ -7,6 +7,7 @@ import {connect} from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
 import { fetchPatientInfo , fetchPatientInfo2 } from '../logics/api';
+import {fakeFetchPatientInfo } from '../logics/fakeApi';
 import { primaryColor , secondarylight, primarylight, secondaryDark } from '../assets/colors/color';
 
 const mapStateToProps = state => ({ 
@@ -32,6 +33,8 @@ class UserInfoBox extends React.Component{
             birthdate: '',
             gender: '',
 
+            errorEmpty: false,
+            errorNotFound: false,
             success: false,
             loading: false,
         }
@@ -43,49 +46,46 @@ class UserInfoBox extends React.Component{
         }
 
         this.handleButtonClick = () => {
-
-            //this is sample patient
-            const patient = {
-                "phone_num": "+989123555555",
-                "first_name": "مهدی",
-                "last_name": "همتی",
-                "profile_pic": "",
-                "birth_date": "1398/2/1",
-                "gender": "مرد",
-                "disease_history_duration": "درد بیدرمان",
-                "education": "بی سواد",
-                "job": "بیکار",
-                "cause_of_siblings_death": "خیلی",
-                "particular_disease": "زیاد",
-                "allergies": "فراوان",
-                "current_disease": "مرگ",
-                "accident_experience": false,
-                "blood_transition": false,
-                "drug_consumption": false,
-                "alcohol_consumption": false,
-                "is_married": false,
-                "PPD": false,
-                "BIS": false,
-                "pop_smear": false,
-                "other_tests": false
-            }
-
-
+            this.setState({
+                errorEmpty: false,
+                errorNotFound: false,
+                success: false,
+                loading: false,
+            })
             if (!this.state.loading) {
                 this.setState({success: false, loading: true})
             }
-            setTimeout(async () => {
-                //request phone to the server and get response()
-                //save response in the redux
-                this.props.submitPatientInfo(patient)
-                this.setState({
-                    name: patient.first_name+" "+patient.last_name,
-                    birthdate: patient.birth_date,
-                    gender: patient.gender,
-                    success: true, 
-                    loading: false
-                })
-            } , 2000);
+            if(this.state.phone === ''){                
+                this.setState({loading: false, errorNotFound: false, errorEmpty: true, success: false})
+                return 
+            }
+                console.log("else");
+                setTimeout(async () => {
+                    //request phone to the server and get response()
+                    const patient = await fakeFetchPatientInfo(this.state.phone);
+                    //save response in the redux
+                    this.props.submitPatientInfo(patient)
+                    if(patient !== null)
+                        this.setState({
+                            name: patient.first_name+" "+patient.last_name,
+                            birthdate: patient.birth_date,
+                            gender: patient.gender,
+                            success: true, 
+                            loading: false,
+                            errorEmpty: false,
+                            errorNotFound: false
+                        })
+                    else
+                        this.setState({
+                            loading: false,
+                            success: false,
+                            errorNotFound: true,
+                            errorEmpty: false,
+                        })
+                } , 2000);
+            // }
+            console.log(this.state.loading);
+            
         }
 
     }
@@ -100,7 +100,8 @@ class UserInfoBox extends React.Component{
 
     render(){
         let phone = '';
-        if(this.props.patient !== undefined) {
+        if(this.props.patient === undefined || this.props.patient === null) ;
+        else{
             phone = this.props.patient.phone_num;
             // this.handleButtonClick();
         };
@@ -126,7 +127,9 @@ class UserInfoBox extends React.Component{
                             </div>
 
 
-                            <div>   
+                            <div>
+                                {this.state.errorNotFound&&<p style={styles.textStyle}>*** بیماری با این شماره یافت نشد</p>}
+                                {this.state.errorEmpty&&<p style={styles.textStyle}> ***فیلد خالی را پر کنید</p>}
                                 <p style={styles.textStyle}>اطلاعات بیمار</p>
                                 <div style={styles.infoContainer}>
                                     <p style={styles.textStyle}>نام :  {this.state.success&&this.state.name} </p>
