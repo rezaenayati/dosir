@@ -55,6 +55,10 @@ class Header extends React.Component {
             this.props.history.push('aboutus');
         };
 
+        this.toContactUsPage = () => {
+            this.props.history.push('contactus');
+        };
+        
         this.handleLogOut = () => {
             console.log("log out"); 
             this.props.deleteCurrentUserData();
@@ -98,7 +102,7 @@ class Header extends React.Component {
                             <Paper style={styles.popup}>این بخش برای اسپرینت بعدی است عجله نکن</Paper>
                         </Popper>
 
-                        <Button variant="button" onClick={this.handleClickPop} style={(this.props.isMobile ? styles.Mobilelink : styles.link)}>
+                        <Button variant="button" onClick={this.toContactUsPage} style={(this.props.isMobile ? styles.Mobilelink : styles.link)}>
                             تماس با ما
                         </Button>
                         <Button variant="button" onClick={this.toDashboard} style={(this.props.isMobile ? styles.Mobilelink : styles.link)}>
@@ -130,7 +134,7 @@ const styles = {
         margin: 'auto',
         height: 60,
         backgroundColor: primaryDark,
-        width: window.innerWidth
+        // width: window.innerWidth
     },
     popup: {
         backgroundColor: 'white',
