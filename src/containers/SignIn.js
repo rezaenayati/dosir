@@ -62,7 +62,6 @@ class SignIn extends React.Component{
             this.completePhone();
             this.setState({loading: true} , async () => {
                 try {
-                    setTimeout(async () => {
                         await logInDoctor(this.state.validPhone , this.state.password)
                         .then(res => {
                             console.log(res);
@@ -78,7 +77,6 @@ class SignIn extends React.Component{
                             console.log(err)
                             this.setState({fieldsNotMatch: true, loading: false})
                         });
-                    }, 2000);
                 } catch (error) {}
             });
         };

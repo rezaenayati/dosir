@@ -55,7 +55,7 @@ class SignUp extends React.Component{
             phone = "+98" + newPhone;
             this.setState({validPhone: phone})
         };
-        this.submit = ev => {
+        this.submit = async ev => {
             ev.preventDefault();
             this.completePhone();
             this.setState({phoneError: false, passError: false, loading: true, error: false , emptyFiels: false});
@@ -63,7 +63,6 @@ class SignUp extends React.Component{
                 this.setState({phoneError: false, passError: false, loading: false, error: false, emptyFiels: true});
                 return null;
             }
-            setTimeout(async () => {
                 if(this.state.password !== this.state.password2){
                     console.log("Password unmatch!");
                     this.setState({passError: true , loading: false});
@@ -85,7 +84,6 @@ class SignUp extends React.Component{
                         this.setState({phoneError: true })
                     });
                 this.setState({loading: false});
-        }, 2000);
 
         };
     }
