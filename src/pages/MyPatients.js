@@ -4,7 +4,23 @@ import { withRouter } from 'react-router-dom';
 import Header from '../components/Header';
 import { Paper, List, ListItem, Avatar } from '@material-ui/core';
 
+import { primarylight , primaryDark, primaryColor, secondarylight, secondaryDark } from '../assets/colors/color';
+import MyPatientListItem from '../components/MyPatientListItem.js'
 class MyPatients extends React.Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            patients: [
+
+            ]
+        }
+
+    }
+
+    componentDidMount() {
+
+    }
+
     render(){
         return(
             <div>
@@ -12,45 +28,13 @@ class MyPatients extends React.Component {
                 <Header />
             </header>
                 <div>
-                    <div style={{marginRight: '10vh', marginLeft: '10vh', marginTop: '5vh'}}>
+                    <div style={{backgroundColor: primarylight, marginRight: '10vh', marginLeft: '10vh', marginTop: '5vh'}}>
                     <Paper  dir="rtl" style={{display: 'flex', flexDirection: 'column'}}>
                         <p style={styles.title}>لیست بیمار های من :</p>
                         <List>
-                            <ListItem button>
-                                <div style={styles.rowContainer}>
-                                    <Avatar style={styles.avatar} /> 
-                                    <p style={styles.nameText}>مصطفی اشرفی</p>
-                                    <div style={styles.row}>
-                                        <p style={styles.nameText}>شماره همراه : 09122222222</p>
-                                        <p style={styles.nameText}>تاریخ آخرین ویزیت: ۱۳۹۸/۱۲/۱</p>
-                                        <p style={styles.nameText}>نوبت ویزیت بعدی: ۱۳۹۹/۱/۱</p>
-                                    </div>
-             
-                                </div>
-                            </ListItem>
-                            <ListItem button>
-                                <div style={styles.rowContainer}>
-                                    <Avatar style={styles.avatar} /> 
-                                    <p style={styles.nameText}>مصطفی اشرفی</p>
-                                    <div style={styles.row}>
-                                        <p style={styles.nameText}>شماره همراه : 09122222222</p>
-                                        <p style={styles.nameText}>تاریخ آخرین ویزیت: ۱۳۹۸/۱۲/۱</p>
-                                        <p style={styles.nameText}>نوبت ویزیت بعدی: ۱۳۹۹/۱/۱</p>
-                                    </div>
-                                </div>
-                            </ListItem>
-                            <ListItem button>
-                                <div style={styles.rowContainer}>
-                                    <Avatar style={styles.avatar} /> 
-                                    <p style={styles.nameText}>مصطفی اشرفی</p>
-                                    <div style={styles.row}>
-
-                                        <p style={styles.nameText}>شماره همراه : 09122222222</p>
-                                        <p style={styles.nameText}>تاریخ آخرین ویزیت: ۱۳۹۸/۱۲/۱</p>
-                                        <p style={styles.nameText}>نوبت ویزیت بعدی: ۱۳۹۹/۱/۱</p>
-                                    </div>
-                                </div>
-                            </ListItem>
+                            <MyPatientListItem first_name="مصطفی" last_name="اشرفی" phone_num="0912222222" next_date="1398/12/2" last_date="1398/2/1" />
+                            <MyPatientListItem />
+                            <MyPatientListItem />
                         </List>
                     </Paper>
                     </div>
