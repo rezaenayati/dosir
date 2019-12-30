@@ -89,11 +89,9 @@ const Styles = {
         marginLeft: 20,
     },
     chartContainer: {
-        height: 750,
-        width: 750,
-        marginRight: 'auto',
-        marginLeft: 'auto',
-        marginTop: 50
+        marginRight: '20vh',
+        marginLeft: '20vh',
+        marginTop: '5vh'
     },
     chart: {
 
