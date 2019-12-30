@@ -41,7 +41,7 @@ class PatientInfo extends React.Component {
                 <div style={styles.container} >
                     <div dir='rtl' style={styles.topContainer}>
                                 <Avatar style={styles.avatarStyles}
-                                            src='https://playerswiki.com/uploads/thumb/mehdi-torabi-300-300.jpeg'
+                                            src={this.props.profile_pic}
                                             /> 
                                 <div style={styles.nameContainer}>
                                     <h4 style={styles.largeText}> {this.props.name +"    "+ this.props.family}</h4>

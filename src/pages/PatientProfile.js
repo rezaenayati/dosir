@@ -67,7 +67,7 @@ class PatientProfile extends React.Component{
                         <Grid item={true} style={styles.rightContainer} component={Paper} xs={12} sm={8} md={4} elevation={1} square>
                             <PatientInfo 
 
-
+                                profile_pic={this.props.patientInfo.profile_pic}
                                 name={this.props.patientInfo.first_name} 
                                 family={this.props.patientInfo.last_name}
                                 gender={this.props.patientInfo.gender}
@@ -78,7 +78,7 @@ class PatientProfile extends React.Component{
                                 education={this.props.patientInfo.education}
                                 current_disease={this.props.patientInfo.current_disease}
 
-
+                                
                                 accident_experience={this.props.patientInfo.accident_experience}
                                 blood_transition={this.props.patientInfo.blood_transition}
                                 allergies={this.props.patientInfo.allergies}
