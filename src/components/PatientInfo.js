@@ -96,13 +96,17 @@ class PatientInfo extends React.Component {
                                             <p style={styles.text}> سابقه تصادف: {this.props.accident_experience&&"دارد"}{!this.props.accident_experience&&"ندارد"}</p>
                                             <Divider variant='middle' />
                                             <div>
-                                            <p style={styles.text}> انتقال خون: {this.props.blood_transition&&"داشته"}{!this.props.blood_transition&&"نداشته"}</p>
-                                            <p style={styles.text}> آلرژی ها: {this.props.allergies} </p>
+                                            <div style={styles.rowContainer}>
+                                                <p style={styles.text}> آلرژی ها: {this.props.allergies} </p>
+                                                <p style={styles.text}> انتقال خون: {this.props.blood_transition&&"داشته"}{!this.props.blood_transition&&"نداشته"}</p>
+                                            </div>
                                             </div>
                                             <Divider variant='middle' />
                                             <div>
-                                            <p style={styles.text}> مصرف دخانیات: {this.props.drug_consumption&&"داشته"}{!this.props.drug_consumption&&"نداشته"}</p>
-                                            <p style={styles.text}> مصرف الکل: {this.props.alcohol_consumption&&"داشته"}{!this.props.alcohol_consumption&&"نداشته"}</p>
+                                            <div style={styles.rowContainer}>
+                                                <p style={styles.text}> مصرف دخانیات: {this.props.drug_consumption&&"داشته"}{!this.props.drug_consumption&&"نداشته"}</p>
+                                                <p style={styles.text}> مصرف الکل: {this.props.alcohol_consumption&&"داشته"}{!this.props.alcohol_consumption&&"نداشته"}</p>
+                                            </div>
                                             </div>
                                             <Divider variant='middle' />
                                             <p style={styles.text}> آزمون های غربالگری:</p>
