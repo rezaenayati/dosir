@@ -55,7 +55,7 @@ class UserInfoBox extends React.Component{
             if (!this.state.loading) {
                 this.setState({success: false, loading: true})
             }
-            if(this.state.phone === ''){                
+            if(this.state.phone === '' && (this.props.patient === undefined)){                
                 this.setState({loading: false, errorNotFound: false, errorEmpty: true, success: false})
                 return 
             }
@@ -95,6 +95,8 @@ class UserInfoBox extends React.Component{
         // await fetchPatientInfo(this.props.tokens.access).then(response => console.log(response))
         if(this.props.patient !== undefined) {
             this.handleButtonClick();
+            this.setState({phone: this.props.patient.phone_num})
+            console.log(this.props.patient);
         };
     }
 
