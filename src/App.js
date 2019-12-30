@@ -12,6 +12,7 @@ import CreateReport from './pages/CreateReport';
 import PatientProfile from './pages/PatientProfile';
 import AboutUs from './pages/AboutUs';
 import ContactUs from './pages/ContactUs';
+import Search from './pages/Search';
 
 import './App.css';
 
@@ -54,6 +55,7 @@ class App extends React.Component {
               <Route path={routeCodes.CreateReport}> <CreateReport /> </Route>
               <Route path={routeCodes.AboutUs}> <AboutUs /> </Route>
               <Route path={routeCodes.ContactUs}> <ContactUs /> </Route>
+              <Route path={routeCodes.Search}> <Search /> </Route>
               <Route component={Page404} />
           </Switch>
         </div>
@@ -74,5 +76,6 @@ export const routeCodes = {
   CreateReport: `${ publicPath }createreport`,
   PatientProfile: `${ publicPath }patientprofile`,
   AboutUs: `${ publicPath }aboutus`,
-  ContactUs: `${ publicPath }contactus`
+  ContactUs: `${ publicPath }contactus`,
+  Search: `${ publicPath }search`
 };

@@ -46,6 +46,7 @@ class DashboardDetails extends React.Component{
                         style={this.props.isMobile ? Styles.button : {}}
                         imageUrl='http://uupload.ir/files/o1yi_undraw_search_1px8.png'
                         title='جست و جوی بیمار جدید'
+                        onClick={() => {this.props.history.push('/search')}}
                     />
                     <DashboardButton
                         style={this.props.isMobile ? Styles.button : {}}
