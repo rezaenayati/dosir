@@ -3,6 +3,8 @@ import { withRouter } from 'react-router-dom';
 
 import Header from '../components/Header';
 import { Paper, List, ListItem, Avatar } from '@material-ui/core';
+import Skeleton from '@material-ui/lab/Skeleton';
+
 
 import { primarylight , primaryDark, primaryColor, secondarylight, secondaryDark } from '../assets/colors/color';
 import MyPatientListItem from '../components/MyPatientListItem.js';
@@ -40,6 +42,19 @@ class MyPatients extends React.Component {
         const renderItemList = this.state.patients.map((patient) =>
             <MyPatientListItem first_name={patient.first_name} last_name={patient.last_name} phone_num={patient.phone_num} next_date="1398/12/2" last_date="1398/2/1" />
         );
+        const renderSkeletor = this.state.patients.map((patient) =>
+            <ListItem button>
+                <div style={styles.rowContainer}>
+                    <Skeleton width="10vh" height='10vh' variant='circle' />
+                    <div style={styles.row}>
+                        <Skeleton height={"7vh"} width="10%" style={styles.skeletor} />                                   
+                        <Skeleton height={"5vh"} width="18%" style={styles.skeletor} />                                   
+                        <Skeleton height={"5vh"} width="18%" style={styles.skeletor} />                                   
+                        <Skeleton height={"5vh"} width="18%" style={styles.skeletor} />                                   
+                    </div>
+                </div>
+            </ListItem>
+        );
         if(this.state.loading)
             return <WaitingProgressBar />
         else
@@ -55,7 +70,9 @@ class MyPatients extends React.Component {
                             {!this.state.progressShow&&<List>
                                 <div dir="rtl">{renderItemList}</div>
                             </List>}
-                            <WaitingProgressBar wait={this.state.progressShow} />
+                            {this.state.progressShow&&<List>
+                                <div dir="rtl">{renderSkeletor}</div>
+                            </List>}
                         </Paper>
                         </div>
                     </div>
@@ -89,8 +106,13 @@ const styles = {
     row: {
         display: 'flex',
         flexDirection: 'row',
-        justifyContent: 'space-around',
+        marginRight: '5vh',
         width: '100%',
+    },
+    skeletor: {
+        marginTop: 'auto',
+        marginBottom: 'auto',
+        marginLeft: 'auto'
     }
 }
 export default withRouter(MyPatients);
