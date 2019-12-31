@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom';
 import Header from '../components/Header';
 import { Paper, List, ListItem, Avatar } from '@material-ui/core';
 import Skeleton from '@material-ui/lab/Skeleton';
+import {connect} from 'react-redux';
 
 
 import { primarylight , primaryDark, primaryColor, secondarylight, secondaryDark } from '../assets/colors/color';
@@ -11,6 +12,20 @@ import MyPatientListItem from '../components/MyPatientListItem.js';
 import { fakeFetchPatinetsList } from "../logics/fakeApi";
 import WaitingProgressBar from '../components/WaitingProgressBar';
 import { timeout } from 'q';
+
+
+const mapStateToProps = state => ({ 
+    ...state, 
+    patient: state.currentPatient.info, 
+    tokens: state.auth.tokens,
+    isMobile: state.device.isMobile,
+});
+
+const mapDispatchToProps = dispatch => ({
+submitPatientInfo: (info) => {
+    dispatch({type: 'SUBMIT_PATIENT_INFO' , info});
+}
+});
 
 class MyPatients extends React.Component {
     constructor(props){
@@ -21,6 +36,10 @@ class MyPatients extends React.Component {
             patients: [
 
             ]
+        }
+        this.onClick = (patient) => (patients) => {
+            this.props.submitPatientInfo(patient)
+            this.props.history.push('/patientprofile');
         }
     }
     
@@ -40,7 +59,7 @@ class MyPatients extends React.Component {
 
     render(){
         const renderItemList = this.state.patients.map((patient) =>
-            <MyPatientListItem first_name={patient.first_name} last_name={patient.last_name} profile_pic={patient.profile_pic} phone_num={patient.phone_num} next_date="1398/12/2" last_date="1398/2/1" />
+            <MyPatientListItem onClick={this.onClick(patient)} first_name={patient.first_name} last_name={patient.last_name} profile_pic={patient.profile_pic} phone_num={patient.phone_num} next_date="1398/12/2" last_date="1398/2/1" />
         );
         const renderSkeletor = this.state.patients.map((patient) =>
             <ListItem button>
@@ -115,4 +134,4 @@ const styles = {
         marginLeft: 'auto'
     }
 }
-export default withRouter(MyPatients);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(MyPatients));

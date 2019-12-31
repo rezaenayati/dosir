@@ -5,17 +5,16 @@ import { Avatar , ListItem, List } from '@material-ui/core'
 import { primarylight , primaryDark, primaryColor, secondarylight, secondaryDark } from '../assets/colors/color';
 
 
-export default class TimelineElement extends React.Component{
+export default class MyPatientListItem extends React.Component{
 
     constructor(props){
         super(props);
         this.state = {
         }
-
     }
     render(){
         return(
-            <ListItem button>
+            <ListItem button onClick={this.props.onClick} >
                 <div style={styles.rowContainer}>
                     <Avatar src={this.props.profile_pic} style={styles.avatar} /> 
                     <p style={styles.nameText}>{this.props.first_name + "   " + this.props.last_name}</p>
