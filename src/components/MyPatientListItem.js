@@ -17,7 +17,7 @@ export default class TimelineElement extends React.Component{
         return(
             <ListItem button>
                 <div style={styles.rowContainer}>
-                    <Avatar style={styles.avatar} /> 
+                    <Avatar src={this.props.profile_pic} style={styles.avatar} /> 
                     <p style={styles.nameText}>{this.props.first_name + "   " + this.props.last_name}</p>
                     <div style={styles.row}>
                         <p style={styles.nameText}>شماره همراه : {this.props.phone_num}</p>

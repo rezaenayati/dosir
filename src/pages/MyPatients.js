@@ -40,7 +40,7 @@ class MyPatients extends React.Component {
 
     render(){
         const renderItemList = this.state.patients.map((patient) =>
-            <MyPatientListItem first_name={patient.first_name} last_name={patient.last_name} phone_num={patient.phone_num} next_date="1398/12/2" last_date="1398/2/1" />
+            <MyPatientListItem first_name={patient.first_name} last_name={patient.last_name} profile_pic={patient.profile_pic} phone_num={patient.phone_num} next_date="1398/12/2" last_date="1398/2/1" />
         );
         const renderSkeletor = this.state.patients.map((patient) =>
             <ListItem button>
