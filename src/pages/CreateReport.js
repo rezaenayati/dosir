@@ -75,6 +75,9 @@ class CreateReport extends React.Component{
             
             const response =  await fakePostReport(
                 this.correctNum(this.props.doctor.phone_num),
+                this.props.doctor.first_name,
+                this.props.doctor.last_name,
+                this.props.doctor.title,
                 this.props.patient.phone_num,
                 "1398/10/15",
                 this.state.selectedDay.year + "/" + this.state.selectedDay.month + "/" + this.state.selectedDay.day,

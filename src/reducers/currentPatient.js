@@ -7,6 +7,11 @@ export default (state = {} , action) => {
                 ...state,
                 info: action.info,
             };
+        case 'SUBMIT_REPORT_DETAIL':
+            return {
+                ...state,
+                report: action.report
+            };
         default:
             return state;
     }

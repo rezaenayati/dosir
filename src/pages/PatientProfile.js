@@ -17,6 +17,8 @@ import { primarylight , primaryDark, primaryColor, secondarylight, secondaryDark
 import PatientInfo from '../components/PatientInfo';
 import ReportDetail from '../components/ReportDetail';
 import { width } from '@material-ui/system';
+import WaitingProgressBar from '../components/WaitingProgressBar';
+import { fakeFetchReportList , fakeDoctorInfoForReportElement} from '../logics/fakeApi';
 
 const mapStateToProps = state => ({ 
     ...state, 
@@ -24,6 +26,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+    onSubmit: (report) => dispatch({type: 'SUBMIT_REPORT_DETAIL' , report}),
 });
 
 
@@ -31,26 +34,66 @@ class PatientProfile extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            reportDetail: false
+            openReportDetail: false,
+            reports: [
+
+            ],
+            loading: false,
+            loadingReportDetail: false,
+            reportDetail: {}
         }
 
         this.toCreateReport = () => {
             this.props.history.push('/createreport');    
         }
-        this.toReportDetail = () => {
-            this.setState({reportDetail: true})
+        this.toReportDetail = (element) => () => {
+            this.setState({loadingReportDetail: true} , () => {
+                this.saveElement(element);
+                this.setState({loadingReportDetail: false})                
+            })
+            this.props.onSubmit(element)
+            this.setState({loadingReportDetail: false})
+            console.log(this.reportDetail);
+            this.open();
+        }
+
+        this.saveElement = (element) => () => {
+            this.setState({reportDetail: element} , async () => {
+                this.reportDetail = element
+            }) 
+        }
+        this.open = () => {
+            this.setState({openReportDetail: true})
         }
         this.back = () => {
-            this.setState({reportDetail: false})
+            this.setState({openReportDetail: false})
         }
+        this.reportDetail = {};
     }
-
     componentWillMount(){
         if(this.props.patientInfo === undefined)
-            this.props.history.push('/dashboard');    
+            this.props.history.push('/dashboard'); 
+        else {
+            this.setState({loading: true} , async () => {
+                const list = await fakeFetchReportList(this.props.patientInfo.phone_num);
+                for(var i = 0; i < list.length; i++){
+                    this.state.reports.push(list[i])
+                }
+                this.setState({loading: false})
+            })
+        }   
     }
 
     render(){
+        const renderElements = this.state.reports.map((element) =>
+            <TimelineElement 
+                onClick={this.toReportDetail(element)} 
+                diagnosis={element.final_diagnosis} 
+                doctorName={element.doctor_first_name + " " + element.doctor_last_name} 
+                doctorTitle={element.doctor_title} 
+                date={element.date} />
+        );
+
         if(this.props.patientInfo === undefined)
             return null;   
         const reverseSignUp = !this.state.signUp;
@@ -99,18 +142,15 @@ class PatientProfile extends React.Component{
                         
                         
                         
-                            <ReportDetail
+                            {this.state.openReportDetail&&<ReportDetail
+                                    // value={this.reportDetail}
                                     onClose={this.back}
-                                    open={this.state.reportDetail}
-                                    />
+                                    open={this.state.openReportDetail}
+                                    />}
 
+                            <WaitingProgressBar open={this.state.loading} />
                             <VerticalTimeline>
-                                <TimelineElement onClick={this.toReportDetail} diagnosis='شیزوفرنی' doctorName='احمد جلالی' doctorTitle='اعصاب و  روان' date='۱۳۹۸/۸/۱۰' />
-                                <TimelineElement onClick={this.toReportDetail} diagnosis='سر درد' doctorName='مجید سمیعی' doctorTitle='مغز و اعصاب' date='۱۳۹۸/۷/۲۱' />
-                                <TimelineElement onClick={this.toReportDetail} diagnosis='شیزوفرنی' doctorName='احمد جلالی' doctorTitle='اعصاب و  روان' date='۱۳۹۸/۴/۲' />
-                                <TimelineElement onClick={this.toReportDetail} diagnosis='سرماخوردگی' doctorName='محمد پورتکلو' doctorTitle='عمومی' date='۱۳۹۷/۱۲/۲۱' />
-                                <TimelineElement onClick={this.toReportDetail} diagnosis='شیزوفرنی' doctorName='احمد جلالی' doctorTitle='اعصاب و  روان' date='۱۳۹۷/۱۱/۲۹' />
-
+                                <li>{renderElements}</li>
                             </VerticalTimeline>
 
                             <Tooltip title="اضافه کردن ریپورت جدید" aria-label="add">
