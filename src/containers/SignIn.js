@@ -59,10 +59,10 @@ class SignIn extends React.Component{
                 this.setState({loading: false, error: false, emptyFiels: true, fieldsNotMatch: false});
                 return null;
             }
-            this.completePhone();
+            // this.completePhone();
             this.setState({loading: true} , async () => {
                 try {
-                        await logInDoctor(this.state.validPhone , this.state.password)
+                        await logInDoctor(this.state.phone , this.state.password)
                         .then(res => {
                             console.log(res);
                             this.props.onSubmit(res);

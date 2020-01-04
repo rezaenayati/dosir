@@ -57,7 +57,7 @@ class SignUp extends React.Component{
         };
         this.submit = async ev => {
             ev.preventDefault();
-            this.completePhone();
+            // this.completePhone();
             this.setState({phoneError: false, passError: false, loading: true, error: false , emptyFiels: false});
             if(this.state.phone === '' || this.state.password === '' || this.state.password2 === '' || this.state.name === '' || this.state.family === '' ){
                 this.setState({phoneError: false, passError: false, loading: false, error: false, emptyFiels: true});
@@ -68,7 +68,8 @@ class SignUp extends React.Component{
                     this.setState({passError: true , loading: false});
                     return null;
                 }
-                await createDoctor(this.state.validPhone, this.state.password, this.state.name, this.state.family)
+                
+                await createDoctor(this.state.phone, this.state.password, this.state.name, this.state.family)
                     .then(response => {
                         console.log(response);
                         this.props.onSubmit(response);
