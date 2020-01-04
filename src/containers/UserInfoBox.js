@@ -63,9 +63,7 @@ class UserInfoBox extends React.Component{
                 setTimeout(async () => {
                     //request phone to the server and get response()
                     const patient = await fakeFetchPatientInfo(this.state.phone);
-                    const response = await fakePostReport();
                     console.log(patient);
-                    console.log(response);
                     
                     
                     // await fetchPatientInfo(this.props.tokens.access).then(res => console.log(res));

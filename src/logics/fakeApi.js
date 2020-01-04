@@ -1,19 +1,21 @@
-export const fakePostReport = async (report) => {
+export const fakePostReport = async (
+        doctor_phone, 
+        patient_phone, 
+        date, 
+        next_date, 
+        clinical_findings, 
+        prescreption, 
+        actions, 
+        final_diagnosis) => {
     const re =  JSON.stringify({
-        "doctor_phone": "09198307074",
-        "patient_phone": "09123555555",
-        "date": "1398/12/2",
-        "next_date": "1399/3/3",
-        "clinical_findings": "هیچی",
-        "prescreption": [
-          {
-            "number": 1,
-            "name": "مرگ موش",
-            "dose": "کم"
-          }
-        ],
-        "actions": "هیچی",
-        "final_diagnosis": "مرگ"
+        "doctor_phone": doctor_phone,
+        "patient_phone": patient_phone,
+        "date": date,
+        "next_date": next_date,
+        "clinical_findings": clinical_findings,
+        "prescreption": prescreption,
+        "actions": actions,
+        "final_diagnosis": final_diagnosis
     });
     const res = await fetch(`https://murmuring-atoll-41693.herokuapp.com/reports` , {
         method: 'POST',

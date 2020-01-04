@@ -11,8 +11,14 @@ import Header from '../components/Header';
 import { primaryColor , secondarylight, primarylight, secondaryDark } from '../assets/colors/color';
 import ProgressBar from '../components/ProgressBar';
 import UserInfoBox from '../containers/UserInfoBox';
+import { fakePostReport } from '../logics/fakeApi';
 
-const mapStateToProps = state => ({ ...state, isMobile: state.device.isMobile});
+const mapStateToProps = state => ({ 
+    ...state, 
+    isMobile: state.device.isMobile, 
+    doctor: state.currentUser.doctor,
+    patient: state.currentPatient.info
+});
 
 const mapDispatchToProps = dispatch => ({
     
@@ -58,8 +64,28 @@ class CreateReport extends React.Component{
             Object.assign(this.state.prescription[number-1] , temp);
         }
 
-        this.submit = () => {
-            console.log(this.state)
+        this.correctNum = (phone) => {
+            let newPhone = phone.substring(3)
+            phone = "0" + newPhone;
+            return phone;
+        }
+
+        this.submit = async () => {
+            console.log()
+            
+            const response =  await fakePostReport(
+                this.correctNum(this.props.doctor.phone_num),
+                this.props.patient.phone_num,
+                "1398/10/15",
+                this.state.selectedDay.year + "/" + this.state.selectedDay.month + "/" + this.state.selectedDay.day,
+                this.state.clinicalFindings,
+                this.state.prescription,
+                this.state.actions,
+                this.state.finalDiag
+            )
+
+            console.log(response);
+            
         }
 
         this.addDrug = () => {
@@ -163,10 +189,10 @@ export default connect(mapStateToProps , mapDispatchToProps)(CreateReport);
 
 const styles = {
     drugName: {
-        width: window.innerWidth * 1/5,
+        width: window.innerWidth * 1/6,
     },
     drugDose: {
-        width: window.innerWidth * 1/9,
+        // width: window.innerWidth * 1/9,
     },
     mobileDrugName: {
         width: window.innerWidth * 2/5,
