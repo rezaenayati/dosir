@@ -1,122 +1,46 @@
+export const fakePostReport = async (report) => {
+    const re =  JSON.stringify({
+        "doctor_phone": "09198307074",
+        "patient_phone": "09123555555",
+        "date": "1398/12/2",
+        "next_date": "1399/3/3",
+        "clinical_findings": "هیچی",
+        "prescreption": [
+          {
+            "number": 1,
+            "name": "مرگ موش",
+            "dose": "کم"
+          }
+        ],
+        "actions": "هیچی",
+        "final_diagnosis": "مرگ"
+    });
+    const res = await fetch(`https://murmuring-atoll-41693.herokuapp.com/reports` , {
+        method: 'POST',
+        body: re,
+        headers: {
+            'Content-Type': 'application/json'
+          },
+      
+    })   
+    const result = await res.json();
+    return result
+
+}
+
 export const fakeFetchPatientInfo = async (phone) => {
-    for(var i = 0; i < db.patients.length; i++){
-        if(db.patients[i].phone_num !== phone)
-            continue;
-        else
-            return db.patients[i];
-    }
-    return null;
+    const res = await fetch(`https://murmuring-atoll-41693.herokuapp.com/patients?phone_num=${phone}`)   
+    const result = await res.json();
+    return result[0]
 }
 
 export const fakeFetchPatinetsList = async () => {
-    return new Promise((resolve, reject) => {
-        resolve(db.patients)
-    });
-    // console.log(db.patients);
+    // return new Promise((resolve, reject) => {
+    //     resolve(db.patients)
+    // });
+    // // console.log(db.patients);
     // return db.patients
 }
-
-const db = {
-    patients: [
-        {
-            "phone_num": "09123555555",
-            "first_name": "مهدی",
-            "last_name": "همتی",
-            "profile_pic": "http://uupload.ir/files/8byz_photo_2019-12-22_23-45-29.jpg",
-            "birth_date": "1398/2/1",
-            "gender": "مرد",
-            "disease_history_duration": "درد بیدرمان",
-            "education": "بی سواد",
-            "job": "بیکار",
-            "cause_of_siblings_death": "خیلی",
-            "particular_disease": "زیاد",
-            "allergies": "فراوان",
-            "current_disease": "مرگ",
-            "accident_experience": false,
-            "blood_transition": false,
-            "drug_consumption": false,
-            "alcohol_consumption": false,
-            "is_married": false,
-            "PPD": false,
-            "BIS": false,
-            "pop_smear": false,
-            "other_tests": false
-        },
-        {
-            "phone_num": "09366666666",
-            "first_name": "محمدرضا",
-            "last_name": "روزگار",
-            "profile_pic": "http://uupload.ir/files/3rvm_photo_2019-12-12_23-02-23.jpg",
-            "birth_date": "1398/12/11",
-            "gender": "مرد",
-            "disease_history_duration": "درد بیدرمان",
-            "education": "بی سواد",
-            "job": "بیکار",
-            "cause_of_siblings_death": "خیلی",
-            "particular_disease": "زیاد",
-            "allergies": "فراوان",
-            "current_disease": "مرگ",
-            "accident_experience": false,
-            "blood_transition": false,
-            "drug_consumption": false,
-            "alcohol_consumption": false,
-            "is_married": false,
-            "PPD": false,
-            "BIS": false,
-            "pop_smear": false,
-            "other_tests": false
-        },
-        {
-            "phone_num": "09351234567",
-            "first_name": "مصطفی",
-            "last_name": "اشرفی",
-            "profile_pic": "http://uupload.ir/files/cvbp_photo_2019-12-04_00-23-18.jpg",
-            "birth_date": "1398/2/1",
-            "gender": "مرد",
-            "disease_history_duration": "درد بیدرمان",
-            "education": "بی سواد",
-            "job": "بیکار",
-            "cause_of_siblings_death": "خیلی",
-            "particular_disease": "زیاد",
-            "allergies": "فراوان",
-            "current_disease": "مرگ",
-            "accident_experience": false,
-            "blood_transition": false,
-            "drug_consumption": false,
-            "alcohol_consumption": false,
-            "is_married": false,
-            "PPD": false,
-            "BIS": false,
-            "pop_smear": false,
-            "other_tests": false
-        },
-        {
-            "phone_num": "09192121212",
-            "first_name": "محمدرضا",
-            "last_name": "رستگاران",
-            "profile_pic": "http://uupload.ir/files/md0n_photo_2019-12-09_17-38-21.jpg",
-            "birth_date": "1377/5/7",
-            "gender": "مرد",
-            "disease_history_duration": "درد بیدرمان",
-            "education": "دانشجو",
-            "job": "برنامه نویس",
-            "cause_of_siblings_death": "مرگ طبیغی",
-            "particular_disease": "سرطان",
-            "allergies": "آلاینده",
-            "current_disease": "تاکی کاردی",
-            "accident_experience": true,
-            "blood_transition": true,
-            "drug_consumption": false,
-            "alcohol_consumption": false,
-            "is_married": false,
-            "PPD": false,
-            "BIS": false,
-            "pop_smear": false,
-            "other_tests": false
-        }
-    ]
-}
-
 
 
 

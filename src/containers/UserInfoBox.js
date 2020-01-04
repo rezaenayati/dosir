@@ -7,7 +7,7 @@ import {connect} from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
 import { fetchPatientInfo , fetchPatientInfo2 } from '../logics/api';
-import {fakeFetchPatientInfo } from '../logics/fakeApi';
+import {fakeFetchPatientInfo , fakePostReport} from '../logics/fakeApi';
 import { primaryColor , secondarylight, primarylight, secondaryDark } from '../assets/colors/color';
 
 const mapStateToProps = state => ({ 
@@ -63,6 +63,12 @@ class UserInfoBox extends React.Component{
                 setTimeout(async () => {
                     //request phone to the server and get response()
                     const patient = await fakeFetchPatientInfo(this.state.phone);
+                    const response = await fakePostReport();
+                    console.log(patient);
+                    console.log(response);
+                    
+                    
+                    // await fetchPatientInfo(this.props.tokens.access).then(res => console.log(res));
                     //save response in the redux
                     this.props.submitPatientInfo(patient)
                     if(patient !== null)
@@ -85,13 +91,11 @@ class UserInfoBox extends React.Component{
                 } , 2000);
             // }
             console.log(this.state.loading);
-            
         }
 
     }
 
-    async componentDidMount() {
-        // await fetchPatientInfo2(this.props.tokens.access)
+    componentDidMount() {
         // await fetchPatientInfo(this.props.tokens.access).then(response => console.log(response))
         if(this.props.patient !== undefined) {
             this.handleButtonClick();

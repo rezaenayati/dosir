@@ -23,8 +23,8 @@ export const createDoctor = async (phone, password, name, family) => {
             headers:{
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
-                'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Methods': 'POST'
+                // 'Access-Control-Allow-Origin': '*',
+                // 'Access-Control-Allow-Methods': 'POST'
             }
         })
         .then(response => resolve(response.data) )
@@ -110,8 +110,14 @@ export const editDoctorInfo = async (access , doctor , editedDoctor) => {
 export const fetchPatientInfo = async (access) => {
 
     var data = JSON.stringify({
-        'phone_num': '+989192222222'
+        'phone_num': '+989123555555'
     });
+
+    console.log("enter fetch");
+
+    console.log(access);
+    
+    
 
     return new Promise((resolve, reject) => {
         axios({
@@ -121,8 +127,9 @@ export const fetchPatientInfo = async (access) => {
             withCredentials: true,
             headers: {
                 'Authorization': `Bearer ${access}`,
-                // 'Access-Control-Allow-Origin': 'http://localhost:3000',
                 'Content-Type': 'application/json',
+                'Access-Control-Allow-Credentials': 'true'
+
             }
         }).then(response => console.log(response)).catch(err => console.log(err)).finally(res => console.log(res))
     });
