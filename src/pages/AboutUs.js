@@ -65,7 +65,7 @@ class AboutUS extends React.Component{
                             component="img"
                             alt="Contemplative Reptile"
                             height="140"
-                            image="http://uupload.ir/files/q72i_photo_2019-12-22_13-08-29.jpg"
+                            image="http://uupload.ir/files/0p7l_photo_2018-11-17_03-07-02.jpg"
                             />
                         <CardContent>
                             <h2 style={styles.text}>رضا عنایتی</h2>

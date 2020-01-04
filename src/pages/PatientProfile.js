@@ -105,9 +105,12 @@ class PatientProfile extends React.Component{
                                     />
 
                             <VerticalTimeline>
-                                <TimelineElement onClick={this.toReportDetail} diagnosis='سرماخوردگی' doctorName='احمد جلالی' doctorTitle='اعصاب و  روان' date='۱۳۹۸/۲/۲۱' />
-                                <TimelineElement />
-                                <TimelineElement />
+                                <TimelineElement onClick={this.toReportDetail} diagnosis='شیزوفرنی' doctorName='احمد جلالی' doctorTitle='اعصاب و  روان' date='۱۳۹۸/۸/۱۰' />
+                                <TimelineElement onClick={this.toReportDetail} diagnosis='سر درد' doctorName='مجید سمیعی' doctorTitle='مغز و اعصاب' date='۱۳۹۸/۷/۲۱' />
+                                <TimelineElement onClick={this.toReportDetail} diagnosis='شیزوفرنی' doctorName='احمد جلالی' doctorTitle='اعصاب و  روان' date='۱۳۹۸/۴/۲' />
+                                <TimelineElement onClick={this.toReportDetail} diagnosis='سرماخوردگی' doctorName='محمد پورتکلو' doctorTitle='عمومی' date='۱۳۹۷/۱۲/۲۱' />
+                                <TimelineElement onClick={this.toReportDetail} diagnosis='شیزوفرنی' doctorName='احمد جلالی' doctorTitle='اعصاب و  روان' date='۱۳۹۷/۱۱/۲۹' />
+
                             </VerticalTimeline>
 
                             <Tooltip title="اضافه کردن ریپورت جدید" aria-label="add">
