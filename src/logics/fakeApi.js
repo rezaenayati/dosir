@@ -48,7 +48,8 @@ export const fakeFetchPatientInfo = async (phone) => {
 export const fakeFetchReportList = async (phone) => {
     const res = await fetch(`https://murmuring-atoll-41693.herokuapp.com/reports?patient_phone=${phone}`)
     const result = await res.json();
-    return result
+    const rev = result.reverse();
+    return rev
 }
 
 export const fakeFetchPatinetsList = async (phone) => {
