@@ -1,11 +1,19 @@
 import React from 'react';
 import { Avatar , ListItem, List } from '@material-ui/core'
-
+import {connect} from 'react-redux';
 
 import { primarylight , primaryDark, primaryColor, secondarylight, secondaryDark } from '../assets/colors/color';
 
+const mapStateToProps = state => ({ 
+    ...state, 
+    isMobile: state.device.isMobile
+});
 
-export default class MyPatientListItem extends React.Component{
+const mapDispatchToProps = dispatch => ({
+});
+
+
+class MyPatientListItem extends React.Component{
 
     constructor(props){
         super(props);
@@ -15,10 +23,10 @@ export default class MyPatientListItem extends React.Component{
     render(){
         return(
             <ListItem button onClick={this.props.onClick} >
-                <div style={styles.rowContainer}>
+                <div style={this.props.isMobile ? styles.mobileContainer : styles.rowContainer}>
                     <Avatar src={this.props.profile_pic} style={styles.avatar} /> 
                     <p style={styles.nameText}>{this.props.first_name + "   " + this.props.last_name}</p>
-                    <div style={styles.row}>
+                    <div style={this.props.isMobile ? styles.mobileContainer : styles.row}>
                         <p style={styles.nameText}>شماره همراه : {this.props.phone_num}</p>
                         <p style={styles.nameText}>تاریخ آخرین ویزیت: {this.props.last_date}</p>
                         <p style={styles.nameText}>نوبت ویزیت بعدی: {this.props.next_date}</p>
@@ -28,6 +36,8 @@ export default class MyPatientListItem extends React.Component{
         );
     }
 }
+
+export default connect(mapStateToProps , mapDispatchToProps)(MyPatientListItem);
 
 const styles = {
     title: {
@@ -49,6 +59,11 @@ const styles = {
     rowContainer: {
         display: 'flex',
         flexDirection: 'row',
+        width: '100%',
+    },
+    mobileContainer: {
+        display: 'flex',
+        flexDirection: 'column',
         width: '100%',
     },
     row: {
