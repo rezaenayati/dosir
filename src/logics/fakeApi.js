@@ -57,8 +57,18 @@ export const fakeFetchPatinetsList = async (phone) => {
     var patients = [];
     for(var i = 0 ; i < result.length ; i++){
         var {patient_phone} = result[i];
+        var bool = true
+        for(var j = 0 ; j < patients.length ; j++){
+            if(patient_phone === patients[j].phone_num){
+                bool = false;
+                break;
+            }
+        }
+        if(!bool){
+            bool = true;
+            continue;
+        }
         const patient = await fakeFetchPatientInfo(patient_phone);
-        
         patients.push(patient)
     }
     console.log(patients);

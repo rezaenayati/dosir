@@ -33,7 +33,7 @@ class MyPatients extends React.Component {
         super(props);
         this.state = {
             loading: true,
-            progressShow: true,
+            progressShow: false,
             patients: [
 
             ],
@@ -54,6 +54,7 @@ class MyPatients extends React.Component {
     
 
     componentWillMount() {
+        this.setState({progressShow: true})
         this.setState({loading: true} , async () => {
             const list = await fakeFetchPatinetsList(this.correctNum(this.props.doctor.phone_num))
             this.setState({loading: false})
@@ -66,7 +67,7 @@ class MyPatients extends React.Component {
         setTimeout(async () => {
             this.setState({progressShow: false})
         } , 2000)
-        }
+    }
 
     render(){
         const renderItemList = this.state.patients.map((patient) =>
