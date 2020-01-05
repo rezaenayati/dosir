@@ -19,6 +19,7 @@ const mapStateToProps = state => ({
     patient: state.currentPatient.info, 
     tokens: state.auth.tokens,
     isMobile: state.device.isMobile,
+    doctor: state.currentUser.doctor
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -35,33 +36,43 @@ class MyPatients extends React.Component {
             progressShow: true,
             patients: [
 
+            ],
+            skeletor: [
+                {},{},{},{}
             ]
         }
         this.onClick = (patient) => (patients) => {
             this.props.submitPatientInfo(patient)
             this.props.history.push('/patientprofile');
         }
+        this.correctNum = (phone) => {
+            let newPhone = phone.substring(3)
+            phone = "0" + newPhone;
+            return phone;
+        }
     }
     
-    async componentWillMount() {
-        await fakeFetchPatinetsList().then(res => {
-            console.log(res[0]);
-            for(var i = 0; i < res.length; i++){
-                this.state.patients.push(res[i])
-            }
-            console.log(this.state.patients);
+
+    componentWillMount() {
+        this.setState({loading: true} , async () => {
+            const list = await fakeFetchPatinetsList(this.correctNum(this.props.doctor.phone_num))
             this.setState({loading: false})
-        });
-            setTimeout(async () => {
-                this.setState({progressShow: false})
-            } , 2000)
+            console.log(list);
+            
+            for(var i = 0; i < list.length ; i++){
+                this.state.patients.push(list[i])
+            }
+        })
+        setTimeout(async () => {
+            this.setState({progressShow: false})
+        } , 2000)
         }
 
     render(){
         const renderItemList = this.state.patients.map((patient) =>
             <MyPatientListItem onClick={this.onClick(patient)} first_name={patient.first_name} last_name={patient.last_name} profile_pic={patient.profile_pic} phone_num={patient.phone_num} next_date="1398/12/2" last_date="1398/2/1" />
         );
-        const renderSkeletor = this.state.patients.map((patient) =>
+        const renderSkeletor = this.state.skeletor.map((patient) =>
             <ListItem button>
                 <div style={styles.rowContainer}>
                     <Skeleton width="10vh" height='10vh' variant='circle' />

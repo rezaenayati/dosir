@@ -1,3 +1,6 @@
+import axios from 'axios';
+
+
 export const fakePostReport = async (
         doctor_phone, 
         doctor_first_name,
@@ -47,16 +50,30 @@ export const fakeFetchReportList = async (phone) => {
     const result = await res.json();
     return result
 }
-export const fakeDoctorInfoForReportElement = async (phone) => {
 
-}
-
-export const fakeFetchPatinetsList = async () => {
+export const fakeFetchPatinetsList = async (phone) => {
+    const res = await fetch(`https://murmuring-atoll-41693.herokuapp.com/reports?doctor_phone=${phone}`)
+    const result = await res.json();
+    var patients = [];
+    for(var i = 0 ; i < result.length ; i++){
+        var {patient_phone} = result[i];
+        const patient = await fakeFetchPatientInfo(patient_phone);
+        
+        patients.push(patient)
+    }
+    console.log(patients);
+    return patients
     // return new Promise((resolve, reject) => {
-    //     resolve(db.patients)
+    //     axios({
+    //         method: 'get',
+    //         url: `https://murmuring-atoll-41693.herokuapp.com/reports?doctor_phone=${phone}`,
+    //         headers:{
+    //             'Content-Type': 'application/json',
+    //         }
+    //     })
+    //     .then(response => console.log(response.data))
+    //     .catch((er) => reject(er))
     // });
-    // // console.log(db.patients);
-    // return db.patients
 }
 
 
