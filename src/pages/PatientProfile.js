@@ -150,7 +150,7 @@ class PatientProfile extends React.Component{
 
                             <WaitingProgressBar open={this.state.loading} />
                             <VerticalTimeline>
-                                <li>{renderElements}</li>
+                                {renderElements}
                             </VerticalTimeline>
 
                             <Tooltip title="اضافه کردن ریپورت جدید" aria-label="add">
