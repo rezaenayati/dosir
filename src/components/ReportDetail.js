@@ -28,20 +28,21 @@ class ReportDetail extends React.Component {
         }
     }
 
-    componentWillMount() {
-        // const list = this.props.value.prescription;
+    componentDidMount() {
+        console.log(this.props.value.prescreption);
+        // const list = this.props.value.prescreption;
         // for(var i = 0; i < list.length; i++){
-        //     this.state.prescription.push(this.props.value.prescription[i])
+        //     this.state.prescreption.push(this.props.value.prescreption[i])
         // }
     }
 
     render(){
-        console.log(this.props.value.prescription);
+        console.log(this.props.value.prescreption);
         
-        // const prescription = this.props.value.prescription
-        // const renderDrugs = prescription.map((drug) =>
-        //     <p>. {drug.name + "  " + drug.dose}</p>
-        // );
+        const prescreption = this.props.value.prescreption
+        const renderDrugs = prescreption.map((drug) =>
+            <p>{drug.number + ". " + drug.name + "  " + drug.dose}</p>
+        );
         return(
                 <Modal  
                     open={this.props.open} onClose={this.props.onClose} dir="rtl">
@@ -54,7 +55,7 @@ class ReportDetail extends React.Component {
                             <p style={styles.text}> یافته های بالینی: {this.props.value.clinical_findings}</p>
                             <Divider variant='middle' />
                             <p style={styles.text}>نسخه تجویز شده: </p>
-                                {/* <li>{renderDrugs}</li> */}
+                                <ul>{renderDrugs}</ul>
                             <Divider variant='middle' />
                             <p style={styles.text}>اقدامات درمانی : {this.props.value.actions}</p>
                             <Divider variant='middle' />
