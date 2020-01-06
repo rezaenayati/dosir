@@ -1,0 +1,27 @@
+{
+  "files": {
+    "main.css": "/dosir/static/css/main.6d567226.chunk.css",
+    "main.js": "/dosir/static/js/main.e838f7fa.chunk.js",
+    "main.js.map": "/dosir/static/js/main.e838f7fa.chunk.js.map",
+    "runtime-main.js": "/dosir/static/js/runtime-main.7b84b6b7.js",
+    "runtime-main.js.map": "/dosir/static/js/runtime-main.7b84b6b7.js.map",
+    "static/css/2.a212dddb.chunk.css": "/dosir/static/css/2.a212dddb.chunk.css",
+    "static/js/2.8bdd151b.chunk.js": "/dosir/static/js/2.8bdd151b.chunk.js",
+    "static/js/2.8bdd151b.chunk.js.map": "/dosir/static/js/2.8bdd151b.chunk.js.map",
+    "index.html": "/dosir/index.html",
+    "precache-manifest.ac57b64b38731b978792df6b7ec1f3d8.js": "/dosir/precache-manifest.ac57b64b38731b978792df6b7ec1f3d8.js",
+    "service-worker.js": "/dosir/service-worker.js",
+    "static/css/2.a212dddb.chunk.css.map": "/dosir/static/css/2.a212dddb.chunk.css.map",
+    "static/css/main.6d567226.chunk.css.map": "/dosir/static/css/main.6d567226.chunk.css.map",
+    "static/js/2.8bdd151b.chunk.js.LICENSE": "/dosir/static/js/2.8bdd151b.chunk.js.LICENSE",
+    "static/media/Vazir-Bold.ttf": "/dosir/static/media/Vazir-Bold.e7425dc1.ttf",
+    "static/media/Vazir.ttf": "/dosir/static/media/Vazir.2c96154b.ttf"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.7b84b6b7.js",
+    "static/css/2.a212dddb.chunk.css",
+    "static/js/2.8bdd151b.chunk.js",
+    "static/css/main.6d567226.chunk.css",
+    "static/js/main.e838f7fa.chunk.js"
+  ]
+}
