@@ -12,7 +12,7 @@
     "chart.js": "^2.9.3",
     "google-map-react": "^1.1.5",
     "jss-rtl": "^0.3.0",
-    "node-sass": "^4.13.0",
+    "node-sass": "^7.0.0",
     "react": "^16.10.2",
     "react-animated-slider": "^1.1.4",
     "react-awesome-slider": "^2.2.1",
